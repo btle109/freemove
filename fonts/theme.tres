@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d2papxoidqsqe"]
+
+[ext_resource type="FontFile" uid="uid://bswbfb2a61rur" path="res://fonts/GregorianFLF.ttf" id="1_513cy"]
+
+[resource]
+resource_name = "theme"
+default_font = ExtResource("1_513cy")
+default_font_size = 105

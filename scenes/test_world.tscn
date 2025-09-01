@@ -1,0 +1,139 @@
+[gd_scene load_steps=18 format=3 uid="uid://cm0y4md206lmb"]
+
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_umbte"]
+[ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://textures/dark.png" id="2_ynswa"]
+[ext_resource type="Texture2D" uid="uid://cxjxvqmf4boxq" path="res://textures/green.png" id="3_dvny0"]
+[ext_resource type="Texture2D" uid="uid://dsv4jm4vydflb" path="res://textures/orange.png" id="4_xwrkq"]
+[ext_resource type="Script" uid="uid://imclffrba1it" path="res://props/prop.gd" id="5_xwrkq"]
+[ext_resource type="Script" uid="uid://8befsr2vbnbn" path="res://scenes/pause.gd" id="5_ynswa"]
+[ext_resource type="Theme" uid="uid://d2papxoidqsqe" path="res://fonts/theme.tres" id="6_dvny0"]
+[ext_resource type="Script" uid="uid://dgvxuijdt5w0x" path="res://props/info.gd" id="8_nrstc"]
+
+[sub_resource type="Gradient" id="Gradient_ur0vy"]
+colors = PackedColorArray(0, 0.476245, 0.0193456, 1, 0.360494, 0.612721, 0.119744, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jd3pw"]
+frequency = 0.0027
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7akuf"]
+width = 1024
+height = 1024
+in_3d_space = true
+seamless = true
+color_ramp = SubResource("Gradient_ur0vy")
+noise = SubResource("FastNoiseLite_jd3pw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_67ysu"]
+albedo_texture = SubResource("NoiseTexture2D_7akuf")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gomnb"]
+albedo_texture = ExtResource("2_ynswa")
+metallic = 0.81
+metallic_specular = 0.2
+roughness = 0.5
+uv1_triplanar = true
+uv1_triplanar_sharpness = 0.000850145
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u0sbk"]
+albedo_texture = ExtResource("3_dvny0")
+metallic = 0.81
+metallic_specular = 0.2
+roughness = 0.5
+uv1_triplanar = true
+uv1_triplanar_sharpness = 0.000850145
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7j4uu"]
+albedo_texture = ExtResource("4_xwrkq")
+metallic = 0.81
+metallic_specular = 0.2
+roughness = 0.5
+uv1_triplanar = true
+uv1_triplanar_sharpness = 0.000850145
+
+[sub_resource type="BoxMesh" id="BoxMesh_dvny0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xwrkq"]
+size = Vector3(1, 1.50195, 1.7655)
+
+[node name="test_world" type="Node3D"]
+
+[node name="Character" parent="." instance=ExtResource("1_umbte")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="terrain" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.5, 10)
+use_collision = true
+size = Vector3(30, 1, 30)
+material = SubResource("StandardMaterial3D_67ysu")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -10)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.8, -13)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, -9.5, 1.2, -10)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = SubResource("StandardMaterial3D_u0sbk")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 3, -15.5)
+use_collision = true
+size = Vector3(19, 8, 1)
+material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="Area3D" type="Area3D" parent="terrain" node_paths=PackedStringArray("label")]
+collision_layer = 3
+script = ExtResource("5_xwrkq")
+label = NodePath("../../UI/Info")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="terrain/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.07798, 7.22826)
+mesh = SubResource("BoxMesh_dvny0")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.05551, 7.09783)
+shape = SubResource("BoxShape3D_xwrkq")
+
+[node name="Pause" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("5_ynswa")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Info" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("6_dvny0")
+theme_override_font_sizes/font_size = 55
+script = ExtResource("8_nrstc")
+
+[node name="Timer" type="Timer" parent="UI/Info"]
+wait_time = 2.0
+
+[connection signal="timeout" from="UI/Info/Timer" to="UI/Info" method="_on_timer_timeout"]
