@@ -1,2 +1,2 @@
 extends Node
-var playerWeaponSkill = 100.0;
+#var playerWeaponSkill = 100.0;

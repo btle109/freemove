@@ -1,3 +1,4 @@
+Control
 StaticBody3D
 Area3D
 CollisionShape3D
@@ -6,5 +7,4 @@ MeshInstance3D
 Timer
 CSGBox3D
 Label
-Control
 Node

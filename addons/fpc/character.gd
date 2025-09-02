@@ -38,9 +38,9 @@ extends CharacterBody3D
 
 @export_group("Nodes")
 ## A reference to the camera for use in the character script. This is the parent node to the camera and is rotated instead of the camera for mouse input.
-@export var HEAD : Node3D
+#@export var HEAD : Node3D
 ## A reference to the camera for use in the character script.
-@export var CAMERA : Camera3D
+#@export var CAMERA : Camera3D
 ## A reference to the headbob animation for use in the character script.
 @export var HEADBOB_ANIMATION : AnimationPlayer
 ## A reference to the jump animation for use in the character script.
@@ -48,8 +48,11 @@ extends CharacterBody3D
 ## A reference to the crouch animation for use in the character script.
 @export var CROUCH_ANIMATION : AnimationPlayer
 ## A reference to the the player's collision shape for use in the character script.
-@export var COLLISION_MESH : CollisionShape3D
+#@export var COLLISION_MESH : CollisionShape3D
 
+@onready var HEAD = $Head
+@onready var CAMERA = $Head/Camera
+@onready var COLLISION_MESH = $Collision
 #endregion
 
 #region Controls Export Group
@@ -136,18 +139,27 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") 
 var mouseInput : Vector2 = Vector2(0,0)
 #endregion
 
+#region party system
+var party1 = preload("res://party/partyData.gd").new()
+var party2 = preload("res://party/partyData.gd").new()
+var party3 = preload("res://party/partyData.gd").new()
+var party = [party1,party2,party3]
+var activePlayer = party1;
 
+func refreshPlayer() -> void:
+	$Head/attacks.speed_scale = activePlayer.weaponSkill/100.0
+#endregion
 
 #region Main Control Flow
 
 func _ready():
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	$Head/attacks.speed_scale = Global.playerWeaponSkill/100.0
+	
 	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
 	HEAD.rotation.y = rotation.y
 	rotation.y = 0
-
+	
 	if default_reticle:
 		change_reticle(default_reticle)
 
@@ -155,7 +167,9 @@ func _ready():
 	check_controls()
 	enter_normal_state()
 
-
+	refreshPlayer()
+	party2.weaponSkill = 75
+	party3.weaponSkill = 35
 func _process(_delta):
 	#if (dragging == true):
 	#	mouse_sensitivity = 0.01
@@ -446,16 +460,16 @@ func update_debug_menu_per_tick():
 	$UserInterface/DebugPanel.add_property("Velocity", readable_velocity, 3)
 
 
-func _unhandled_input(event : InputEvent):
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		mouseInput.x += event.relative.x
-		mouseInput.y += event.relative.y
-	# Toggle debug menu
-	elif event is InputEventKey:
-		if event.is_released():
+#func _unhandled_input(event : InputEvent):
+#	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+#		mouseInput.x += event.relative.x
+#		mouseInput.y += event.relative.y
+#	# Toggle debug menu
+#	elif event is InputEventKey:
+#		if event.is_released():
 			# Where we're going, we don't need InputMap
-			if event.keycode == 4194338: # F7
-				$UserInterface/DebugPanel.visible = !$UserInterface/DebugPanel.visible
+#			if event.keycode == 4194338: # F7
+#				$UserInterface/DebugPanel.visible = !$UserInterface/DebugPanel.visible
 
 #endregion
 
@@ -494,22 +508,53 @@ var dirVec := Vector2.ZERO
 var dragging := false
 var swing_ready := true
 const SWING_THRESHOLD := 20 
+
 func _input(event):
-	if event is InputEventMouseButton and Input.is_action_pressed("RMB"):
-		if event.pressed:
-			dragging = true
-			dirVec = Vector2.ZERO
-			swing_ready = true
-			mouse_sensitivity = 0.01
-		else:
-			swing_ready = true
-			dirVec = Vector2.ZERO
-	elif event is InputEventMouseMotion and dragging:
-		dirVec += event.relative
-		if dirVec.length() >= SWING_THRESHOLD and swing_ready:
-			process_swing()
-			mouse_sensitivity = 0.1
-			dragging = false
+	if event is InputEventMouseButton:
+		if Input.is_action_pressed("RMB"):
+			if event.pressed:
+				dragging = true
+				dirVec = Vector2.ZERO
+				swing_ready = true
+				mouse_sensitivity = 0.01
+			else:
+				dragging = false
+				swing_ready = true
+				dirVec = Vector2.ZERO
+
+	elif event is InputEventMouseMotion:
+		# Always accumulate mouse movement for mouselook when mouse is captured
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			mouseInput.x += event.relative.x
+			mouseInput.y += event.relative.y
+
+		# If dragging with RMB, accumulate drag vector for swing detection
+		if dragging:
+			dirVec += event.relative
+			if dirVec.length() >= SWING_THRESHOLD and swing_ready:
+				process_swing()
+				mouse_sensitivity = 0.1
+				dragging = false
+
+	# Party switching keys
+	if (Input.is_action_pressed("1")):
+		activePlayer = party1
+		$UserInterface/Party/party1.show()
+		$UserInterface/Party/party2.hide()
+		$UserInterface/Party/party3.hide()
+		refreshPlayer()
+	if (Input.is_action_pressed("2")):
+		activePlayer = party2
+		$UserInterface/Party/party1.hide()
+		$UserInterface/Party/party2.show()
+		$UserInterface/Party/party3.hide()
+		refreshPlayer()
+	if (Input.is_action_pressed("3")):
+		activePlayer = party3
+		$UserInterface/Party/party1.hide()
+		$UserInterface/Party/party2.hide()
+		$UserInterface/Party/party3.show()
+		refreshPlayer()
 
 func process_swing():
 	if $Head/attacks.is_playing():
@@ -543,7 +588,7 @@ func process_bounce(target: Node) ->void:
 		$Head/attacks.speed_scale *= -1.25
 		await get_tree().create_timer(0.1).timeout
 		$Head/attacks.stop()
-		$Head/attacks.speed_scale = Global.playerWeaponSkill/100
+		refreshPlayer()
 	
 func _on_sword_collision_area_entered(area: Area3D) -> void:
 	if $Head/attacks.is_playing() and $Head/attacks.current_animation == "swing_up":

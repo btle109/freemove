@@ -1,4 +1,4 @@
-res://addons/fpc/character.tscn
-res://addons/swordmesh.res
 res://scenes/test_world.tscn
+res://addons/swordmesh.res
+res://addons/fpc/character.tscn
 res://addons/fpc/character.gd
