@@ -1,0 +1,10 @@
+StaticBody3D
+Area3D
+CollisionShape3D
+AnimationPlayer
+MeshInstance3D
+Timer
+CSGBox3D
+Label
+Control
+Node

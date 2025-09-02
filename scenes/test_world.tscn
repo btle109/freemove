@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cm0y4md206lmb"]
+[gd_scene load_steps=19 format=3 uid="uid://cm0y4md206lmb"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_umbte"]
 [ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://textures/dark.png" id="2_ynswa"]
@@ -52,15 +52,17 @@ roughness = 0.5
 uv1_triplanar = true
 uv1_triplanar_sharpness = 0.000850145
 
-[sub_resource type="BoxMesh" id="BoxMesh_dvny0"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_nrstc"]
+size = Vector3(1.1, 1.1, 1.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xwrkq"]
-size = Vector3(1, 1.50195, 1.7655)
+size = Vector3(1.6, 1.50195, 1.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dvny0"]
 
 [node name="test_world" type="Node3D"]
 
 [node name="Character" parent="." instance=ExtResource("1_umbte")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
@@ -72,7 +74,7 @@ shadow_enabled = true
 [node name="terrain" type="Node3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.5, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.98306, -0.512697, 10.0292)
 use_collision = true
 size = Vector3(30, 1, 30)
 material = SubResource("StandardMaterial3D_67ysu")
@@ -101,19 +103,25 @@ use_collision = true
 size = Vector3(19, 8, 1)
 material = SubResource("StandardMaterial3D_7j4uu")
 
-[node name="Area3D" type="Area3D" parent="terrain" node_paths=PackedStringArray("label")]
+[node name="StaticBody3D" type="StaticBody3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 7)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, -0.000974894, 0.0827494)
+shape = SubResource("BoxShape3D_nrstc")
+
+[node name="Area3D" type="Area3D" parent="terrain/StaticBody3D" node_paths=PackedStringArray("label")]
 collision_layer = 3
 script = ExtResource("5_xwrkq")
-label = NodePath("../../UI/Info")
+label = NodePath("../../../UI/Info")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="terrain/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.07798, 7.22826)
+[node name="areaclickable" type="CollisionShape3D" parent="terrain/StaticBody3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-08, 0, -0.11725)
+shape = SubResource("BoxShape3D_xwrkq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="terrain/StaticBody3D"]
 mesh = SubResource("BoxMesh_dvny0")
 skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.05551, 7.09783)
-shape = SubResource("BoxShape3D_xwrkq")
 
 [node name="Pause" type="Node" parent="."]
 process_mode = 3

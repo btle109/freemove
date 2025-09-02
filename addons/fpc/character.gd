@@ -493,7 +493,7 @@ func handle_pausing():
 var dirVec := Vector2.ZERO
 var dragging := false
 var swing_ready := true
-const SWING_THRESHOLD := 200 
+const SWING_THRESHOLD := 20 
 func _input(event):
 	if event is InputEventMouseButton and Input.is_action_pressed("RMB"):
 		if event.pressed:
@@ -518,16 +518,40 @@ func process_swing():
 	var direction = dirVec.normalized()
 	if abs(direction.x) > abs(direction.y):
 		if direction.x > 0:
-			#$Head/attacks.play("swing right")
+			$Head/attacks.play("swing_right")
 			pass
 		else:
 			
 			$Head/attacks.play("swing_left")
 	else:
 		if direction.y > 0:
-			#$Head/attacks.play("swing down")
-			pass
+			$Head/attacks.play("swing_down")
+			
 		else:
-			#$Head/attacks.play("swing up")
-			pass
+			$Head/attacks.play("swing_up")
+			
 	dirVec = Vector2.ZERO
+
+func process_bounce(target: Node) ->void:
+	if (target == $"."):
+		pass
+	if (target.has_method("hurt")):
+		var bounce = true;
+		bounce = target.hurt();
+		##placeholder, dont worry about
+	else:
+		$Head/attacks.speed_scale *= -1.25
+		await get_tree().create_timer(0.1).timeout
+		$Head/attacks.stop()
+		$Head/attacks.speed_scale = Global.playerWeaponSkill/100
+	
+func _on_sword_collision_area_entered(area: Area3D) -> void:
+	if $Head/attacks.is_playing() and $Head/attacks.current_animation == "swing_up":
+		return
+	process_bounce(area)
+	
+
+func _on_sword_collision_body_entered(body: Node3D) -> void:
+	if ($Head/attacks.is_playing() and $Head/attacks.current_animation == "swing_up") or (body == $"."):
+		return
+	process_bounce(body)

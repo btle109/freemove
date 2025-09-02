@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=31 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://bh8b7mqs80wnc" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" uid="uid://dnm78wy2epe6i" path="res://addons/fpc/interact.gd" id="2_bx7cj"]
@@ -374,46 +374,6 @@ _data = {
 &"land_right": SubResource("Animation_vsknp")
 }
 
-[sub_resource type="Animation" id="Animation_qaoyu"]
-resource_name = "swing_left"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("sword:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("sword:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(1.5708, -1.0472, 0), Vector3(1.5708, 1.0472, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("sword:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0.946552, -0.68621, -1.5), Vector3(-1.053, -0.686, -1.5)]
-}
-
 [sub_resource type="Animation" id="Animation_gv6je"]
 length = 0.001
 tracks/0/type = "value"
@@ -452,12 +412,238 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector3(0.946552, -0.68621, -1.5)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sword/swordCollision/col_shape:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_qaoyu"]
+resource_name = "swing_left"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sword:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.5708, -1.0472, 0), Vector3(1.5708, 1.0472, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sword:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.147, -0.686, -1.2), Vector3(-1.253, -0.686, -1.3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sword/swordCollision/col_shape:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.127081, 0.333333, 0.366667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_4fv23"]
+resource_name = "swing_right"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sword:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.5708, 1.0472, 0), Vector3(1.5708, -1.0472, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sword:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.253, -0.686, -1.3), Vector3(1.147, -0.686, -1.2)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sword/swordCollision/col_shape:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.366667, 0.466667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_q62an"]
+resource_name = "swing_down"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sword:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0166667, 0.483333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5708, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sword:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.366667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.686, -0.8), Vector3(0, -0.686, -0.8), Vector3(0, -0.686, -1.735)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sword/swordCollision/col_shape:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.2, 0.333333, 0.366667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, false, true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_q34qd"]
+resource_name = "swing_down"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sword:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0166667, 0.483333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.433333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.361364, 1.95839, 2.68967), Vector3(0.252683, 1.63075, 0.725447)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sword:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.433333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.357, 0.114, -0.5), Vector3(0.246552, -1.48621, -0.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sword/swordCollision/col_shape:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.0916667, 0.233333, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4fv23"]
 _data = {
 &"RESET": SubResource("Animation_gv6je"),
-&"swing_left": SubResource("Animation_qaoyu")
+&"swing_down": SubResource("Animation_q34qd"),
+&"swing_left": SubResource("Animation_qaoyu"),
+&"swing_right": SubResource("Animation_4fv23"),
+&"swing_up": SubResource("Animation_q62an")
 }
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qaoyu"]
+size = Vector3(0.168262, 2.1, 0.0479248)
 
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
@@ -508,17 +694,23 @@ libraries = {
 }
 speed_scale = 4.0
 
-[node name="Attacks" type="AnimationPlayer" parent="Head"]
-
-[node name="sword" type="MeshInstance3D" parent="Head"]
-transform = Transform3D(0.494974, -0.494975, 2.1636e-08, 0, -3.0598e-08, -0.7, 0.494974, 0.494975, -2.1636e-08, 0.946552, -0.68621, -1.5)
-visible = false
-mesh = ExtResource("3_qaoyu")
-
 [node name="attacks" type="AnimationPlayer" parent="Head"]
 libraries = {
 &"": SubResource("AnimationLibrary_4fv23")
 }
+
+[node name="sword" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(0.494974, -0.494975, 1.7918e-06, 0, -2.53399e-06, -0.7, 0.494974, 0.494975, -1.7918e-06, 0.946552, -0.68621, -1.5)
+visible = false
+mesh = ExtResource("3_qaoyu")
+
+[node name="swordCollision" type="Area3D" parent="Head/sword"]
+transform = Transform3D(0.714284, -1.65724e-13, -1.23718, 1.23718, -5.17141e-06, 0.714282, -4.47858e-06, -1.42857, -2.5857e-06, -0.71334, 2.47875, -0.980009)
+
+[node name="col_shape" type="CollisionShape3D" parent="Head/sword/swordCollision"]
+transform = Transform3D(0.50001, 0.866019, -3.78549e-08, 2.23462e-24, -4.37105e-08, -0.999984, -0.866004, 0.499997, -2.18557e-08, -1.67808, -0.691332, -1.56374)
+visible = false
+shape = SubResource("BoxShape3D_qaoyu")
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3
@@ -552,3 +744,7 @@ target_position = Vector3(0, 0.5, 0)
 
 [node name="EditorModule" type="Node" parent="."]
 script = ExtResource("3_v3ckk")
+
+[connection signal="area_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_area_entered"]
+[connection signal="area_shape_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_area_shape_entered"]
+[connection signal="body_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_body_entered"]
