@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=35 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://bh8b7mqs80wnc" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" uid="uid://dnm78wy2epe6i" path="res://addons/fpc/interact.gd" id="2_bx7cj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://v8t8dcmbr6va" path="res://import/image1.jpg" id="6_q34qd"]
 [ext_resource type="Texture2D" uid="uid://cbq2nrv2xo5m0" path="res://import/IMG_0512.jpg" id="7_ex63h"]
 [ext_resource type="Texture2D" uid="uid://bktwt0uslwg23" path="res://import/cropped-PXL_20250730_061432465.RAW-01.COVER.jpg" id="7_q62an"]
+[ext_resource type="Texture2D" uid="uid://8qsi6kjie5u8" path="res://import/image0.jpg" id="8_q34qd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -717,6 +718,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -751,22 +756,57 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="party2" type="Sprite2D" parent="UserInterface/Party"]
-visible = false
-position = Vector2(29, 200)
-scale = Vector2(0.548438, 0.507812)
+[node name="p_img1" type="Sprite2D" parent="UserInterface/Party"]
+position = Vector2(-277.875, 248.805)
+scale = Vector2(0.200417, 0.200417)
+texture = ExtResource("7_q62an")
+
+[node name="p_img2" type="Sprite2D" parent="UserInterface/Party"]
+position = Vector2(-89.625, 248.472)
+scale = Vector2(0.414844, 0.384114)
 texture = ExtResource("6_q34qd")
 
-[node name="party3" type="Sprite2D" parent="UserInterface/Party"]
-visible = false
-position = Vector2(273, 203)
-scale = Vector2(0.3165, 0.3265)
+[node name="p_img3" type="Sprite2D" parent="UserInterface/Party"]
+position = Vector2(95, 249.68)
+scale = Vector2(0.23625, 0.243714)
 texture = ExtResource("7_ex63h")
 
-[node name="party1" type="Sprite2D" parent="UserInterface/Party"]
-position = Vector2(-222, 198)
-scale = Vector2(0.280833, 0.280833)
-texture = ExtResource("7_q62an")
+[node name="p_img4" type="Sprite2D" parent="UserInterface/Party"]
+position = Vector2(278, 247.68)
+scale = Vector2(0.425, 0.375)
+texture = ExtResource("8_q34qd")
+
+[node name="party1" type="Polygon2D" parent="UserInterface/Party"]
+z_index = -1
+position = Vector2(-343, 183.68)
+scale = Vector2(0.796077, 0.679995)
+color = Color(1, 0.843, 0, 1)
+polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
+
+[node name="party2" type="Polygon2D" parent="UserInterface/Party"]
+z_index = -1
+position = Vector2(-151, 183.68)
+scale = Vector2(0.796077, 0.679995)
+color = Color(0.133, 0.545, 0.133, 1)
+polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
+
+[node name="party3" type="Polygon2D" parent="UserInterface/Party"]
+visible = false
+z_index = -1
+position = Vector2(33, 183)
+scale = Vector2(0.796077, 0.679995)
+color = Color(0.821223, 0.567054, 0.336054, 1)
+polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
+
+[node name="party4" type="Polygon2D" parent="UserInterface/Party"]
+visible = false
+z_index = -1
+position = Vector2(217, 183)
+scale = Vector2(0.796077, 0.679995)
+color = Color(0.821223, 0.567054, 0.336054, 1)
+polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
+
+[node name="atkCooldown" type="Timer" parent="UserInterface/Party"]
 
 [node name="CrouchCeilingDetection" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

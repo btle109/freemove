@@ -143,11 +143,46 @@ var mouseInput : Vector2 = Vector2(0,0)
 var party1 = preload("res://party/partyData.gd").new()
 var party2 = preload("res://party/partyData.gd").new()
 var party3 = preload("res://party/partyData.gd").new()
-var party = [party1,party2,party3]
+var party4 = preload("res://party/partyData.gd").new()
+var party = [party1,party2,party3, party4]
+@onready var partyHighlight = [$UserInterface/Party/party1, $UserInterface/Party/party2, $UserInterface/Party/party3, $UserInterface/Party/party4]
 var activePlayer = party1;
+var inactiveIndex = 1;
+var activeIndex = 0;
 
 func refreshPlayer() -> void:
 	$Head/attacks.speed_scale = activePlayer.weaponSkill/100.0
+
+func switchActivePlayer(n: int) -> void:
+	if $Head/attacks.is_playing():
+			return
+	activeIndex = n
+	activePlayer = party[n]
+	for i in 4:
+		if (i==n):
+			partyHighlight[i].color = Color(1, 0.843137, 0, 1)
+			partyHighlight[i].show()
+		else:
+			partyHighlight[i].hide()
+	setInactive(n)
+	refreshPlayer()
+
+func setInactive(n : int)->void:
+	if (n==0):
+		if (party[1].atkready):
+			partyHighlight[1].color = Color(0.133333, 0.545098, 0.133333, 1)
+		else:
+			partyHighlight[1].color = Color(0.862745, 0.0784314, 0.235294, 1)
+		partyHighlight[1].show()
+		inactiveIndex = 1
+	else:
+		if (party[0].atkready):
+			partyHighlight[0].color = Color(0.133333, 0.545098, 0.133333, 1)
+		else:
+			partyHighlight[0].color = Color(0.862745, 0.0784314, 0.235294, 1)
+		partyHighlight[0].show()
+		inactiveIndex = 0
+	return
 #endregion
 
 #region Main Control Flow
@@ -155,7 +190,6 @@ func refreshPlayer() -> void:
 func _ready():
 	#It is safe to comment this line if your game doesn't start with the mouse captured
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
 	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
 	HEAD.rotation.y = rotation.y
 	rotation.y = 0
@@ -170,6 +204,7 @@ func _ready():
 	refreshPlayer()
 	party2.weaponSkill = 75
 	party3.weaponSkill = 35
+	party4.weaponSkill = 80
 func _process(_delta):
 	#if (dragging == true):
 	#	mouse_sensitivity = 0.01
@@ -178,6 +213,14 @@ func _process(_delta):
 	if pausing_enabled:
 		handle_pausing()		
 	update_debug_menu_per_frame()
+
+	if partyHighlight[inactiveIndex].visible:
+		if party[inactiveIndex].atkready:
+			if partyHighlight[inactiveIndex].color != Color(0.133333, 0.545098, 0.133333, 1):
+				partyHighlight[inactiveIndex].color = Color(0.133333, 0.545098, 0.133333, 1)
+		else:
+			if partyHighlight[inactiveIndex].color != Color(0.862745, 0.0784314, 0.235294, 1):
+				partyHighlight[inactiveIndex].color = Color(0.862745, 0.0784314, 0.235294, 1)
 
 
 func _physics_process(delta): # Most things happen here.
@@ -538,23 +581,57 @@ func _input(event):
 
 	# Party switching keys
 	if (Input.is_action_pressed("1")):
-		activePlayer = party1
-		$UserInterface/Party/party1.show()
-		$UserInterface/Party/party2.hide()
-		$UserInterface/Party/party3.hide()
-		refreshPlayer()
+		switchActivePlayer(0)
 	if (Input.is_action_pressed("2")):
-		activePlayer = party2
-		$UserInterface/Party/party1.hide()
-		$UserInterface/Party/party2.show()
-		$UserInterface/Party/party3.hide()
-		refreshPlayer()
+		switchActivePlayer(1)
 	if (Input.is_action_pressed("3")):
-		activePlayer = party3
-		$UserInterface/Party/party1.hide()
-		$UserInterface/Party/party2.hide()
-		$UserInterface/Party/party3.show()
-		refreshPlayer()
+		switchActivePlayer(2)
+	if (Input.is_action_pressed("4")):
+		switchActivePlayer(3)
+	if (Input.is_action_pressed("5")):
+		pass
+		
+	if (Input.is_action_just_pressed("F")):
+		if (!party[inactiveIndex].atkready):
+			return
+		var prevIndex = inactiveIndex
+		party[inactiveIndex].attack()
+		partyHighlight[inactiveIndex].hide()
+		if (inactiveIndex + 1 == activeIndex): 
+			inactiveIndex += 2;
+			inactiveIndex = inactiveIndex % 4
+		elif ((inactiveIndex + 1) == 4):
+			if (activeIndex == 0):
+				inactiveIndex = 1;
+			else:
+				inactiveIndex = 0;
+		else:
+			inactiveIndex += 1;
+		if (party[inactiveIndex].atkready):
+			partyHighlight[inactiveIndex].color = Color(0.133333, 0.545098, 0.133333, 1)
+		else:
+			partyHighlight[inactiveIndex].color = Color(0.862745, 0.0784314, 0.235294, 1)
+		partyHighlight[inactiveIndex].show()
+		await get_tree().create_timer(2).timeout
+		party[prevIndex].atkready = true;
+		
+	if (Input.is_action_just_pressed("G")):
+		partyHighlight[inactiveIndex].hide()
+		if (inactiveIndex + 1 == activeIndex): 
+			inactiveIndex += 2;
+			inactiveIndex = inactiveIndex % 4
+		elif ((inactiveIndex + 1) == 4):
+			if (activeIndex == 0):
+				inactiveIndex = 1;
+			else:
+				inactiveIndex = 0;
+		else:
+			inactiveIndex += 1;
+		if (party[inactiveIndex].atkready):
+			partyHighlight[inactiveIndex].color = Color(0.133333, 0.545098, 0.133333, 1)
+		else:
+			partyHighlight[inactiveIndex].color = Color(0.862745, 0.0784314, 0.235294, 1)
+		partyHighlight[inactiveIndex].show()
 
 func process_swing():
 	if $Head/attacks.is_playing():
@@ -586,7 +663,7 @@ func process_bounce(target: Node) ->void:
 		##placeholder, dont worry about
 	else:
 		$Head/attacks.speed_scale *= -1.25
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.2).timeout
 		$Head/attacks.stop()
 		refreshPlayer()
 	
