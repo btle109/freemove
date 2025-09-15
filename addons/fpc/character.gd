@@ -53,6 +53,7 @@ extends CharacterBody3D
 @onready var HEAD = $Head
 @onready var CAMERA = $Head/Camera
 @onready var COLLISION_MESH = $Collision
+var atkArr = []
 #endregion
 
 #region Controls Export Group
@@ -202,9 +203,11 @@ func _ready():
 	enter_normal_state()
 
 	refreshPlayer()
-	party2.weaponSkill = 75
+	party2.weaponSkill = 90
 	party3.weaponSkill = 35
-	party4.weaponSkill = 80
+	party4.weaponSkill = 90
+	party2.damage = 5
+	party3.damage = 8
 func _process(_delta):
 	#if (dragging == true):
 	#	mouse_sensitivity = 0.01
@@ -595,7 +598,13 @@ func _input(event):
 		if (!party[inactiveIndex].atkready):
 			return
 		var prevIndex = inactiveIndex
-		party[inactiveIndex].attack()
+		
+		if (!atkArr.is_empty()):
+			if (party[inactiveIndex].attack()):
+				var enemyTarget = atkArr.pick_random()
+				if (enemyTarget.has_method("hurt")):
+					enemyTarget.hurt(party[activeIndex].damage);
+				
 		partyHighlight[inactiveIndex].hide()
 		if (inactiveIndex + 1 == activeIndex): 
 			inactiveIndex += 2;
@@ -612,7 +621,10 @@ func _input(event):
 		else:
 			partyHighlight[inactiveIndex].color = Color(0.862745, 0.0784314, 0.235294, 1)
 		partyHighlight[inactiveIndex].show()
-		await get_tree().create_timer(2).timeout
+		var cool = party[inactiveIndex].coolDown
+		if (state == "sprinting"):
+			cool *= 2;
+		await get_tree().create_timer(cool).timeout
 		party[prevIndex].atkready = true;
 		
 	if (Input.is_action_just_pressed("G")):
@@ -656,11 +668,7 @@ func process_swing():
 
 func process_bounce(target: Node) ->void:
 	if (target == $"."):
-		pass
-	if (target.has_method("hurt")):
-		var bounce = true;
-		bounce = target.hurt();
-		##placeholder, dont worry about
+		return;
 	else:
 		$Head/attacks.speed_scale *= -1.25
 		await get_tree().create_timer(0.2).timeout
@@ -668,12 +676,37 @@ func process_bounce(target: Node) ->void:
 		refreshPlayer()
 	
 func _on_sword_collision_area_entered(area: Area3D) -> void:
+	return;
+	
+	print("AREA COLLIDED")
+	print(area)
 	if $Head/attacks.is_playing() and $Head/attacks.current_animation == "swing_up":
 		return
 	process_bounce(area)
 	
 
 func _on_sword_collision_body_entered(body: Node3D) -> void:
+	if (body == $"."):
+		return;
+		
+	print("SWORD BODY COLLIDED")
+	print(body)
+	if (body.has_method("hurt")):
+		#var bounce = true;
+		body.hurt(party[activeIndex].damage);
+		return;
 	if ($Head/attacks.is_playing() and $Head/attacks.current_animation == "swing_up") or (body == $"."):
 		return
 	process_bounce(body)
+
+
+func _on_indirect_range_body_entered(body: Node3D) -> void:
+	if (body.is_in_group("Enemy") and body.alive):
+		print(body, " ENTERED")
+		atkArr.append(body);
+
+func _on_indirect_range_body_exited(body: Node3D) -> void:
+	if (atkArr.has(body)):
+		print(body, " LEFT")
+		atkArr.erase(body)
+	# Replace with function body.

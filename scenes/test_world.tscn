@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cm0y4md206lmb"]
+[gd_scene load_steps=18 format=3 uid="uid://cm0y4md206lmb"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_umbte"]
 [ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://textures/dark.png" id="2_ynswa"]
@@ -8,25 +8,11 @@
 [ext_resource type="Script" uid="uid://8befsr2vbnbn" path="res://scenes/pause.gd" id="5_ynswa"]
 [ext_resource type="Theme" uid="uid://d2papxoidqsqe" path="res://fonts/theme.tres" id="6_dvny0"]
 [ext_resource type="Script" uid="uid://dgvxuijdt5w0x" path="res://props/info.gd" id="8_nrstc"]
+[ext_resource type="PackedScene" uid="uid://142ts2cqci3b" path="res://import/skeleton/skullowpoly.tscn" id="9_7448y"]
 
-[sub_resource type="Gradient" id="Gradient_ur0vy"]
-colors = PackedColorArray(0, 0.476245, 0.0193456, 1, 0.360494, 0.612721, 0.119744, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_jd3pw"]
-frequency = 0.0027
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7akuf"]
-width = 1024
-height = 1024
-in_3d_space = true
-seamless = true
-color_ramp = SubResource("Gradient_ur0vy")
-noise = SubResource("FastNoiseLite_jd3pw")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_67ysu"]
-albedo_texture = SubResource("NoiseTexture2D_7akuf")
-uv1_scale = Vector3(0.1, 0.1, 0.1)
-uv1_triplanar = true
+[sub_resource type="NavigationMesh" id="NavigationMesh_nrstc"]
+vertices = PackedVector3Array(-5.36947, 0.337303, -5.5, -5.11947, 0.247303, -10.25, -5.61947, 0.427303, -10.5, -13.6195, 3.3373, -14.25, -13.6195, 3.3373, -5.5, -12.2445, 2.7873, -5.5, -10.8695, 2.2473, -5.5, -9.49447, 1.7873, -5.5, -8.11947, 1.2473, -5.5, -6.74447, 0.787303, -5.5, -5.18197, 0.247303, -9.0625, -6.95281, 0.877303, -11.125, -9.61947, 1.7873, -12.375, -10.9528, 2.3373, -13, -6.88932, 0.787303, -6.98217, -11.3945, 2.4273, -11.525, -6.86941, 0.787303, -10.0201, -9.85934, 1.8773, -7.00414, -11.3944, 2.4273, -7.01513, -8.35443, 1.3373, -9.98105, -9.88944, 1.8773, -9.99204, -5.61947, 0.427303, -14.25, -6.95281, 0.877303, -14.25, -9.61947, 1.7873, -14.25, -10.9528, 2.3373, -14.25, -6.85946, 0.787303, -13.014, -4.61947, 2.0673, -14.25, -4.61947, 2.0673, -11.5, -1.36947, 2.0673, -11.5, -1.36947, 2.0673, -14.25, -4.86947, 0.157303, -5.5, -4.36947, 0.017303, -10.5, -4.74447, 0.057303, -6.75, -4.61947, 0.017303, -8, 4.63053, 0.017303, -14.25, -4.36947, 0.017303, -14.25, -4.61947, 0.057303, -4.75, 4.63053, 0.017303, -5, -2.38932, 0.017303, -6.98217, -4.61947, 0.007303, 7, -1.11947, 0.007303, 7, -0.869474, 0.007303, 5.75, 5.13053, 0.007303, -4.5, 0.880526, 0.007303, 5.75, -2.38944, 0.007303, -2.49204, 0.605526, 0.007303, -4.025, 1.13053, 0.007303, 6.25, -0.869474, 0.007303, 8.25, -4.61947, 0.007303, 24.5, 0.880526, 0.007303, 8.25, 24.3805, 0.007303, -4.5, 24.3805, 0.007303, 24.5)
+polygons = [PackedInt32Array(3, 15, 4), PackedInt32Array(4, 18, 5), PackedInt32Array(5, 18, 6), PackedInt32Array(6, 17, 7), PackedInt32Array(7, 17, 8), PackedInt32Array(8, 14, 9), PackedInt32Array(9, 14, 0), PackedInt32Array(0, 14, 10), PackedInt32Array(10, 2, 1), PackedInt32Array(2, 16, 11), PackedInt32Array(11, 19, 12), PackedInt32Array(12, 15, 13), PackedInt32Array(13, 15, 3), PackedInt32Array(15, 18, 4), PackedInt32Array(18, 17, 6), PackedInt32Array(17, 14, 8), PackedInt32Array(14, 16, 10), PackedInt32Array(10, 16, 2), PackedInt32Array(16, 19, 11), PackedInt32Array(19, 20, 12), PackedInt32Array(12, 20, 15), PackedInt32Array(15, 20, 18), PackedInt32Array(18, 20, 17), PackedInt32Array(17, 19, 14), PackedInt32Array(14, 19, 16), PackedInt32Array(19, 17, 20), PackedInt32Array(24, 13, 3), PackedInt32Array(13, 23, 12), PackedInt32Array(12, 25, 11), PackedInt32Array(11, 25, 2), PackedInt32Array(2, 25, 21), PackedInt32Array(21, 25, 22), PackedInt32Array(22, 25, 23), PackedInt32Array(23, 13, 24), PackedInt32Array(23, 25, 12), PackedInt32Array(29, 28, 26), PackedInt32Array(26, 28, 27), PackedInt32Array(30, 0, 32), PackedInt32Array(32, 0, 33), PackedInt32Array(33, 0, 10), PackedInt32Array(33, 10, 1), PackedInt32Array(33, 1, 31), PackedInt32Array(31, 35, 34), PackedInt32Array(37, 38, 34), PackedInt32Array(34, 38, 31), PackedInt32Array(31, 38, 33), PackedInt32Array(33, 38, 32), PackedInt32Array(32, 38, 30), PackedInt32Array(30, 38, 36), PackedInt32Array(36, 38, 37), PackedInt32Array(40, 39, 41), PackedInt32Array(41, 39, 36), PackedInt32Array(41, 44, 43), PackedInt32Array(43, 45, 42), PackedInt32Array(42, 45, 37), PackedInt32Array(37, 45, 36), PackedInt32Array(36, 44, 41), PackedInt32Array(44, 45, 43), PackedInt32Array(45, 44, 36), PackedInt32Array(42, 46, 43), PackedInt32Array(40, 47, 39), PackedInt32Array(39, 47, 48), PackedInt32Array(46, 42, 49), PackedInt32Array(49, 42, 50), PackedInt32Array(48, 49, 51), PackedInt32Array(51, 49, 50), PackedInt32Array(48, 47, 49)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gomnb"]
 albedo_texture = ExtResource("2_ynswa")
@@ -60,6 +46,9 @@ size = Vector3(1.6, 1.50195, 1.4)
 
 [sub_resource type="BoxMesh" id="BoxMesh_dvny0"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_7448y"]
+size = Vector3(35, 5, 31)
+
 [node name="test_world" type="Node3D"]
 
 [node name="Character" parent="." instance=ExtResource("1_umbte")]
@@ -70,58 +59,6 @@ size = Vector3(1.6, 1.50195, 1.4)
 transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
 light_energy = 2.0
 shadow_enabled = true
-
-[node name="terrain" type="Node3D" parent="."]
-
-[node name="CSGBox3D" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.98306, -0.512697, 10.0292)
-use_collision = true
-size = Vector3(30, 1, 30)
-material = SubResource("StandardMaterial3D_67ysu")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -10)
-use_collision = true
-size = Vector3(10, 1, 10)
-material = SubResource("StandardMaterial3D_gomnb")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.8, -13)
-use_collision = true
-size = Vector3(4, 0.5, 4)
-material = SubResource("StandardMaterial3D_gomnb")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, -9.5, 1.2, -10)
-use_collision = true
-size = Vector3(10, 1, 10)
-material = SubResource("StandardMaterial3D_u0sbk")
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 3, -15.5)
-use_collision = true
-size = Vector3(19, 8, 1)
-material = SubResource("StandardMaterial3D_7j4uu")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 7)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="terrain/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, -0.000974894, 0.0827494)
-shape = SubResource("BoxShape3D_nrstc")
-
-[node name="Area3D" type="Area3D" parent="terrain/StaticBody3D" node_paths=PackedStringArray("label")]
-collision_layer = 3
-script = ExtResource("5_xwrkq")
-label = NodePath("../../../UI/Info")
-
-[node name="areaclickable" type="CollisionShape3D" parent="terrain/StaticBody3D/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-08, 0, -0.11725)
-shape = SubResource("BoxShape3D_xwrkq")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="terrain/StaticBody3D"]
-mesh = SubResource("BoxMesh_dvny0")
-skeleton = NodePath("../..")
 
 [node name="Pause" type="Node" parent="."]
 process_mode = 3
@@ -143,5 +80,83 @@ script = ExtResource("8_nrstc")
 
 [node name="Timer" type="Timer" parent="UI/Info"]
 wait_time = 2.0
+
+[node name="NavReg" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_nrstc")
+
+[node name="terrain" type="Node3D" parent="NavReg"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavReg/terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.98306, -0.512697, 10.0292)
+use_collision = true
+size = Vector3(30, 1, 30)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavReg/terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -10)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavReg/terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.8, -13)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_gomnb")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="NavReg/terrain"]
+transform = Transform3D(0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, -9.5, 1.2, -10)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = SubResource("StandardMaterial3D_u0sbk")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="NavReg/terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 3, -15.5)
+use_collision = true
+size = Vector3(19, 8, 1)
+material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavReg/terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 7)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavReg/terrain/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, -0.000974894, 0.0827494)
+shape = SubResource("BoxShape3D_nrstc")
+
+[node name="Area3D" type="Area3D" parent="NavReg/terrain/StaticBody3D" node_paths=PackedStringArray("label")]
+collision_layer = 3
+collision_mask = 0
+script = ExtResource("5_xwrkq")
+label = NodePath("../../../../UI/Info")
+
+[node name="areaclickable" type="CollisionShape3D" parent="NavReg/terrain/StaticBody3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-08, 0, -0.11725)
+shape = SubResource("BoxShape3D_xwrkq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavReg/terrain/StaticBody3D"]
+mesh = SubResource("BoxMesh_dvny0")
+skeleton = NodePath("../..")
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="sk1" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 14, 0, 12)
+orig = NodePath("../orig")
+enemyRange = NodePath("../enemyRange")
+label = NodePath("../../UI/Info")
+
+[node name="enemyRange" type="Area3D" parent="Enemies"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemies/enemyRange"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2, 17)
+shape = SubResource("BoxShape3D_7448y")
+
+[node name="orig" type="Node3D" parent="Enemies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 17)
+
+[node name="sk2" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 19, 0, 19)
+orig = NodePath("../orig")
+enemyRange = NodePath("../enemyRange")
+label = NodePath("../../UI/Info")
 
 [connection signal="timeout" from="UI/Info/Timer" to="UI/Info" method="_on_timer_timeout"]

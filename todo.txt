@@ -1,0 +1,4 @@
+parrying -> make another area3d visible, if enemy is in area3d then parrying done successful, negate damage and play clink sound. attack enemy with 0 dmg (essentially a stun check)
+indirect attack -> another area3d (indirect range). maybe we can have an array of Booleans for each enemy in enemy group, Boolean True when enter range Boolean false. for each one that is Boolean true, add to a temp array and randomly pick one from it and deal damage.
+hp bar -> damage will function same way, draw random who is alive and deal damage to them. use progress bar. indirect attack if dead skip/remove from arr
+proper sounds and folder restructuring

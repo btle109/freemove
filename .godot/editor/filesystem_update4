@@ -1,5 +1,9 @@
 res://scenes/test_world.tscn
 res://addons/swordmesh.res
+res://import/skeleton/skeletonMat/claymore.tres
 res://addons/fpc/character.tscn
+res://import/skeleton/skullowpoly.tscn
+res://import/skeleton/skullowpoly.gd
 res://addons/fpc/character.gd
 res://party/partyData.gd
+res://import/skeleton/anim/animLib.res
