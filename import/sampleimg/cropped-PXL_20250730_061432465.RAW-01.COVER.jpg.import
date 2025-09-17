@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8qsi6kjie5u8"
-path="res://.godot/imported/image0.jpg-ee57e02ea52c4575d9262aa672e15f04.ctex"
+uid="uid://bktwt0uslwg23"
+path="res://.godot/imported/cropped-PXL_20250730_061432465.RAW-01.COVER.jpg-2a8471975b288d6263d4365b2f1e3f90.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://import/image0.jpg"
-dest_files=["res://.godot/imported/image0.jpg-ee57e02ea52c4575d9262aa672e15f04.ctex"]
+source_file="res://import/sampleimg/cropped-PXL_20250730_061432465.RAW-01.COVER.jpg"
+dest_files=["res://.godot/imported/cropped-PXL_20250730_061432465.RAW-01.COVER.jpg-2a8471975b288d6263d4365b2f1e3f90.ctex"]
 
 [params]
 

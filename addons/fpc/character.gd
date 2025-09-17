@@ -53,6 +53,8 @@ extends CharacterBody3D
 @onready var HEAD = $Head
 @onready var CAMERA = $Head/Camera
 @onready var COLLISION_MESH = $Collision
+
+@onready var swingSound = load("res://sound/sound2.mp3")
 var atkArr = []
 #endregion
 
@@ -555,6 +557,12 @@ var dragging := false
 var swing_ready := true
 const SWING_THRESHOLD := 20 
 
+func start_cooldown(index: int, cool: float) -> void:
+	var t := get_tree().create_timer(cool)
+	t.timeout.connect(func():
+		party[index].atkready = true
+	)
+	
 func _input(event):
 	if event is InputEventMouseButton:
 		if Input.is_action_pressed("RMB"):
@@ -598,13 +606,13 @@ func _input(event):
 		if (!party[inactiveIndex].atkready):
 			return
 		var prevIndex = inactiveIndex
-		
+		$soundsfx.stream =  swingSound
+		$soundsfx.play()
 		if (!atkArr.is_empty()):
 			if (party[inactiveIndex].attack()):
 				var enemyTarget = atkArr.pick_random()
 				if (enemyTarget.has_method("hurt")):
 					enemyTarget.hurt(party[activeIndex].damage);
-				
 		partyHighlight[inactiveIndex].hide()
 		if (inactiveIndex + 1 == activeIndex): 
 			inactiveIndex += 2;
@@ -621,12 +629,13 @@ func _input(event):
 		else:
 			partyHighlight[inactiveIndex].color = Color(0.862745, 0.0784314, 0.235294, 1)
 		partyHighlight[inactiveIndex].show()
-		var cool = party[inactiveIndex].coolDown
+
+		var cool = party[prevIndex].coolDown
 		if (state == "sprinting"):
-			cool *= 2;
-		await get_tree().create_timer(cool).timeout
-		party[prevIndex].atkready = true;
-		
+			cool *= 2
+		party[prevIndex].atkready = false
+		start_cooldown(prevIndex, cool)
+	
 	if (Input.is_action_just_pressed("G")):
 		partyHighlight[inactiveIndex].hide()
 		if (inactiveIndex + 1 == activeIndex): 
@@ -663,7 +672,8 @@ func process_swing():
 			
 		else:
 			$Head/attacks.play("swing_up")
-			
+	$soundsfx.stream =  swingSound
+	$soundsfx.play()
 	dirVec = Vector2.ZERO
 
 func process_bounce(target: Node) ->void:

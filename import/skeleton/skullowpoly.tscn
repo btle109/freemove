@@ -716,7 +716,7 @@ bones/41/rotation = Quaternion(0, 0, 0, 1)
 bones/41/scale = Vector3(1, 1, 1)
 
 [node name="Plane" type="BoneAttachment3D" parent="skelChar/Skeleton3D"]
-transform = Transform3D(0.886427, 0.0410099, 0.0734539, -0.076862, 0.0787594, 0.883583, 0.0341983, -0.885971, 0.0819472, -0.0135812, 0.619873, 0.146156)
+transform = Transform3D(0.886427, 0.0410099, 0.0734539, -0.076862, 0.0787594, 0.883583, 0.0341982, -0.885971, 0.0819471, -0.0135812, 0.619873, 0.146156)
 bone_name = "Plane"
 bone_idx = 6
 
@@ -725,7 +725,7 @@ mesh = SubResource("ArrayMesh_ajcas")
 skeleton = NodePath("")
 
 [node name="Cylinder_001" type="BoneAttachment3D" parent="skelChar/Skeleton3D"]
-transform = Transform3D(-1.58408, 0.327459, -0.203698, 0.308301, -1.53965, -0.358342, -0.65925, -1.50685, 0.321874, 0.00404169, 0.339097, 0.181801)
+transform = Transform3D(-1.58408, 0.327459, -0.203698, 0.308301, -1.53965, -0.358342, -0.65925, -1.50685, 0.321874, 0.00404174, 0.339097, 0.181801)
 bone_name = "Cylinder.001"
 bone_idx = 12
 
@@ -743,7 +743,7 @@ mesh = SubResource("ArrayMesh_js32i")
 skeleton = NodePath("")
 
 [node name="claymore" type="BoneAttachment3D" parent="skelChar/Skeleton3D"]
-transform = Transform3D(4.1566, -10.0215, 0.976784, -6.0521, -3.33114, -8.42243, 8.04715, 2.67112, -6.83888, -0.0333241, 0.440907, 0.339172)
+transform = Transform3D(4.1566, -10.0215, 0.976786, -6.0521, -3.33114, -8.42243, 8.04715, 2.67112, -6.83888, -0.0333241, 0.440907, 0.339172)
 bone_name = "claymore"
 bone_idx = 24
 

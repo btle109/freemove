@@ -5,10 +5,10 @@
 [ext_resource type="ArrayMesh" uid="uid://c7ahg862icvt5" path="res://addons/swordmesh.res" id="3_qaoyu"]
 [ext_resource type="Script" uid="uid://descqbt73m7pl" path="res://addons/fpc/EditorModule.gd" id="3_v3ckk"]
 [ext_resource type="Script" uid="uid://ct2jmiwmeuuny" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
-[ext_resource type="Texture2D" uid="uid://v8t8dcmbr6va" path="res://import/image1.jpg" id="6_q34qd"]
-[ext_resource type="Texture2D" uid="uid://cbq2nrv2xo5m0" path="res://import/IMG_0512.jpg" id="7_ex63h"]
-[ext_resource type="Texture2D" uid="uid://bktwt0uslwg23" path="res://import/cropped-PXL_20250730_061432465.RAW-01.COVER.jpg" id="7_q62an"]
-[ext_resource type="Texture2D" uid="uid://8qsi6kjie5u8" path="res://import/image0.jpg" id="8_q34qd"]
+[ext_resource type="Texture2D" uid="uid://v8t8dcmbr6va" path="res://import/sampleimg/image1.jpg" id="6_q34qd"]
+[ext_resource type="Texture2D" uid="uid://cbq2nrv2xo5m0" path="res://import/sampleimg/IMG_0512.jpg" id="7_ex63h"]
+[ext_resource type="Texture2D" uid="uid://bktwt0uslwg23" path="res://import/sampleimg/cropped-PXL_20250730_061432465.RAW-01.COVER.jpg" id="7_q62an"]
+[ext_resource type="Texture2D" uid="uid://8qsi6kjie5u8" path="res://import/sampleimg/image0.jpg" id="8_q34qd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -886,6 +886,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="indirCol" type="CollisionShape3D" parent="indirectRange"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0999999, 0.6, -1)
 shape = SubResource("BoxShape3D_q34qd")
+
+[node name="soundsfx" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 
 [connection signal="area_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_area_entered"]
 [connection signal="body_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_body_entered"]

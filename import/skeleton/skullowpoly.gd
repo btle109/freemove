@@ -33,7 +33,8 @@ var can_change_state := true
 # === AUDIO ===
 var sound = preload("res://import/skeleton/skeletonscream.mp3")
 var sound2 = preload("res://import/skeleton/skeletonscream2.mp3")
-
+var smashsound = preload("res://sound/smashsound.mp3")
+var clashsound = preload("res://sound/swordclashshort.mp3")
 # === REFERENCES ===
 var player: Node3D = null
 
@@ -152,7 +153,8 @@ func hurt(dmg: int) -> void:
 	if prob < DEF_CHANCE:
 		HP -= int(0.4 * dmg + randi() % 4)
 		print("ENEMY ", HP, " - DEFENDED")
-		#play sword clash
+		$hitsounds.stream = clashsound
+		$hitsounds.play()
 		
 	else:
 		print("stun!")
@@ -160,7 +162,8 @@ func hurt(dmg: int) -> void:
 		set_state(EnemyState.STUNNED)
 		HP -= int(dmg + randi() % 7)
 		print("ENEMY ", HP, " - HIT")
-		#play crush
+		$hitsounds.stream = smashsound
+		$hitsounds.play()
 		
 	if HP <= 0:
 		alive = false
