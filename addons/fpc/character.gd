@@ -221,7 +221,6 @@ func getNext(type : int)->int:
 	var indexArr = []
 	for elem in avArr:
 		indexArr.append(elem.index)
-
 	var size = indexArr.size()  #3
 	if (size == 0 || size == 1):
 		return -1
@@ -281,6 +280,7 @@ func _ready():
 	party2.index = 1
 	party3.index = 2
 	party4.index = 3
+	party3.coolDown = 5
 	party2.damage = 5
 	party3.damage = 8
 	party3.HP = 10
@@ -688,7 +688,7 @@ func _input(event):
 				var enemyTarget = atkArr.pick_random()
 				if (enemyTarget.has_method("hurt")):
 					enemyTarget.hurt(party[activeIndex].damage);
-		var next = getNext(0);
+		var next = getNext(1);
 		partyHighlight[inactiveIndex].hide()
 		if (next != -1):
 			inactiveIndex = next;
