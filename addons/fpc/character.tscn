@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=37 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://bh8b7mqs80wnc" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" uid="uid://dnm78wy2epe6i" path="res://addons/fpc/interact.gd" id="2_bx7cj"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cbq2nrv2xo5m0" path="res://import/sampleimg/IMG_0512.jpg" id="7_ex63h"]
 [ext_resource type="Texture2D" uid="uid://bktwt0uslwg23" path="res://import/sampleimg/cropped-PXL_20250730_061432465.RAW-01.COVER.jpg" id="7_q62an"]
 [ext_resource type="Texture2D" uid="uid://8qsi6kjie5u8" path="res://import/sampleimg/image0.jpg" id="8_q34qd"]
+[ext_resource type="Script" uid="uid://d1moar36gtke7" path="res://party/partyData.gd" id="10_ex63h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -889,6 +890,9 @@ shape = SubResource("BoxShape3D_q34qd")
 
 [node name="soundsfx" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+
+[node name="partyData" type="Node" parent="."]
+script = ExtResource("10_ex63h")
 
 [connection signal="area_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_area_entered"]
 [connection signal="body_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_body_entered"]

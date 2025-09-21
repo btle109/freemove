@@ -1,8 +1,7 @@
-res://import/skeleton/skullowpoly.tscn
+res://scenes/test_world.tscn
 res://addons/swordmesh.res
 res://import/skeleton/skeletonMat/claymore.tres
-res://import/skeleton/skullowpoly.gd
-res://scenes/test_world.tscn
 res://addons/fpc/character.tscn
+res://import/skeleton/skullowpoly.tscn
 res://addons/fpc/character.gd
-res://party/partyData.gd
+res://import/skeleton/skullowpoly.gd

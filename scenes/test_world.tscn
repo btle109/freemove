@@ -154,7 +154,7 @@ shape = SubResource("BoxShape3D_7448y")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 17)
 
 [node name="sk2" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 19, 0, 19)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 19, 0, 12)
 orig = NodePath("../orig")
 enemyRange = NodePath("../enemyRange")
 label = NodePath("../../UI/Info")

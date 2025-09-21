@@ -131,7 +131,6 @@ var current_speed : float = 0.0
 var state : String = "normal"
 var low_ceiling : bool = false # This is for when the ceiling is too low and the player needs to crouch.
 var was_on_floor : bool = true # Was the player on the floor last frame (for landing animation)
-
 # The reticle should always have a Control node as the root
 var RETICLE : Control
 
@@ -148,16 +147,19 @@ var party2 = preload("res://party/partyData.gd").new()
 var party3 = preload("res://party/partyData.gd").new()
 var party4 = preload("res://party/partyData.gd").new()
 var party = [party1,party2,party3, party4]
+var partyHash = {party1 : 1 ,party2 : 2,party3 : 3, party4 : 4}
+@onready var partyImg = [$UserInterface/Party/p_img1, $UserInterface/Party/p_img2, $UserInterface/Party/p_img3, $UserInterface/Party/p_img4]
 @onready var partyHighlight = [$UserInterface/Party/party1, $UserInterface/Party/party2, $UserInterface/Party/party3, $UserInterface/Party/party4]
 var activePlayer = party1;
 var inactiveIndex = 1;
 var activeIndex = 0;
+var partyDead = false;
 
 func refreshPlayer() -> void:
 	$Head/attacks.speed_scale = activePlayer.weaponSkill/100.0
 
 func switchActivePlayer(n: int) -> void:
-	if $Head/attacks.is_playing():
+	if $Head/attacks.is_playing() || (party[n].dead):
 			return
 	activeIndex = n
 	activePlayer = party[n]
@@ -186,6 +188,74 @@ func setInactive(n : int)->void:
 		partyHighlight[0].show()
 		inactiveIndex = 0
 	return
+	
+func hurt(dmg)->void:
+	var dmgArr = []
+	for elem in party:
+		if (!elem.dead):
+			dmgArr.append(elem)
+	var rand = dmgArr.pick_random()
+	rand.hurt(dmg)
+	if(rand.HP <= 0):
+		updateDead()
+
+func getAvailable(atk : int)->Array:
+	var availableArr = []
+	print("active index = ", activeIndex )
+	for elem in party:
+		if (elem.index != activeIndex and !elem.dead):
+			if (atk == 1):
+				if (elem.atkready):
+					availableArr.append(elem)
+			else:
+				print("elem index = ", elem.index, "a ppending")
+				availableArr.append(elem)
+	print("available members: ")
+	for elem in availableArr:
+		print(elem.index, " ")
+	return availableArr
+	
+func getNext(type : int)->int:
+	var avArr = getAvailable(type) # [1,2,3]
+								   #  0 1 2
+	var indexArr = []
+	for elem in avArr:
+		indexArr.append(elem.index)
+
+	var size = indexArr.size()  #3
+	if (size == 0 || size == 1):
+		return -1
+	#1, 2 MOD 3 = 2 avAr[2] = 3
+	var index = indexArr.find(inactiveIndex) # = 0
+	print(inactiveIndex, " next is ",avArr[(index+1) % size].index)
+	return avArr[(index+1) % size].indexw
+	# 1 -> 2
+	# 2 -> 3
+	# 3 -> 1
+	## attack will pass 0 (looking for next atkready), g will pass 1 (looking for next alive)
+	##get available Arr, find your curr inactiveIndex + 1 mod avaiableArrsize . if avaialbleArrsize == 0 or 1 return
+	#get next alive that is not active or dead
+	#call when pressed F or G.
+
+func updateDead()->void:
+	var deadCount = 0;
+	for elem in party:
+		if elem.dead:
+			partyImg[elem.index].visible = false
+			deadCount += 1
+			#party.erase(elem)
+			#if (elem.index == activeIndex):
+				#go next
+			#	pass
+			#elif (elem.index == inactiveIndex): 
+			#	#go next
+			#	pass
+		#else:
+			#party.insert(elem.index, elem)
+	if deadCount == 4:
+		partyDead = true;
+		get_tree().quit()
+	
 #endregion
 
 #region Main Control Flow
@@ -208,8 +278,13 @@ func _ready():
 	party2.weaponSkill = 90
 	party3.weaponSkill = 35
 	party4.weaponSkill = 90
+	party2.index = 1
+	party3.index = 2
+	party4.index = 3
 	party2.damage = 5
 	party3.damage = 8
+	party3.HP = 10
+
 func _process(_delta):
 	#if (dragging == true):
 	#	mouse_sensitivity = 0.01
@@ -637,23 +712,19 @@ func _input(event):
 		start_cooldown(prevIndex, cool)
 	
 	if (Input.is_action_just_pressed("G")):
+		var next = getNext(0);
+		if (next == -1):
+			return
 		partyHighlight[inactiveIndex].hide()
-		if (inactiveIndex + 1 == activeIndex): 
-			inactiveIndex += 2;
-			inactiveIndex = inactiveIndex % 4
-		elif ((inactiveIndex + 1) == 4):
-			if (activeIndex == 0):
-				inactiveIndex = 1;
-			else:
-				inactiveIndex = 0;
+		inactiveIndex = next;
+		if (party[next].atkready):
+			partyHighlight[next].color = Color(0.133333, 0.545098, 0.133333, 1)
 		else:
-			inactiveIndex += 1;
-		if (party[inactiveIndex].atkready):
-			partyHighlight[inactiveIndex].color = Color(0.133333, 0.545098, 0.133333, 1)
-		else:
-			partyHighlight[inactiveIndex].color = Color(0.862745, 0.0784314, 0.235294, 1)
-		partyHighlight[inactiveIndex].show()
-
+			partyHighlight[next].color = Color(0.862745, 0.0784314, 0.235294, 1)
+		partyHighlight[next].show()
+		
+		##STRONGLY RECOMMEND CODING A GENERIC "GET NEXT" function, that gets the next available.
+		##I SUSPECT THE BEST WAY is O(n) search that checks if it is active/inactive/dead
 func process_swing():
 	if $Head/attacks.is_playing():
 		return

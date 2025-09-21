@@ -56,7 +56,7 @@ func set_state(new_state: EnemyState) -> void:
 		return
 	if !can_change_state and new_state not in [EnemyState.STUNNED, EnemyState.DEAD]:
 		return
-	print("transition from: ", state, " to ", new_state)
+	#print("transition from: ", state, " to ", new_state)
 	state = new_state
 
 	match state:
@@ -144,7 +144,9 @@ func animAttack() -> void:
 	if !screaming_audio.is_playing():
 		screaming_audio.stream = sound
 		screaming_audio.play()
-
+func attack()->void:
+	player.hurt(10)
+	
 func hurt(dmg: int) -> void:
 	if !alive:
 		return
