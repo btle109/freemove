@@ -208,7 +208,7 @@ func getAvailable(atk : int)->Array:
 				if (elem.atkready):
 					availableArr.append(elem)
 			else:
-				print("elem index = ", elem.index, "a ppending")
+				print("elem index = ", elem.index, " appending")
 				availableArr.append(elem)
 	print("available members: ")
 	for elem in availableArr:
@@ -228,7 +228,7 @@ func getNext(type : int)->int:
 	#1, 2 MOD 3 = 2 avAr[2] = 3
 	var index = indexArr.find(inactiveIndex) # = 0
 	print(inactiveIndex, " next is ",avArr[(index+1) % size].index)
-	return avArr[(index+1) % size].indexw
+	return avArr[(index+1) % size].index
 	# 1 -> 2
 	# 2 -> 3
 	# 3 -> 1
@@ -688,17 +688,10 @@ func _input(event):
 				var enemyTarget = atkArr.pick_random()
 				if (enemyTarget.has_method("hurt")):
 					enemyTarget.hurt(party[activeIndex].damage);
+		var next = getNext(0);
 		partyHighlight[inactiveIndex].hide()
-		if (inactiveIndex + 1 == activeIndex): 
-			inactiveIndex += 2;
-			inactiveIndex = inactiveIndex % 4
-		elif ((inactiveIndex + 1) == 4):
-			if (activeIndex == 0):
-				inactiveIndex = 1;
-			else:
-				inactiveIndex = 0;
-		else:
-			inactiveIndex += 1;
+		if (next != -1):
+			inactiveIndex = next;
 		if (party[inactiveIndex].atkready):
 			partyHighlight[inactiveIndex].color = Color(0.133333, 0.545098, 0.133333, 1)
 		else:
