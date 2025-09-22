@@ -860,7 +860,7 @@ visible = false
 z_index = -1
 position = Vector2(33, 183)
 scale = Vector2(0.796077, 0.679995)
-color = Color(0.821223, 0.567054, 0.336054, 1)
+color = Color(0.133, 0.545, 0.133, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 
 [node name="party4" type="Polygon2D" parent="UserInterface/Party"]
@@ -868,10 +868,36 @@ visible = false
 z_index = -1
 position = Vector2(217, 183)
 scale = Vector2(0.796077, 0.679995)
-color = Color(0.821223, 0.567054, 0.336054, 1)
+color = Color(0.133, 0.545, 0.133, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 
 [node name="atkCooldown" type="Timer" parent="UserInterface/Party"]
+
+[node name="readyIndicators" type="Node" parent="UserInterface/Party"]
+
+[node name="readyindicator" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
+position = Vector2(297.125, 558.805)
+scale = Vector2(0.200417, 0.200417)
+polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
+uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
+
+[node name="readyindicator2" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
+position = Vector2(488, 560)
+scale = Vector2(0.200417, 0.200417)
+polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
+uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
+
+[node name="readyindicator3" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
+position = Vector2(672, 560)
+scale = Vector2(0.200417, 0.200417)
+polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
+uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
+
+[node name="readyindicator4" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
+position = Vector2(856, 560)
+scale = Vector2(0.200417, 0.200417)
+polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
+uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
 
 [node name="CrouchCeilingDetection" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

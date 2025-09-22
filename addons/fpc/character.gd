@@ -147,9 +147,10 @@ var party2 = preload("res://party/partyData.gd").new()
 var party3 = preload("res://party/partyData.gd").new()
 var party4 = preload("res://party/partyData.gd").new()
 var party = [party1,party2,party3, party4]
-var partyHash = {party1 : 1 ,party2 : 2,party3 : 3, party4 : 4}
+#var partyHash = {party1 : 1 ,party2 : 2,party3 : 3, party4 : 4}
 @onready var partyImg = [$UserInterface/Party/p_img1, $UserInterface/Party/p_img2, $UserInterface/Party/p_img3, $UserInterface/Party/p_img4]
 @onready var partyHighlight = [$UserInterface/Party/party1, $UserInterface/Party/party2, $UserInterface/Party/party3, $UserInterface/Party/party4]
+@onready var readyIndicators = [$UserInterface/Party/readyIndicators/readyindicator, $UserInterface/Party/readyIndicators/readyindicator2, $UserInterface/Party/readyIndicators/readyindicator3, $UserInterface/Party/readyIndicators/readyindicator4]
 var activePlayer = party1;
 var inactiveIndex = 1;
 var activeIndex = 0;
@@ -197,6 +198,18 @@ func hurt(dmg)->void:
 	var rand = dmgArr.pick_random()
 	rand.hurt(dmg)
 	if(rand.HP <= 0):
+		if (rand.index == inactiveIndex):
+			var next = getNext(0);
+			if (next == -1):
+				updateDead()
+				return
+			partyHighlight[inactiveIndex].hide()
+			inactiveIndex = next;
+			if (party[next].atkready):
+				partyHighlight[next].color = Color(0.133333, 0.545098, 0.133333, 1)
+			else:
+				partyHighlight[next].color = Color(0.862745, 0.0784314, 0.235294, 1)
+			partyHighlight[next].show()
 		updateDead()
 
 func getAvailable(atk : int)->Array:
@@ -241,6 +254,7 @@ func updateDead()->void:
 	for elem in party:
 		if elem.dead:
 			partyImg[elem.index].visible = false
+			readyIndicators[elem.index].visible = false
 			deadCount += 1
 			#party.erase(elem)
 			#if (elem.index == activeIndex):
@@ -301,6 +315,16 @@ func _process(_delta):
 		else:
 			if partyHighlight[inactiveIndex].color != Color(0.862745, 0.0784314, 0.235294, 1):
 				partyHighlight[inactiveIndex].color = Color(0.862745, 0.0784314, 0.235294, 1)
+	
+	for i in range(0,4):
+		if party[i].atkready and !party[i].dead and i != activeIndex:
+			if readyIndicators[i].color != Color(0.133333, 0.545098, 0.133333, 1):
+				readyIndicators[i].color = Color(0.133333, 0.545098, 0.133333, 1)
+		else:
+			if (i == activeIndex):
+				readyIndicators[i].color = Color(1, 0.843137, 0, 1)
+			elif readyIndicators[i].color != Color(0.862745, 0.0784314, 0.235294, 1):
+				readyIndicators[i].color = Color(0.862745, 0.0784314, 0.235294, 1)
 
 
 func _physics_process(delta): # Most things happen here.
@@ -678,7 +702,12 @@ func _input(event):
 		pass
 		
 	if (Input.is_action_just_pressed("F")):
+		var next = getNext(1);
 		if (!party[inactiveIndex].atkready):
+			if (next != -1):
+				partyHighlight[inactiveIndex].hide()
+				inactiveIndex = next;
+				partyHighlight[inactiveIndex].show()
 			return
 		var prevIndex = inactiveIndex
 		$soundsfx.stream =  swingSound
@@ -688,14 +717,9 @@ func _input(event):
 				var enemyTarget = atkArr.pick_random()
 				if (enemyTarget.has_method("hurt")):
 					enemyTarget.hurt(party[activeIndex].damage);
-		var next = getNext(1);
 		partyHighlight[inactiveIndex].hide()
 		if (next != -1):
 			inactiveIndex = next;
-		if (party[inactiveIndex].atkready):
-			partyHighlight[inactiveIndex].color = Color(0.133333, 0.545098, 0.133333, 1)
-		else:
-			partyHighlight[inactiveIndex].color = Color(0.862745, 0.0784314, 0.235294, 1)
 		partyHighlight[inactiveIndex].show()
 
 		var cool = party[prevIndex].coolDown
@@ -710,10 +734,6 @@ func _input(event):
 			return
 		partyHighlight[inactiveIndex].hide()
 		inactiveIndex = next;
-		if (party[next].atkready):
-			partyHighlight[next].color = Color(0.133333, 0.545098, 0.133333, 1)
-		else:
-			partyHighlight[next].color = Color(0.862745, 0.0784314, 0.235294, 1)
 		partyHighlight[next].show()
 		
 		##STRONGLY RECOMMEND CODING A GENERIC "GET NEXT" function, that gets the next available.

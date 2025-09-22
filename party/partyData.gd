@@ -3,7 +3,7 @@ class_name partyData
 #var playerClass = 0
 var weaponSkill = 100;
 var damage = 10
-var coolDown = 2
+var coolDown = 1
 var atkready = true;
 var HP = 100
 var dead = false;

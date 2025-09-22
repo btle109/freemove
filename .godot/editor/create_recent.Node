@@ -1,4 +1,5 @@
 Node
+Polygon2D
 CollisionShape3D
 Area3D
 AudioStreamPlayer3D
@@ -6,10 +7,8 @@ Node3D
 NavigationRegion3D
 NavigationAgent3D
 Timer
-Polygon2D
 Control
 StaticBody3D
 AnimationPlayer
 MeshInstance3D
 CSGBox3D
-Label
