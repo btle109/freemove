@@ -4,9 +4,15 @@ extends CharacterBody3D
 @export var MoveSpeed: float = 3
 @export var HP = 100
 @export var orig : Node3D
+@export var group = "Enemy"
+@export var killGroup = "Player"
+
 @export var enemyRange : Area3D
 var attackZone : Area3D
 @export var label : Label 
+var atkArr = []
+var killArr = []
+var atkTarget
 
 # === NODES ===
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
@@ -40,9 +46,9 @@ var player: Node3D = null
 
 # === READY ===
 func _ready() -> void:
-	player = get_tree().get_nodes_in_group("Player")[0]
+	#player = get_tree().get_nodes_in_group("Player")[0]
 	attackZone = $attackZone
-	
+	add_to_group(group)
 	if enemyRange:
 		enemyRange.body_entered.connect(_on_enemy_range_body_entered)
 		enemyRange.body_exited.connect(_on_enemy_range_body_exited)
@@ -86,7 +92,14 @@ func play_animation(anim_name: String, loop := false) -> void:
 			anim.loop_mode = Animation.LOOP_NONE
 		if animation_player.current_animation != anim_name:
 			animation_player.play(anim_name)
-
+			
+func choose_target() -> void:
+	if atkTarget == null or not atkArr.has(atkTarget) or atkTarget.dead:
+		if atkArr.is_empty():
+			atkTarget = null
+		else:
+			atkTarget = atkArr.pick_random()
+			
 func _physics_process(delta: float) -> void:
 	#global_position.y = 0
 	if !alive:
@@ -106,8 +119,10 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 		set_state(EnemyState.ATTACKING)
 	elif in_range:
-		handle_movement(delta, player.global_position)
-		set_state(EnemyState.WALKING)
+		choose_target()
+		if atkTarget != null:
+			handle_movement(delta, atkTarget.global_position)
+			set_state(EnemyState.WALKING)
 	else:
 	# If not in range and not at origin, return to origin
 		if global_position.distance_to(orig.global_position) > 0.5:
@@ -145,8 +160,18 @@ func animAttack() -> void:
 		screaming_audio.stream = sound
 		screaming_audio.play()
 func attack()->void:
-	player.hurt(10)
-	
+	if (killArr.is_empty()):
+		return
+	var killTarget = killArr.pick_random()
+	if killTarget.dead:
+		killArr.erase(killTarget)
+		atkArr.erase(killTarget)
+		if (killArr.is_empty()):
+			in_attack_zone = false
+		if (atkArr.is_empty()):
+			in_range = false 
+	killTarget.hurt(10)
+
 func hurt(dmg: int) -> void:
 	if !alive:
 		return
@@ -176,22 +201,29 @@ func die() -> void:
 		return
 	dead = true
 	animation_player.play("newAnimfbx/skelChar|die")
-	$Timer.stop()
+	await get_tree().create_timer(5).timeout
+	queue_free()
 
 func _on_enemy_range_body_entered(body: Node3D) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group(killGroup):
+		atkArr.append(body)
 		in_range = true
 
 func _on_enemy_range_body_exited(body: Node3D) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group(killGroup):
+		atkArr.erase(body)
+	if (atkArr.is_empty()):
 		in_range = false
 		
 func _on_attack_zone_body_entered(body: Node3D) -> void:
-	if body.is_in_group("Player"):
+	if (atkArr.find(body) != -1):
+		killArr.append(body)
 		in_attack_zone = true
 
 func _on_attack_zone_body_exited(body: Node3D) -> void:
-	if body.is_in_group("Player"):
+	if (atkArr.find(body) != -1):
+		killArr.erase(body)
+	if (killArr.is_empty()):
 		in_attack_zone = false
 		
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

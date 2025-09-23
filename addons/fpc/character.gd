@@ -154,7 +154,7 @@ var party = [party1,party2,party3, party4]
 var activePlayer = party1;
 var inactiveIndex = 1;
 var activeIndex = 0;
-var partyDead = false;
+var dead = false;
 
 func refreshPlayer() -> void:
 	$Head/attacks.speed_scale = activePlayer.weaponSkill/100.0
@@ -266,7 +266,7 @@ func updateDead()->void:
 		#else:
 			#party.insert(elem.index, elem)
 	if deadCount == 4:
-		partyDead = true;
+		dead = true;
 		get_tree().quit()
 	
 #endregion

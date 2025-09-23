@@ -412,7 +412,7 @@ size = Vector3(2, 2.8, 3.4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_4kkxq"]
 size = Vector3(2.3, 2, 3.2)
 
-[node name="skullowpoly" type="CharacterBody3D" groups=["Enemy"]]
+[node name="skullowpoly" type="CharacterBody3D"]
 script = ExtResource("1_f6sjy")
 
 [node name="skelChar" type="Node3D" parent="."]
