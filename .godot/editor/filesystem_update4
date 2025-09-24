@@ -3,3 +3,4 @@ res://addons/swordmesh.res
 res://import/skeleton/skeletonMat/claymore.tres
 res://addons/fpc/character.tscn
 res://import/skeleton/skullowpoly.tscn
+res://import/skeleton/skullowpoly.gd

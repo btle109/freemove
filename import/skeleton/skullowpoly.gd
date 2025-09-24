@@ -113,7 +113,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 		move_and_slide()
 		return
-
+	choose_target()
 	# Priority: ATTACK > WALK > IDLE
 	if in_attack_zone:
 		velocity = Vector3.ZERO
@@ -163,14 +163,24 @@ func attack()->void:
 	if (killArr.is_empty()):
 		return
 	var killTarget = killArr.pick_random()
-	if killTarget.dead:
-		killArr.erase(killTarget)
-		atkArr.erase(killTarget)
+	if (killTarget):
+		if killTarget.dead:
+			print(killTarget, " DEAD")
+			print(killArr)
+			print(atkArr)
+			killArr.erase(killTarget)
+			atkArr.erase(killTarget)
+			if (killArr.is_empty()):
+				in_attack_zone = false
+			if (atkArr.is_empty()):
+				in_range = false 
+		killTarget.hurt(10)
+	else:
 		if (killArr.is_empty()):
 			in_attack_zone = false
 		if (atkArr.is_empty()):
 			in_range = false 
-	killTarget.hurt(10)
+		return
 
 func hurt(dmg: int) -> void:
 	if !alive:

@@ -151,6 +151,7 @@ var party = [party1,party2,party3, party4]
 @onready var partyImg = [$UserInterface/Party/p_img1, $UserInterface/Party/p_img2, $UserInterface/Party/p_img3, $UserInterface/Party/p_img4]
 @onready var partyHighlight = [$UserInterface/Party/party1, $UserInterface/Party/party2, $UserInterface/Party/party3, $UserInterface/Party/party4]
 @onready var readyIndicators = [$UserInterface/Party/readyIndicators/readyindicator, $UserInterface/Party/readyIndicators/readyindicator2, $UserInterface/Party/readyIndicators/readyindicator3, $UserInterface/Party/readyIndicators/readyindicator4]
+@onready var HPBars = [$UserInterface/Party/HPbar/hp1, $UserInterface/Party/HPbar/hp2, $UserInterface/Party/HPbar/hp3, $UserInterface/Party/HPbar/hp4]
 var activePlayer = party1;
 var inactiveIndex = 1;
 var activeIndex = 0;
@@ -197,6 +198,7 @@ func hurt(dmg)->void:
 			dmgArr.append(elem)
 	var rand = dmgArr.pick_random()
 	rand.hurt(dmg)
+	HPBars[rand.index].value = rand.HP/rand.maxHP * 100
 	if(rand.HP <= 0):
 		if (rand.index == inactiveIndex):
 			var next = getNext(0);
@@ -288,16 +290,20 @@ func _ready():
 	enter_normal_state()
 
 	refreshPlayer()
-	party2.weaponSkill = 90
-	party3.weaponSkill = 35
-	party4.weaponSkill = 90
+	party2.weaponSkill = 90.0
+	party3.weaponSkill = 35.0
+	party4.weaponSkill = 90.0
 	party2.index = 1
 	party3.index = 2
 	party4.index = 3
-	party3.coolDown = 5
 	party2.damage = 5
 	party3.damage = 8
-	party3.HP = 10
+	party3.HP = 30.0
+	
+	for elem in party:
+	#	print(elem.index, " weaponSkill: ", elem.weaponSkill)
+		elem.coolDown = 9000.0 / ((elem.weaponSkill) * (elem.weaponSkill))
+	#	print(elem.index, " cooldown: ", elem.coolDown)
 
 func _process(_delta):
 	#if (dragging == true):

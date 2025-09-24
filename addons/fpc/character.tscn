@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=46 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://bh8b7mqs80wnc" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" uid="uid://dnm78wy2epe6i" path="res://addons/fpc/interact.gd" id="2_bx7cj"]
@@ -716,6 +716,36 @@ MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
 
+[sub_resource type="Gradient" id="Gradient_ex63h"]
+offsets = PackedFloat32Array(0, 0.968858)
+colors = PackedColorArray(0, 0, 0, 0.564, 0, 0, 0, 0.569)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ex63h"]
+gradient = SubResource("Gradient_ex63h")
+
+[sub_resource type="Gradient" id="Gradient_mnhhx"]
+offsets = PackedFloat32Array(0.522491)
+colors = PackedColorArray(1, 1, 1, 0.207843)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mnhhx"]
+gradient = SubResource("Gradient_mnhhx")
+
+[sub_resource type="Gradient" id="Gradient_6yc32"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.612299, 7.70092e-07, 4.33177e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6yc32"]
+gradient = SubResource("Gradient_6yc32")
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_go8lt"]
+gradient = SubResource("Gradient_ex63h")
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6wwgf"]
+gradient = SubResource("Gradient_mnhhx")
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xtbqr"]
+gradient = SubResource("Gradient_6yc32")
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q34qd"]
@@ -898,6 +928,56 @@ position = Vector2(856, 560)
 scale = Vector2(0.200417, 0.200417)
 polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
 uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
+
+[node name="HPbar" type="Node" parent="UserInterface/Party"]
+
+[node name="hp1" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
+offset_left = 368.0
+offset_top = 632.0
+offset_right = 636.0
+offset_bottom = 633.0
+rotation = -1.57079
+scale = Vector2(0.528189, 14.44)
+value = 100.0
+texture_under = SubResource("GradientTexture1D_ex63h")
+texture_over = SubResource("GradientTexture1D_mnhhx")
+texture_progress = SubResource("GradientTexture1D_6yc32")
+
+[node name="hp2" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
+offset_left = 560.0
+offset_top = 632.0
+offset_right = 828.0
+offset_bottom = 633.0
+rotation = -1.57079
+scale = Vector2(0.5069, 14.44)
+value = 100.0
+texture_under = SubResource("GradientTexture1D_go8lt")
+texture_over = SubResource("GradientTexture1D_6wwgf")
+texture_progress = SubResource("GradientTexture1D_xtbqr")
+
+[node name="hp3" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
+offset_left = 736.0
+offset_top = 632.0
+offset_right = 1004.0
+offset_bottom = 633.0
+rotation = -1.57079
+scale = Vector2(0.5069, 14.44)
+value = 100.0
+texture_under = SubResource("GradientTexture1D_go8lt")
+texture_over = SubResource("GradientTexture1D_6wwgf")
+texture_progress = SubResource("GradientTexture1D_xtbqr")
+
+[node name="hp4" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
+offset_left = 928.0
+offset_top = 632.0
+offset_right = 1196.0
+offset_bottom = 633.0
+rotation = -1.57079
+scale = Vector2(0.5069, 14.44)
+value = 100.0
+texture_under = SubResource("GradientTexture1D_go8lt")
+texture_over = SubResource("GradientTexture1D_6wwgf")
+texture_progress = SubResource("GradientTexture1D_xtbqr")
 
 [node name="CrouchCeilingDetection" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

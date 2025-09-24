@@ -1,14 +1,14 @@
 extends Node
 class_name partyData
 #var playerClass = 0
-var weaponSkill = 100;
+@export var weaponSkill: int = 100
 var damage = 10
-var coolDown = 1
+var coolDown = 0.6
 var atkready = true;
-var HP = 100
+var HP = 100.0
+var maxHP = HP
 var dead = false;
 var index = 0
-
 #var weapon := Node3D
 #var spells/inventory
 func hurt(dmg)->void:
