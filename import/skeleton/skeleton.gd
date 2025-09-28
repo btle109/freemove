@@ -108,6 +108,17 @@ func choose_target() -> void:
 
 		atkTarget = atkArr.pick_random()
 			
+func clean_dead_targets() -> void:
+	atkArr = atkArr.filter(func(t): return t != null and not t.dead)
+	killArr = killArr.filter(func(t): return t != null and not t.dead)
+
+	if atkArr.is_empty():
+		in_range = false
+		atkTarget = null
+
+	if killArr.is_empty():
+		in_attack_zone = false
+		
 func _physics_process(delta: float) -> void:
 	#global_position.y = 0
 	if !alive:
@@ -115,7 +126,7 @@ func _physics_process(delta: float) -> void:
 			set_state(EnemyState.DEAD)
 		move_and_slide()
 		return
-
+	clean_dead_targets()
 	# Movement & state handling
 	if stunned:
 		velocity = Vector3.ZERO

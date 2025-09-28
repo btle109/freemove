@@ -738,7 +738,6 @@ func _input(event):
 					var aim = target.global_position + Vector3(0,1,0)
 					var arrowDir = (aim - $Head/arrowOrigin.global_position).normalized()
 					var arrow = arrowScene.instantiate()
-					arrow.speed = party[inactiveIndex].weaponSkwill * 0.75
 					arrow.damage = (party[inactiveIndex].damage * party[inactiveIndex].weaponSkill/100)/2
 					get_parent().add_child(arrow)
 					arrow.global_position =$Head/arrowOrigin.global_position

@@ -165,7 +165,7 @@ enemyRange = NodePath("../enemyRange")
 label = NodePath("../../UI/Info")
 
 [node name="sk3" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3, 0, 20)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3, 0, 14)
 orig = NodePath("../orig")
 enemyRange = NodePath("../enemyRange")
 label = NodePath("../../UI/Info")

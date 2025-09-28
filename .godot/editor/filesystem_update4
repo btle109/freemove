@@ -1,9 +1,10 @@
-res://scenes/test_world.tscn
+res://props/arrow.tscn
 res://addons/swordmesh.res
 res://import/skeleton/skeletonMat/claymore.tres
+res://import/arrow.tres
+res://scenes/test_world.tscn
 res://addons/fpc/character.tscn
 res://import/skeleton/skullowpoly.tscn
-res://import/skeleton/skeleton.gd
-res://props/arrow.tscn
-res://props/arrow.gd
 res://addons/fpc/character.gd
+res://props/arrow.gd
+res://import/skeleton/skeleton.gd

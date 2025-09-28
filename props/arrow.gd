@@ -19,7 +19,7 @@ func _physics_process(delta):
 
 func set_direction(new_direction):
 	direction = new_direction.normalized()
-	
+	look_at(global_transform.origin + direction, Vector3.UP)
 func _on_body_entered(body):
 	# Handle collision with other bodies (e.g., damage, destroy)
 	print("ARROW STRIKES: ", body.name)
