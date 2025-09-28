@@ -55,7 +55,11 @@ extends CharacterBody3D
 @onready var COLLISION_MESH = $Collision
 
 @onready var swingSound = load("res://sound/sound2.mp3")
+@export var arrowScene : PackedScene
+var bowSound = preload("res://sound/65733__erdie__bow01.wav")
+#@onready var hurtSound = load("res://sound/sound.wav")
 var atkArr = []
+
 #endregion
 
 #region Controls Export Group
@@ -198,6 +202,8 @@ func hurt(dmg)->void:
 			dmgArr.append(elem)
 	var rand = dmgArr.pick_random()
 	rand.hurt(dmg)
+	#$hurtsfx.stream = hurtSound
+	$hurtsfx.play()
 	HPBars[rand.index].value = rand.HP/rand.maxHP * 100
 	if(rand.HP <= 0):
 		if (rand.index == inactiveIndex):
@@ -257,6 +263,7 @@ func updateDead()->void:
 		if elem.dead:
 			partyImg[elem.index].visible = false
 			readyIndicators[elem.index].visible = false
+			HPBars[elem.index].visible = false
 			deadCount += 1
 			#party.erase(elem)
 			#if (elem.index == activeIndex):
@@ -303,6 +310,8 @@ func _ready():
 	for elem in party:
 	#	print(elem.index, " weaponSkill: ", elem.weaponSkill)
 		elem.coolDown = 9000.0 / ((elem.weaponSkill) * (elem.weaponSkill))
+		HPBars[elem.index].value = elem.HP/elem.maxHP * 100
+		
 	#	print(elem.index, " cooldown: ", elem.coolDown)
 
 func _process(_delta):
@@ -716,13 +725,40 @@ func _input(event):
 				partyHighlight[inactiveIndex].show()
 			return
 		var prevIndex = inactiveIndex
-		$soundsfx.stream =  swingSound
-		$soundsfx.play()
 		if (!atkArr.is_empty()):
-			if (party[inactiveIndex].attack()):
-				var enemyTarget = atkArr.pick_random()
-				if (enemyTarget.has_method("hurt")):
-					enemyTarget.hurt(party[activeIndex].damage);
+			var location = $".".global_position
+			var meleeArr = []
+			for elem in atkArr:
+				if (location.distance_to(elem.global_position) <= 5):
+					meleeArr.append(elem)
+			print(meleeArr)
+			if (meleeArr.is_empty()):
+				if (party[inactiveIndex].hasBow):
+					var target = atkArr.pick_random()
+					var aim = target.global_position + Vector3(0,1,0)
+					var arrowDir = (aim - $Head/arrowOrigin.global_position).normalized()
+					var arrow = arrowScene.instantiate()
+					arrow.speed = party[inactiveIndex].weaponSkwill * 0.75
+					arrow.damage = (party[inactiveIndex].damage * party[inactiveIndex].weaponSkill/100)/2
+					get_parent().add_child(arrow)
+					arrow.global_position =$Head/arrowOrigin.global_position
+					arrow.set_direction(arrowDir)
+					$bowsfx.stream = bowSound
+					$bowsfx.play()
+				else:
+					$soundsfx.stream =  swingSound
+					$soundsfx.play()
+			else:
+				var enemyTarget = meleeArr.pick_random()
+				$soundsfx.stream =  swingSound
+				$soundsfx.play()
+				if (party[inactiveIndex].attack()):
+					if (enemyTarget.has_method("hurt")):
+						enemyTarget.hurt(party[activeIndex].damage);
+		else:
+			$soundsfx.stream =  swingSound
+			$soundsfx.play()
+			
 		partyHighlight[inactiveIndex].hide()
 		if (next != -1):
 			inactiveIndex = next;
@@ -800,13 +836,18 @@ func _on_sword_collision_body_entered(body: Node3D) -> void:
 	process_bounce(body)
 
 
-func _on_indirect_range_body_entered(body: Node3D) -> void:
+#func _on_indirect_range_body_entered(body: Node3D) -> void:
+#	meleeRange = true
+
+#func _on_indirect_range_body_exited(body: Node3D) -> void:
+#	meleeRange = false
+
+func _on_bow_range_body_entered(body: Node3D) -> void:
 	if (body.is_in_group("Enemy") and body.alive):
 		print(body, " ENTERED")
 		atkArr.append(body);
 
-func _on_indirect_range_body_exited(body: Node3D) -> void:
+func _on_bow_range_body_exited(body: Node3D) -> void:
 	if (atkArr.has(body)):
 		print(body, " LEFT")
 		atkArr.erase(body)
-	# Replace with function body.

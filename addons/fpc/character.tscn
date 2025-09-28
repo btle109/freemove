@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=48 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://bh8b7mqs80wnc" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="Script" uid="uid://dnm78wy2epe6i" path="res://addons/fpc/interact.gd" id="2_bx7cj"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://bktwt0uslwg23" path="res://import/sampleimg/cropped-PXL_20250730_061432465.RAW-01.COVER.jpg" id="7_q62an"]
 [ext_resource type="Texture2D" uid="uid://8qsi6kjie5u8" path="res://import/sampleimg/image0.jpg" id="8_q34qd"]
 [ext_resource type="Script" uid="uid://d1moar36gtke7" path="res://party/partyData.gd" id="10_ex63h"]
+[ext_resource type="AudioStream" uid="uid://bco02e68wyelp" path="res://sound/sound.wav" id="11_go8lt"]
+[ext_resource type="AudioStream" uid="uid://vbje37hm1rwr" path="res://sound/65733__erdie__bow01.wav" id="12_mnhhx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -710,6 +712,9 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_qaoyu"]
 size = Vector3(0.168262, 2.1, 0.0479248)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_go8lt"]
+size = Vector3(19, 9, 39)
+
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
@@ -747,9 +752,6 @@ gradient = SubResource("Gradient_mnhhx")
 gradient = SubResource("Gradient_6yc32")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_q34qd"]
-size = Vector3(8, 3, 5)
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION") groups=["Player"]]
 script = ExtResource("1_0t4e8")
@@ -807,6 +809,16 @@ monitoring = false
 transform = Transform3D(0.50001, 0.866019, -3.78549e-08, 2.23462e-24, -4.37105e-08, -0.999984, -0.866004, 0.499997, -2.18557e-08, -1.67808, -0.691332, -1.56374)
 visible = false
 shape = SubResource("BoxShape3D_qaoyu")
+
+[node name="bowRange" type="Area3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="indirCol" type="CollisionShape3D" parent="Head/bowRange"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 3.6, -18)
+shape = SubResource("BoxShape3D_go8lt")
+
+[node name="arrowOrigin" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -1)
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3
@@ -987,20 +999,19 @@ target_position = Vector3(0, 0.5, 0)
 [node name="EditorModule" type="Node" parent="."]
 script = ExtResource("3_v3ckk")
 
-[node name="indirectRange" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="indirCol" type="CollisionShape3D" parent="indirectRange"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0999999, 0.6, -1)
-shape = SubResource("BoxShape3D_q34qd")
-
 [node name="soundsfx" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 
 [node name="partyData" type="Node" parent="."]
 script = ExtResource("10_ex63h")
 
+[node name="hurtsfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("11_go8lt")
+
+[node name="bowsfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("12_mnhhx")
+
 [connection signal="area_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_area_entered"]
 [connection signal="body_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_body_entered"]
-[connection signal="body_entered" from="indirectRange" to="." method="_on_indirect_range_body_entered"]
-[connection signal="body_exited" from="indirectRange" to="." method="_on_indirect_range_body_exited"]
+[connection signal="body_entered" from="Head/bowRange" to="." method="_on_bow_range_body_entered"]
+[connection signal="body_exited" from="Head/bowRange" to="." method="_on_bow_range_body_exited"]

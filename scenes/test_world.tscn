@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://cm0y4md206lmb"]
+[gd_scene load_steps=19 format=3 uid="uid://cm0y4md206lmb"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_umbte"]
+[ext_resource type="PackedScene" uid="uid://cvr1hvkpke2cq" path="res://props/arrow.tscn" id="2_ar7ra"]
 [ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://textures/dark.png" id="2_ynswa"]
 [ext_resource type="Texture2D" uid="uid://cxjxvqmf4boxq" path="res://textures/green.png" id="3_dvny0"]
 [ext_resource type="Texture2D" uid="uid://dsv4jm4vydflb" path="res://textures/orange.png" id="4_xwrkq"]
@@ -52,6 +53,7 @@ size = Vector3(35, 5, 31)
 [node name="test_world" type="Node3D"]
 
 [node name="Character" parent="." instance=ExtResource("1_umbte")]
+arrowScene = ExtResource("2_ar7ra")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
@@ -139,7 +141,7 @@ skeleton = NodePath("../..")
 [node name="Enemies" type="Node3D" parent="."]
 
 [node name="sk1" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 14, 0, 12)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, 20)
 orig = NodePath("../orig")
 enemyRange = NodePath("../enemyRange")
 label = NodePath("../../UI/Info")
@@ -155,10 +157,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 17)
 
 [node name="sk2" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 19, 0, -2)
-HP = 25
+HP = 100
 orig = NodePath("../orig")
 group = "Player"
 killGroup = "Enemy"
+enemyRange = NodePath("../enemyRange")
+label = NodePath("../../UI/Info")
+
+[node name="sk3" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3, 0, 20)
+orig = NodePath("../orig")
 enemyRange = NodePath("../enemyRange")
 label = NodePath("../../UI/Info")
 

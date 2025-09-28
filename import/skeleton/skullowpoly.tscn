@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=4 uid="uid://142ts2cqci3b"]
 
-[ext_resource type="Script" uid="uid://dc8t0txi6f8su" path="res://import/skeleton/skullowpoly.gd" id="1_f6sjy"]
+[ext_resource type="Script" uid="uid://dc8t0txi6f8su" path="res://import/skeleton/skeleton.gd" id="1_f6sjy"]
 [ext_resource type="Material" uid="uid://b5yurp8l6diio" path="res://import/skeleton/skeletonMat/helm.tres" id="2_y7w5g"]
 [ext_resource type="Material" uid="uid://co4hmj4r6diie" path="res://import/skeleton/skeletonMat/claymore.tres" id="3_4kkxq"]
 [ext_resource type="Material" uid="uid://ba8foggnyg4p7" path="res://import/skeleton/skeletonMat/scalemail.tres" id="4_5y4xm"]

@@ -9,6 +9,7 @@ var HP = 100.0
 var maxHP = HP
 var dead = false;
 var index = 0
+var hasBow = true
 #var weapon := Node3D
 #var spells/inventory
 func hurt(dmg)->void:

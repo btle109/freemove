@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 # === CONFIG ===
 @export var MoveSpeed: float = 3
-@export var HP = 100
+@export var HP = 200
 @export var orig : Node3D
 @export var group = "Enemy"
 @export var killGroup = "Player"
@@ -94,11 +94,19 @@ func play_animation(anim_name: String, loop := false) -> void:
 			animation_player.play(anim_name)
 			
 func choose_target() -> void:
+	if atkArr.is_empty():
+		atkTarget = null
+		return
+	# If current target is invalid (not in list or dead), replace it
 	if atkTarget == null or not atkArr.has(atkTarget) or atkTarget.dead:
+		# Clean up invalid targets
+		atkArr = atkArr.filter(func(t): return t != null and not t.dead)
+
 		if atkArr.is_empty():
 			atkTarget = null
-		else:
-			atkTarget = atkArr.pick_random()
+			return
+
+		atkTarget = atkArr.pick_random()
 			
 func _physics_process(delta: float) -> void:
 	#global_position.y = 0
@@ -113,13 +121,13 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 		move_and_slide()
 		return
+		
 	choose_target()
 	# Priority: ATTACK > WALK > IDLE
 	if in_attack_zone:
 		velocity = Vector3.ZERO
 		set_state(EnemyState.ATTACKING)
 	elif in_range:
-		choose_target()
 		if atkTarget != null:
 			handle_movement(delta, atkTarget.global_position)
 			set_state(EnemyState.WALKING)
@@ -159,7 +167,20 @@ func animAttack() -> void:
 	if !screaming_audio.is_playing():
 		screaming_audio.stream = sound
 		screaming_audio.play()
-func attack()->void:
+
+func attack() -> void:
+	# Clean up dead or invalid targets
+	killArr = killArr.filter(func(t): return t != null and not t.dead)
+
+	if killArr.is_empty():
+		in_attack_zone = false
+		return
+
+	var killTarget = killArr.pick_random()
+	if killTarget:
+		killTarget.hurt(10)
+		
+func testattack()->void:
 	if (killArr.is_empty()):
 		return
 	var killTarget = killArr.pick_random()
@@ -174,6 +195,7 @@ func attack()->void:
 				in_attack_zone = false
 			if (atkArr.is_empty()):
 				in_range = false 
+			return
 		killTarget.hurt(10)
 	else:
 		if (killArr.is_empty()):
@@ -222,8 +244,11 @@ func _on_enemy_range_body_entered(body: Node3D) -> void:
 func _on_enemy_range_body_exited(body: Node3D) -> void:
 	if body.is_in_group(killGroup):
 		atkArr.erase(body)
-	if (atkArr.is_empty()):
-		in_range = false
+		if body == atkTarget:
+			atkTarget = null
+		if atkArr.is_empty():
+			in_range = false
+
 		
 func _on_attack_zone_body_entered(body: Node3D) -> void:
 	if (atkArr.find(body) != -1):
@@ -231,10 +256,10 @@ func _on_attack_zone_body_entered(body: Node3D) -> void:
 		in_attack_zone = true
 
 func _on_attack_zone_body_exited(body: Node3D) -> void:
-	if (atkArr.find(body) != -1):
+	if atkArr.has(body):
 		killArr.erase(body)
-	if (killArr.is_empty()):
-		in_attack_zone = false
+		if killArr.is_empty():
+			in_attack_zone = false
 		
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	can_change_state = true
