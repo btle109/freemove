@@ -713,7 +713,7 @@ _data = {
 size = Vector3(0.168262, 2.1, 0.0479248)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_go8lt"]
-size = Vector3(19, 9, 39)
+size = Vector3(16, 9, 39)
 
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
@@ -814,7 +814,7 @@ shape = SubResource("BoxShape3D_qaoyu")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="indirCol" type="CollisionShape3D" parent="Head/bowRange"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 3.6, -18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 3.6, -18)
 shape = SubResource("BoxShape3D_go8lt")
 
 [node name="arrowOrigin" type="Node3D" parent="Head"]
@@ -851,48 +851,48 @@ layout_mode = 2
 
 [node name="Party" type="Control" parent="UserInterface"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchor_left = -0.01
+anchor_top = -0.002
+anchor_right = 0.984
+anchor_bottom = 0.986
+offset_left = -7.48
+offset_top = -7.704
+offset_right = 288.432
+offset_bottom = 162.072
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.8, 0.8)
 
 [node name="p_img1" type="Sprite2D" parent="UserInterface/Party"]
-position = Vector2(-277.875, 248.805)
+position = Vector2(505.125, 717.805)
 scale = Vector2(0.200417, 0.200417)
 texture = ExtResource("7_q62an")
 
 [node name="p_img2" type="Sprite2D" parent="UserInterface/Party"]
-position = Vector2(-89.625, 248.472)
+position = Vector2(693.375, 717.472)
 scale = Vector2(0.414844, 0.384114)
 texture = ExtResource("6_q34qd")
 
 [node name="p_img3" type="Sprite2D" parent="UserInterface/Party"]
-position = Vector2(95, 249.68)
+position = Vector2(878, 718.68)
 scale = Vector2(0.23625, 0.243714)
 texture = ExtResource("7_ex63h")
 
 [node name="p_img4" type="Sprite2D" parent="UserInterface/Party"]
-position = Vector2(278, 247.68)
+position = Vector2(1061, 716.68)
 scale = Vector2(0.425, 0.375)
 texture = ExtResource("8_q34qd")
 
 [node name="party1" type="Polygon2D" parent="UserInterface/Party"]
 z_index = -1
-position = Vector2(-343, 183.68)
+position = Vector2(440, 652.68)
 scale = Vector2(0.796077, 0.679995)
 color = Color(1, 0.843, 0, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 
 [node name="party2" type="Polygon2D" parent="UserInterface/Party"]
 z_index = -1
-position = Vector2(-151, 183.68)
+position = Vector2(632, 652.68)
 scale = Vector2(0.796077, 0.679995)
 color = Color(0.133, 0.545, 0.133, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
@@ -900,7 +900,7 @@ polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 [node name="party3" type="Polygon2D" parent="UserInterface/Party"]
 visible = false
 z_index = -1
-position = Vector2(33, 183)
+position = Vector2(815, 653.18)
 scale = Vector2(0.796077, 0.679995)
 color = Color(0.133, 0.545, 0.133, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
@@ -908,46 +908,49 @@ polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 [node name="party4" type="Polygon2D" parent="UserInterface/Party"]
 visible = false
 z_index = -1
-position = Vector2(217, 183)
+position = Vector2(999, 653.18)
 scale = Vector2(0.796077, 0.679995)
 color = Color(0.133, 0.545, 0.133, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 
 [node name="atkCooldown" type="Timer" parent="UserInterface/Party"]
 
-[node name="readyIndicators" type="Node" parent="UserInterface/Party"]
+[node name="readyIndicators" type="Control" parent="UserInterface/Party"]
+anchors_preset = 0
 
 [node name="readyindicator" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
-position = Vector2(297.125, 558.805)
+position = Vector2(505.561, 714.537)
 scale = Vector2(0.200417, 0.200417)
 polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
 uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
 
 [node name="readyindicator2" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
-position = Vector2(488, 560)
+position = Vector2(696.436, 715.732)
 scale = Vector2(0.200417, 0.200417)
 polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
 uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
 
 [node name="readyindicator3" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
-position = Vector2(672, 560)
+position = Vector2(880.436, 715.732)
 scale = Vector2(0.200417, 0.200417)
 polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
 uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
 
 [node name="readyindicator4" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
-position = Vector2(856, 560)
+position = Vector2(1064.44, 715.732)
 scale = Vector2(0.200417, 0.200417)
 polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
 uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
 
-[node name="HPbar" type="Node" parent="UserInterface/Party"]
+[node name="HPbar" type="Control" parent="UserInterface/Party"]
+anchors_preset = 0
 
 [node name="hp1" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
-offset_left = 368.0
-offset_top = 632.0
-offset_right = 636.0
-offset_bottom = 633.0
+layout_mode = 0
+offset_left = 576.435
+offset_top = 787.732
+offset_right = 844.435
+offset_bottom = 788.732
 rotation = -1.57079
 scale = Vector2(0.528189, 14.44)
 value = 100.0
@@ -956,10 +959,11 @@ texture_over = SubResource("GradientTexture1D_mnhhx")
 texture_progress = SubResource("GradientTexture1D_6yc32")
 
 [node name="hp2" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
-offset_left = 560.0
-offset_top = 632.0
-offset_right = 828.0
-offset_bottom = 633.0
+layout_mode = 0
+offset_left = 768.435
+offset_top = 787.732
+offset_right = 1036.44
+offset_bottom = 788.732
 rotation = -1.57079
 scale = Vector2(0.5069, 14.44)
 value = 100.0
@@ -968,10 +972,11 @@ texture_over = SubResource("GradientTexture1D_6wwgf")
 texture_progress = SubResource("GradientTexture1D_xtbqr")
 
 [node name="hp3" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
-offset_left = 736.0
-offset_top = 632.0
-offset_right = 1004.0
-offset_bottom = 633.0
+layout_mode = 0
+offset_left = 944.435
+offset_top = 787.732
+offset_right = 1212.44
+offset_bottom = 788.732
 rotation = -1.57079
 scale = Vector2(0.5069, 14.44)
 value = 100.0
@@ -980,10 +985,11 @@ texture_over = SubResource("GradientTexture1D_6wwgf")
 texture_progress = SubResource("GradientTexture1D_xtbqr")
 
 [node name="hp4" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
-offset_left = 928.0
-offset_top = 632.0
-offset_right = 1196.0
-offset_bottom = 633.0
+layout_mode = 0
+offset_left = 1136.44
+offset_top = 787.732
+offset_right = 1404.44
+offset_bottom = 788.732
 rotation = -1.57079
 scale = Vector2(0.5069, 14.44)
 value = 100.0
@@ -1006,9 +1012,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 script = ExtResource("10_ex63h")
 
 [node name="hurtsfx" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 stream = ExtResource("11_go8lt")
 
 [node name="bowsfx" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 stream = ExtResource("12_mnhhx")
 
 [connection signal="area_entered" from="Head/sword/swordCollision" to="." method="_on_sword_collision_area_entered"]

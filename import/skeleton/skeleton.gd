@@ -6,7 +6,7 @@ extends CharacterBody3D
 @export var orig : Node3D
 @export var group = "Enemy"
 @export var killGroup = "Player"
-
+@export var charName = "Skeleton Swordsman"
 @export var enemyRange : Area3D
 var attackZone : Area3D
 @export var label : Label 
@@ -189,54 +189,38 @@ func attack() -> void:
 
 	var killTarget = killArr.pick_random()
 	if killTarget:
-		killTarget.hurt(10)
+		killTarget.hurt(charName, 10)
 		
-func testattack()->void:
-	if (killArr.is_empty()):
-		return
-	var killTarget = killArr.pick_random()
-	if (killTarget):
-		if killTarget.dead:
-			print(killTarget, " DEAD")
-			print(killArr)
-			print(atkArr)
-			killArr.erase(killTarget)
-			atkArr.erase(killTarget)
-			if (killArr.is_empty()):
-				in_attack_zone = false
-			if (atkArr.is_empty()):
-				in_range = false 
-			return
-		killTarget.hurt(10)
-	else:
-		if (killArr.is_empty()):
-			in_attack_zone = false
-		if (atkArr.is_empty()):
-			in_range = false 
-		return
 
-func hurt(dmg: int) -> void:
+func hurt(_enemyName, dmg: int):
 	if !alive:
-		return
-
+		return 
 	var prob = randi() % 100 + 1
 	if prob < DEF_CHANCE:
-		HP -= int(0.4 * dmg + randi() % 4)
+		var dmgAmt =  int(0.4 * dmg + randi() % 4)
+		HP -= dmgAmt
+		#$"../../UI/Info".addText(charName + " for " + str(dmgAmt) + " damage.")
 		print("ENEMY ", HP, " - DEFENDED")
 		$hitsounds.stream = clashsound
 		$hitsounds.play()
-		
+		if HP <= 0:
+			alive = false
+		return [false, dmgAmt]
 	else:
 		print("stun!")
 		stunned = true
 		set_state(EnemyState.STUNNED)
-		HP -= int(dmg + randi() % 7)
+		var dmgAmt = int(dmg + randi() % 7)
+		HP -= dmgAmt
+		#$"../../UI/Info".addText(charName + " for " + str(dmgAmt) + " damage.")
 		print("ENEMY ", HP, " - HIT")
 		$hitsounds.stream = smashsound
 		$hitsounds.play()
+		if HP <= 0:
+			alive = false
+		return [true, dmgAmt]
 		
-	if HP <= 0:
-		alive = false
+
 
 func die() -> void:
 	$removeArea/removeBox.disabled = false

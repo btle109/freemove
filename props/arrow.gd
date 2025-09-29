@@ -1,6 +1,7 @@
 extends Area3D
 @export var lifetime = 3
 @export var speed = 60
+var shooter = "Bach"
 var damage = 5
 var direction = Vector3.FORWARD
 
@@ -23,6 +24,17 @@ func set_direction(new_direction):
 func _on_body_entered(body):
 	# Handle collision with other bodies (e.g., damage, destroy)
 	print("ARROW STRIKES: ", body.name)
+	var stri = shooter + " shoots " 
 	if (body.has_method("hurt")):
-		body.hurt(damage)
+		var ret = body.hurt(shooter, damage)
+		if (!ret):
+			queue_free()
+			return
+		stri += body.charName 
+		stri += " for "
+		stri += str(ret[1])
+		stri += "."
+	else:
+		stri += "nothing."
+	$"../UI/Info".setText(stri)
 	queue_free()

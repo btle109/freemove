@@ -194,14 +194,22 @@ func setInactive(n : int)->void:
 		partyHighlight[0].show()
 		inactiveIndex = 0
 	return
-	
-func hurt(dmg)->void:
+
+func hurt(enemyName, dmg)->void:
 	var dmgArr = []
 	for elem in party:
 		if (!elem.dead):
 			dmgArr.append(elem)
 	var rand = dmgArr.pick_random()
-	rand.hurt(dmg)
+	var ret = rand.hurt(dmg)
+	if (ret):
+		var msg = ""
+		if (rand.HP <= 0):
+			msg = enemyName + " kills " + rand.charName + "."
+		else:
+			msg = enemyName + " strikes " + rand.charName + " for " + str(ret[1]) + "."
+		$"../UI/Info".setText(msg)
+
 	#$hurtsfx.stream = hurtSound
 	$hurtsfx.play()
 	HPBars[rand.index].value = rand.HP/rand.maxHP * 100
@@ -266,11 +274,13 @@ func updateDead()->void:
 			HPBars[elem.index].visible = false
 			deadCount += 1
 			#party.erase(elem)
-			#if (elem.index == activeIndex):
-				#go next
+			if (elem.index == activeIndex):
+				var next = getNext(0)
+				switchActivePlayer(next)
 			#	pass
-			#elif (elem.index == inactiveIndex): 
-			#	#go next
+			elif (elem.index == inactiveIndex): 
+				var next = getNext(0)
+				setInactive(next)
 			#	pass
 		#else:
 			#party.insert(elem.index, elem)
@@ -305,8 +315,10 @@ func _ready():
 	party4.index = 3
 	party2.damage = 5
 	party3.damage = 8
-	party3.HP = 30.0
-	
+	party3.HP = 10.0
+	party2.charName = "Darren"
+	party3.charName = "Buddy"
+	party4.charName = "Evan"
 	for elem in party:
 	#	print(elem.index, " weaponSkill: ", elem.weaponSkill)
 		elem.coolDown = 9000.0 / ((elem.weaponSkill) * (elem.weaponSkill))
@@ -738,23 +750,43 @@ func _input(event):
 					var aim = target.global_position + Vector3(0,1,0)
 					var arrowDir = (aim - $Head/arrowOrigin.global_position).normalized()
 					var arrow = arrowScene.instantiate()
+					arrow.shooter = party[inactiveIndex].charName
 					arrow.damage = (party[inactiveIndex].damage * party[inactiveIndex].weaponSkill/100)/2
 					get_parent().add_child(arrow)
 					arrow.global_position =$Head/arrowOrigin.global_position
 					arrow.set_direction(arrowDir)
 					$bowsfx.stream = bowSound
 					$bowsfx.play()
+					
 				else:
 					$soundsfx.stream =  swingSound
 					$soundsfx.play()
+					var str = party[inactiveIndex].charName + " swings at nothing."
+					$"../UI/Info".setText(str)
 			else:
 				var enemyTarget = meleeArr.pick_random()
 				$soundsfx.stream =  swingSound
 				$soundsfx.play()
 				if (party[inactiveIndex].attack()):
 					if (enemyTarget.has_method("hurt")):
-						enemyTarget.hurt(party[activeIndex].damage);
+						var ret = enemyTarget.hurt(party[inactiveIndex].charName, party[inactiveIndex].damage);
+						if (!ret):
+							return;
+						if (!ret[0]):
+							var msg = party[inactiveIndex].charName + " is blocked by " + enemyTarget.charName + " for " + str(ret[1]) + "."
+							$"../UI/Info".setText(msg)
+						else:
+							var msg = party[inactiveIndex].charName + " strikes " + enemyTarget.charName + " for " + str(ret[1]) + "."
+							$"../UI/Info".setText(msg)
+						if (enemyTarget.HP <= 0):
+							var msg = party[activeIndex].charName + " kills " + enemyTarget.charName + "."
+							$"../UI/Info".setText(msg)
+				else:
+					var str = party[inactiveIndex].charName + " misses."
+					$"../UI/Info".setText(str)
 		else:
+			var str = party[inactiveIndex].charName + " swings at nothing."
+			$"../UI/Info".setText(str)
 			$soundsfx.stream =  swingSound
 			$soundsfx.play()
 			
@@ -765,7 +797,7 @@ func _input(event):
 
 		var cool = party[prevIndex].coolDown
 		if (state == "sprinting"):
-			cool *= 2
+			cool += cool
 		party[prevIndex].atkready = false
 		start_cooldown(prevIndex, cool)
 	
@@ -828,7 +860,18 @@ func _on_sword_collision_body_entered(body: Node3D) -> void:
 	print(body)
 	if (body.has_method("hurt")):
 		#var bounce = true;
-		body.hurt(party[activeIndex].damage);
+		var ret = body.hurt(party[activeIndex].charName, party[activeIndex].damage);
+		if (!ret):
+			return;
+		var msg = ""
+		if (ret[0]):
+			
+			msg = party[activeIndex].charName + " strikes " + body.charName + " for " + str(ret[1]) + "."
+		else:
+			msg = party[activeIndex].charName + " is blocked by " + body.charName + " for " + str(ret[1]) + "."
+		if (body.HP <= 0):
+			msg = party[activeIndex].charName + " kills " + body.charName + "."
+		$"../UI/Info".setText(msg)
 		return;
 	if ($Head/attacks.is_playing() and $Head/attacks.current_animation == "swing_up") or (body == $"."):
 		return
