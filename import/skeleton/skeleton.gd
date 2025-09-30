@@ -182,7 +182,8 @@ func animAttack() -> void:
 func attack() -> void:
 	# Clean up dead or invalid targets
 	killArr = killArr.filter(func(t): return t != null and not t.dead)
-
+	print(killArr)
+	print(atkArr)
 	if killArr.is_empty():
 		in_attack_zone = false
 		return
@@ -193,6 +194,7 @@ func attack() -> void:
 		
 
 func hurt(_enemyName, dmg: int):
+
 	if !alive:
 		return 
 	var prob = randi() % 100 + 1
@@ -251,7 +253,7 @@ func _on_attack_zone_body_entered(body: Node3D) -> void:
 		in_attack_zone = true
 
 func _on_attack_zone_body_exited(body: Node3D) -> void:
-	if atkArr.has(body):
+	if killArr.has(body):
 		killArr.erase(body)
 		if killArr.is_empty():
 			in_attack_zone = false

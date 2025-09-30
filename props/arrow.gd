@@ -33,7 +33,7 @@ func _on_body_entered(body):
 		stri += body.charName 
 		stri += " for "
 		stri += str(ret[1])
-		stri += "."
+		stri += " points."
 	else:
 		stri += "nothing."
 	$"../UI/Info".setText(stri)

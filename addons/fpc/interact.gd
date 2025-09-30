@@ -28,4 +28,7 @@ func get_selection() -> void:
 	print(result)
 
 	if result and result.collider and result.collider.has_method("use"):
-		result.collider.use()
+		var res = result.collider.use()
+		if (res):
+			if (res == 1):
+				$"../..".heal(4, 999)

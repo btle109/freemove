@@ -78,9 +78,9 @@ anchors_preset = -1
 anchor_right = 29.0
 anchor_bottom = 16.2
 offset_left = 493.0
-offset_top = 446.0
-offset_right = -373.0
-offset_bottom = -140.0
+offset_top = 448.0
+offset_right = -376.0
+offset_bottom = -159.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("6_dvny0")
@@ -166,7 +166,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 17)
 
 [node name="sk2" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 19, 0, -2)
-HP = 100
+HP = 10
 orig = NodePath("../orig")
 group = "Player"
 killGroup = "Enemy"

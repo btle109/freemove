@@ -163,6 +163,18 @@ var dead = false;
 
 func refreshPlayer() -> void:
 	$Head/attacks.speed_scale = activePlayer.weaponSkill/100.0
+func heal(index, amt)-> void:
+	print("heal!")
+	if (index == 4):
+		for elem in party:
+			if !elem.dead:
+				elem.heal(amt)
+				HPBars[elem.index].value = elem.HP/elem.maxHP * 100
+
+	else:
+		if !party[index].dead:
+			party[index].heal(amt)
+			HPBars[index].value = party[index].HP/party[index].maxHP * 100
 
 func switchActivePlayer(n: int) -> void:
 	if $Head/attacks.is_playing() || (party[n].dead):
@@ -207,25 +219,25 @@ func hurt(enemyName, dmg)->void:
 		if (rand.HP <= 0):
 			msg = enemyName + " kills " + rand.charName + "."
 		else:
-			msg = enemyName + " strikes " + rand.charName + " for " + str(ret[1]) + "."
+			msg = enemyName + " strikes " + rand.charName + " for " + str(ret[1]) + " points."
 		$"../UI/Info".setText(msg)
 
 	#$hurtsfx.stream = hurtSound
 	$hurtsfx.play()
 	HPBars[rand.index].value = rand.HP/rand.maxHP * 100
 	if(rand.HP <= 0):
-		if (rand.index == inactiveIndex):
-			var next = getNext(0);
-			if (next == -1):
-				updateDead()
-				return
-			partyHighlight[inactiveIndex].hide()
-			inactiveIndex = next;
-			if (party[next].atkready):
-				partyHighlight[next].color = Color(0.133333, 0.545098, 0.133333, 1)
-			else:
-				partyHighlight[next].color = Color(0.862745, 0.0784314, 0.235294, 1)
-			partyHighlight[next].show()
+		#if (rand.index == inactiveIndex):
+		#	var next = getNext(0);
+		#	if (next == -1):
+		#		updateDead()
+		#		return
+		#	partyHighlight[inactiveIndex].hide()
+		#	inactiveIndex = next;
+		#	if (party[next].atkready):
+		#		partyHighlight[next].color = Color(0.133333, 0.545098, 0.133333, 1)
+		#	else:
+		#		partyHighlight[next].color = Color(0.862745, 0.0784314, 0.235294, 1)
+		#	partyHighlight[next].show()
 		updateDead()
 
 func getAvailable(atk : int)->Array:
@@ -251,8 +263,9 @@ func getNext(type : int)->int:
 	for elem in avArr:
 		indexArr.append(elem.index)
 	var size = indexArr.size()  #3
-	if (size == 0 || size == 1):
+	if (size == 0):
 		return -1
+	#wwwwwwww	return indexArr[0]
 	#1, 2 MOD 3 = 2 avAr[2] = 3
 	var index = indexArr.find(inactiveIndex) # = 0
 	print(inactiveIndex, " next is ",avArr[(index+1) % size].index)
@@ -272,15 +285,22 @@ func updateDead()->void:
 			partyImg[elem.index].visible = false
 			readyIndicators[elem.index].visible = false
 			HPBars[elem.index].visible = false
+			partyHighlight[elem.index].visible = false
 			deadCount += 1
 			#party.erase(elem)
 			if (elem.index == activeIndex):
+				print("PARTY ", elem.index, " DEAD")
 				var next = getNext(0)
+				print ("SWITCHING TO, ", next)
 				switchActivePlayer(next)
 			#	pass
 			elif (elem.index == inactiveIndex): 
+				print("PARTY ", elem.index, " DEAD")
 				var next = getNext(0)
-				setInactive(next)
+				print ("SWITCHING TO, ", next)
+				inactiveIndex = next
+				print ("INACTIVE INDEX: ", next)
+
 			#	pass
 		#else:
 			#party.insert(elem.index, elem)
@@ -315,7 +335,9 @@ func _ready():
 	party4.index = 3
 	party2.damage = 5
 	party3.damage = 8
+	party2.HP = 10.0
 	party3.HP = 10.0
+	party4.HP = 20.0
 	party2.charName = "Darren"
 	party3.charName = "Buddy"
 	party4.charName = "Evan"
@@ -334,15 +356,18 @@ func _process(_delta):
 	if pausing_enabled:
 		handle_pausing()		
 	update_debug_menu_per_frame()
-
-	if partyHighlight[inactiveIndex].visible:
+	
+	if inactiveIndex != -1:
+		partyHighlight[inactiveIndex].visible = true
 		if party[inactiveIndex].atkready:
 			if partyHighlight[inactiveIndex].color != Color(0.133333, 0.545098, 0.133333, 1):
 				partyHighlight[inactiveIndex].color = Color(0.133333, 0.545098, 0.133333, 1)
 		else:
 			if partyHighlight[inactiveIndex].color != Color(0.862745, 0.0784314, 0.235294, 1):
 				partyHighlight[inactiveIndex].color = Color(0.862745, 0.0784314, 0.235294, 1)
-	
+	else:
+		partyHighlight[inactiveIndex].visible = false
+		
 	for i in range(0,4):
 		if party[i].atkready and !party[i].dead and i != activeIndex:
 			if readyIndicators[i].color != Color(0.133333, 0.545098, 0.133333, 1):
@@ -730,12 +755,15 @@ func _input(event):
 		
 	if (Input.is_action_just_pressed("F")):
 		var next = getNext(1);
+		if (next == -1):
+			return
 		if (!party[inactiveIndex].atkready):
 			if (next != -1):
 				partyHighlight[inactiveIndex].hide()
-				inactiveIndex = next;
-				partyHighlight[inactiveIndex].show()
+				inactiveIndex = next
+				#artyHighlight[inactiveIndex].show()
 			return
+			
 		var prevIndex = inactiveIndex
 		if (!atkArr.is_empty()):
 			var location = $".".global_position
@@ -773,10 +801,10 @@ func _input(event):
 						if (!ret):
 							return;
 						if (!ret[0]):
-							var msg = party[inactiveIndex].charName + " is blocked by " + enemyTarget.charName + " for " + str(ret[1]) + "."
+							var msg = party[inactiveIndex].charName + " is blocked by " + enemyTarget.charName + " for " + str(ret[1]) + " points."
 							$"../UI/Info".setText(msg)
 						else:
-							var msg = party[inactiveIndex].charName + " strikes " + enemyTarget.charName + " for " + str(ret[1]) + "."
+							var msg = party[inactiveIndex].charName + " strikes " + enemyTarget.charName + " for " + str(ret[1]) + " points."
 							$"../UI/Info".setText(msg)
 						if (enemyTarget.HP <= 0):
 							var msg = party[activeIndex].charName + " kills " + enemyTarget.charName + "."
@@ -793,13 +821,15 @@ func _input(event):
 		partyHighlight[inactiveIndex].hide()
 		if (next != -1):
 			inactiveIndex = next;
-		partyHighlight[inactiveIndex].show()
+		#wpartyHighlight[inactiveIndex].show()
 
 		var cool = party[prevIndex].coolDown
+		print("cool: ", cool)
 		if (state == "sprinting"):
-			cool += cool
+			start_cooldown(prevIndex, cool*2)
+		else:
+			start_cooldown(prevIndex, cool)
 		party[prevIndex].atkready = false
-		start_cooldown(prevIndex, cool)
 	
 	if (Input.is_action_just_pressed("G")):
 		var next = getNext(0);
@@ -866,11 +896,11 @@ func _on_sword_collision_body_entered(body: Node3D) -> void:
 		var msg = ""
 		if (ret[0]):
 			
-			msg = party[activeIndex].charName + " strikes " + body.charName + " for " + str(ret[1]) + "."
+			msg = party[activeIndex].charName + " strikes " + body.charName + " for " + str(ret[1]) + " points."
 		else:
-			msg = party[activeIndex].charName + " is blocked by " + body.charName + " for " + str(ret[1]) + "."
+			msg = party[activeIndex].charName + " is blocked by " + body.charName + " for " + str(ret[1]) + " points."
 		if (body.HP <= 0):
-			msg = party[activeIndex].charName + " kills " + body.charName + "."
+			msg = party[activeIndex].charName + " kills " + body.charName + "w."
 		$"../UI/Info".setText(msg)
 		return;
 	if ($Head/attacks.is_playing() and $Head/attacks.current_animation == "swing_up") or (body == $"."):
