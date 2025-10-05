@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://de0jmv8pnvqoe"]
+
+[ext_resource type="Texture2D" uid="uid://qb21d68d5e5u" path="res://import/spearPix_alb.png" id="1_1r28q"]
+
+[resource]
+resource_name = "Material"
+cull_mode = 2
+albedo_color = Color(0.288518, 0.28851798, 0.28851798, 1)
+albedo_texture = ExtResource("1_1r28q")

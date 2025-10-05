@@ -335,12 +335,14 @@ func _ready():
 	party4.index = 3
 	party2.damage = 5
 	party3.damage = 8
-	party2.HP = 10.0
+	party2.HP = 20.0
 	party3.HP = 10.0
-	party4.HP = 20.0
+	party4.HP = 10.0
+
 	party2.charName = "Darren"
 	party3.charName = "Buddy"
 	party4.charName = "Evan"
+	
 	for elem in party:
 	#	print(elem.index, " weaponSkill: ", elem.weaponSkill)
 		elem.coolDown = 9000.0 / ((elem.weaponSkill) * (elem.weaponSkill))
@@ -357,7 +359,7 @@ func _process(_delta):
 		handle_pausing()		
 	update_debug_menu_per_frame()
 	
-	if inactiveIndex != -1:
+	if inactiveIndex != -1 and !party[inactiveIndex].dead:
 		partyHighlight[inactiveIndex].visible = true
 		if party[inactiveIndex].atkready:
 			if partyHighlight[inactiveIndex].color != Color(0.133333, 0.545098, 0.133333, 1):
@@ -821,7 +823,7 @@ func _input(event):
 		partyHighlight[inactiveIndex].hide()
 		if (next != -1):
 			inactiveIndex = next;
-		#wpartyHighlight[inactiveIndex].show()
+		#wwpartyHighlight[inactiveIndex].show()
 
 		var cool = party[prevIndex].coolDown
 		print("cool: ", cool)
@@ -900,7 +902,7 @@ func _on_sword_collision_body_entered(body: Node3D) -> void:
 		else:
 			msg = party[activeIndex].charName + " is blocked by " + body.charName + " for " + str(ret[1]) + " points."
 		if (body.HP <= 0):
-			msg = party[activeIndex].charName + " kills " + body.charName + "w."
+			msg = party[activeIndex].charName + " kills " + body.charName + "."
 		$"../UI/Info".setText(msg)
 		return;
 	if ($Head/attacks.is_playing() and $Head/attacks.current_animation == "swing_up") or (body == $"."):

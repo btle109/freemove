@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dqex6icaxnr4o"]
+
+[ext_resource type="Texture2D" uid="uid://c4uth56jsp5im" path="res://import/skelshield/skulshield_kiteshield.jpg" id="1_npxnb"]
+
+[resource]
+resource_name = "kiteshield"
+cull_mode = 2
+albedo_color = Color(0.62152386, 0.62152386, 0.6215238, 1)
+albedo_texture = ExtResource("1_npxnb")
+metallic_specular = 0.9
+roughness = 0.9581818
+texture_repeat = false

@@ -2,13 +2,18 @@ extends CharacterBody3D
 
 # === CONFIG ===
 @export var MoveSpeed: float = 3
-@export var HP = 200
+@export var HP = 125
 @export var orig : Node3D
 @export var group = "Enemy"
 @export var killGroup = "Player"
 @export var charName = "Skeleton Swordsman"
 @export var enemyRange : Area3D
 var attackZone : Area3D
+var walkName = "skelChar|Walk"
+var atkName = "skelChar|skelAttack"
+var stunName = "newAnimfbx/skelChar|Stun"
+var dieName = "newAnimfbx/skelChar|die"
+var restName = "skelChar|rest"
 @export var label : Label 
 var atkArr = []
 var killArr = []
@@ -21,8 +26,8 @@ var atkTarget
 @onready var steps_audio: AudioStreamPlayer3D = $steps
 
 # === CONSTANTS ===
-const DEF_CHANCE = 50
-const ATK_CHANCE = 50
+var DEF_CHANCE = 50
+var ATK_CHANCE = 50
 
 # === STATES ===
 enum EnemyState { IDLE, WALKING, ATTACKING, STUNNED, DEAD }
@@ -62,23 +67,24 @@ func set_state(new_state: EnemyState) -> void:
 		return
 	if !can_change_state and new_state not in [EnemyState.STUNNED, EnemyState.DEAD]:
 		return
-	#print("transition from: ", state, " to ", new_state)
+	
 	state = new_state
 
 	match state:
 		EnemyState.IDLE:
-			play_animation("skelChar|rest")
+			play_animation(restName)
 
 		EnemyState.WALKING:
-			play_animation("skelChar|Walk", true)
+			play_animation(walkName, true)
 
 		EnemyState.ATTACKING:
-			can_change_state = false
-			play_animation("skelChar|skelAttack", false)
+			# The action is now handled in _physics_process.
+			# We can leave this empty.
+			pass
 
 		EnemyState.STUNNED:
 			can_change_state = false
-			play_animation("newAnimfbx/skelChar|Stun", false)
+			play_animation(stunName, false)
 
 		EnemyState.DEAD:
 			die()
@@ -124,7 +130,6 @@ func _physics_process(delta: float) -> void:
 	if !alive:
 		if state != EnemyState.DEAD:
 			set_state(EnemyState.DEAD)
-		move_and_slide()
 		return
 	clean_dead_targets()
 	# Movement & state handling
@@ -137,7 +142,12 @@ func _physics_process(delta: float) -> void:
 	# Priority: ATTACK > WALK > IDLE
 	if in_attack_zone:
 		velocity = Vector3.ZERO
-		set_state(EnemyState.ATTACKING)
+		set_state(EnemyState.ATTACKING) # First, ensure we're in the attack state.
+
+		# Now, perform the action for this state if we are able.
+		if can_change_state:
+			can_change_state = false # Immediately lock to prevent re-triggering mid-animation
+			play_animation(atkName, false)
 	elif in_range:
 		if atkTarget != null:
 			handle_movement(delta, atkTarget.global_position)
@@ -154,7 +164,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func handle_movement(delta: float, target_pos: Vector3 = player.global_position) -> void:
-
+	if (dead):
+		velocity = Vector3.ZERO
+		return;
 	navigation_agent.set_target_position(target_pos)
 	
 	if navigation_agent.is_navigation_finished():
@@ -229,7 +241,7 @@ func die() -> void:
 	if dead:
 		return
 	dead = true
-	animation_player.play("newAnimfbx/skelChar|die")
+	animation_player.play(dieName)
 	await get_tree().create_timer(5).timeout
 	queue_free()
 
@@ -261,14 +273,11 @@ func _on_attack_zone_body_exited(body: Node3D) -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	can_change_state = true
 
-	if anim_name == "newAnimfbx/skelChar|Stun":
+	if anim_name == stunName:
 		stunned = false
 	# Do not force a new state — let _physics_process naturally re-evaluate
-	elif anim_name == "skelChar|skelAttack":
-		if in_attack_zone:
-			set_state(EnemyState.ATTACKING)
-			play_animation("skelChar|skelAttack", false)
-			
+
+	 		
 func use() -> void:
 	label.text = "A skeleton."
 	queue_free()

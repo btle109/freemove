@@ -797,7 +797,7 @@ libraries = {
 }
 
 [node name="sword" type="MeshInstance3D" parent="Head"]
-transform = Transform3D(0.494974, -0.494975, 1.7918e-06, 0, -2.53399e-06, -0.7, 0.494974, 0.494975, -1.7918e-06, 0.946552, -0.68621, -1.5)
+transform = Transform3D(0.49497405, -0.4949749, 1.7918034e-06, 0, -2.5339943e-06, -0.7, 0.4949739, 0.49497506, -1.7918039e-06, 0.946552, -0.68621, -1.5)
 visible = false
 mesh = ExtResource("3_qaoyu")
 

@@ -24,12 +24,26 @@ func set_direction(new_direction):
 func _on_body_entered(body):
 	# Handle collision with other bodies (e.g., damage, destroy)
 	print("ARROW STRIKES: ", body.name)
-	var stri = shooter + " shoots " 
+	var stri = shooter
+	if (body.has_method("block")):
+		print ("BODY CAN BLOCK")
+		if (randi()%100 + 1 <= 65):
+			print ("BODY CAN BLOCK")
+			stri += " is blocked entirely by "
+			stri += body.charName 
+			stri += "."
+			body.block()
+			$"../UI/Info".setText(stri)
+			queue_free()
+			return
+		else:
+			pass
 	if (body.has_method("hurt")):
 		var ret = body.hurt(shooter, damage)
 		if (!ret):
 			queue_free()
 			return
+		stri += " shoots "
 		stri += body.charName 
 		stri += " for "
 		stri += str(ret[1])

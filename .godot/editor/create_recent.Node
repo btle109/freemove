@@ -1,15 +1,14 @@
+CollisionShape3D
+CharacterBody3D
 Label
 RichTextLabel
 Control
 Area3D
 Node3D
 RigidBody3D
-CollisionShape3D
 MeshInstance3D
 AudioStreamPlayer3D
 TextureProgressBar
 ProgressBar
 Node
 Polygon2D
-NavigationRegion3D
-NavigationAgent3D
