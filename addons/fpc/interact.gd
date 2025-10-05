@@ -15,7 +15,7 @@ func get_selection() -> void:
 
 	var space_state = get_world_3d().direct_space_state
 	var start = project_ray_origin(mouse)
-	var end = project_position(mouse, 6)
+	var end = project_position(mouse, 4)
 
 	var ray_params = PhysicsRayQueryParameters3D.new()
 	ray_params.from = start

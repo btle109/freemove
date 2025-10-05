@@ -1,9 +1,12 @@
 extends "res://import/skeleton/skeleton.gd"
 var bashSound = preload("res://sound/shield_impact-2-382412.mp3")
 func _ready()->void:
+	navigation_agent.avoidance_priority = randf_range(0.3, 0.7)
+	walk_rot_speed = randf_range(6.0, 8.0)
+	attack_rot_speed = randf_range(6.0, 8.0)
 	MoveSpeed = 2.5
-	DEF_CHANCE = 60
-	ATK_CHANCE = 35
+	DEF_CHANCE = 70
+	ATK_CHANCE = 50
 	walkName = "walk"
 	atkName = "skelAttack"
 	stunName = "stun"

@@ -768,6 +768,9 @@ libraries = {
 speed_scale = 0.62
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+radius = 3.0
+time_horizon_agents = 2.0
 
 [node name="attackZone" type="Area3D" parent="."]
 collision_layer = 0

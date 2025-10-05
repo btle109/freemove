@@ -168,7 +168,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 17)
 
 [node name="sk2" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 19, 0, 0)
-HP = 75
+HP = 10
 orig = NodePath("../orig")
 group = "Player"
 killGroup = "Enemy"

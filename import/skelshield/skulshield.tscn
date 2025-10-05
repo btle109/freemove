@@ -284,7 +284,7 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n4jcw"]
-size = Vector3(1.2, 2.7, 1.8000001)
+size = Vector3(1.2, 2.7, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xfjs2"]
 size = Vector3(1.8000001, 2, 1.9)
@@ -577,10 +577,13 @@ libraries = {
 speed_scale = 0.75
 
 [node name="ObjCol" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.100000024, 1.4500002, 0.34999996)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.100000024, 1.4500002, 0.4499999)
 shape = SubResource("BoxShape3D_n4jcw")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+radius = 3.0
+time_horizon_agents = 2.0
 
 [node name="attackZone" type="Area3D" parent="."]
 collision_layer = 0

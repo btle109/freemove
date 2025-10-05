@@ -57,6 +57,8 @@ extends CharacterBody3D
 @onready var swingSound = load("res://sound/sound2.mp3")
 @export var arrowScene : PackedScene
 var bowSound = preload("res://sound/65733__erdie__bow01.wav")
+var hurtSound = preload("res://sound/sound.wav")
+var clashSound = preload("res://sound/swordclashshort.mp3")
 #@onready var hurtSound = load("res://sound/sound.wav")
 var atkArr = []
 
@@ -208,37 +210,37 @@ func setInactive(n : int)->void:
 	return
 
 func hurt(enemyName, dmg)->void:
+
 	var dmgArr = []
 	for elem in party:
 		if (!elem.dead):
 			dmgArr.append(elem)
 	var rand = dmgArr.pick_random()
-	var ret = rand.hurt(dmg)
-	if (ret):
-		var msg = ""
-		if (rand.HP <= 0):
-			msg = enemyName + " kills " + rand.charName + "."
-		else:
-			msg = enemyName + " strikes " + rand.charName + " for " + str(ret[1]) + " points."
+	var msg = ""
+	if (dmg == -1):
+		msg = enemyName + " swings at " + rand.charName + " and misses."
 		$"../UI/Info".setText(msg)
-
-	#$hurtsfx.stream = hurtSound
-	$hurtsfx.play()
-	HPBars[rand.index].value = rand.HP/rand.maxHP * 100
-	if(rand.HP <= 0):
-		#if (rand.index == inactiveIndex):
-		#	var next = getNext(0);
-		#	if (next == -1):
-		#		updateDead()
-		#		return
-		#	partyHighlight[inactiveIndex].hide()
-		#	inactiveIndex = next;
-		#	if (party[next].atkready):
-		#		partyHighlight[next].color = Color(0.133333, 0.545098, 0.133333, 1)
-		#	else:
-		#		partyHighlight[next].color = Color(0.862745, 0.0784314, 0.235294, 1)
-		#	partyHighlight[next].show()
-		updateDead()
+	else:
+		var ret = rand.hurt(dmg)
+		if (ret):
+			if (rand.HP <= 0):
+				msg = enemyName + " kills " + rand.charName + "."
+			elif (dmg == -1):
+				msg = enemyName + " is blocked entirely by " + rand.charName + " . "
+				$hurtsfx.stream = clashSound
+				$hurtsfx.play()
+			elif (ret[0] == false):
+				msg = enemyName + " is blocked by " + rand.charName + " for " + str(ret[1]) + " points."
+				$hurtsfx.stream = clashSound
+				$hurtsfx.play()
+			elif (ret[0] == true):
+				msg = enemyName + " strikes " + rand.charName + " for " + str(ret[1]) + " points."
+				$"../UI/Info".setText(msg)
+				$hurtsfx.stream = hurtSound
+				$hurtsfx.play()
+			HPBars[rand.index].value = rand.HP/rand.maxHP * 100
+			if(rand.HP <= 0):
+				updateDead()
 
 func getAvailable(atk : int)->Array:
 	var availableArr = []
@@ -335,9 +337,10 @@ func _ready():
 	party4.index = 3
 	party2.damage = 5
 	party3.damage = 8
-	party2.HP = 20.0
-	party3.HP = 10.0
-	party4.HP = 10.0
+	party1.HP = 10.0
+	#party2.HP = 20.0
+	#party3.HP = 10.0
+	#party4.HP = 10.0
 
 	party2.charName = "Darren"
 	party3.charName = "Buddy"

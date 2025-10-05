@@ -2,12 +2,16 @@ extends CharacterBody3D
 
 # === CONFIG ===
 @export var MoveSpeed: float = 3
+@export var walk_rot_speed: float = 8.0  # default
+@export var attack_rot_speed: float = 12.0  # default
+
 @export var HP = 125
 @export var orig : Node3D
 @export var group = "Enemy"
 @export var killGroup = "Player"
 @export var charName = "Skeleton Swordsman"
 @export var enemyRange : Area3D
+@export var damage = 18
 var attackZone : Area3D
 var walkName = "skelChar|Walk"
 var atkName = "skelChar|skelAttack"
@@ -18,16 +22,16 @@ var restName = "skelChar|rest"
 var atkArr = []
 var killArr = []
 var atkTarget
-
+var offset_strength = 1.1
 # === NODES ===
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var screaming_audio: AudioStreamPlayer3D = $screaming
 @onready var steps_audio: AudioStreamPlayer3D = $steps
-
+ 
 # === CONSTANTS ===
 var DEF_CHANCE = 50
-var ATK_CHANCE = 50
+var ATK_CHANCE = 70
 
 # === STATES ===
 enum EnemyState { IDLE, WALKING, ATTACKING, STUNNED, DEAD }
@@ -46,12 +50,16 @@ var sound = preload("res://import/skeleton/skeletonscream.mp3")
 var sound2 = preload("res://import/skeleton/skeletonscream2.mp3")
 var smashsound = preload("res://sound/smashsound.mp3")
 var clashsound = preload("res://sound/swordclashshort.mp3")
+var swingSound = preload("res://sound/sound2.mp3")
 # === REFERENCES ===
 var player: Node3D = null
 
 # === READY ===
 func _ready() -> void:
 	#player = get_tree().get_nodes_in_group("Player")[0]
+	walk_rot_speed = randf_range(6.0, 10.0)
+	attack_rot_speed = randf_range(8.0, 12.0)
+	navigation_agent.avoidance_priority = randf_range(0, 0.5)
 	attackZone = $attackZone
 	add_to_group(group)
 	if enemyRange:
@@ -126,48 +134,72 @@ func clean_dead_targets() -> void:
 		in_attack_zone = false
 		
 func _physics_process(delta: float) -> void:
-	#global_position.y = 0
-	if !alive:
+	# If dead, lock in DEAD state
+	if not alive:
 		if state != EnemyState.DEAD:
 			set_state(EnemyState.DEAD)
 		return
+
 	clean_dead_targets()
-	# Movement & state handling
+
+	# If stunned, stop movement
 	if stunned:
 		velocity = Vector3.ZERO
 		move_and_slide()
 		return
-		
-	choose_target()
-	# Priority: ATTACK > WALK > IDLE
-	if in_attack_zone:
-		velocity = Vector3.ZERO
-		set_state(EnemyState.ATTACKING) # First, ensure we're in the attack state.
 
-		# Now, perform the action for this state if we are able.
+	choose_target()
+
+	# Default velocity
+	velocity = Vector3.ZERO
+
+	# --- If we have a target, calculate desired position with offset ---
+	var desired_target: Vector3 = Vector3.ZERO
+	if atkTarget != null:
+		var offset_angle = float(get_instance_id() % 360) * 0.01745 # radians
+		var offset = Vector3(cos(offset_angle), 0, sin(offset_angle)) * offset_strength
+		desired_target = atkTarget.global_position + offset
+
+	# --- ATTACK ZONE ---
+	if in_attack_zone and atkTarget != null:
+		set_state(EnemyState.ATTACKING)
+
+		# Rotate toward target
+		var face_dir = (desired_target - global_position).normalized()
+		face_dir.y = 0
+		var attack_yaw = atan2(face_dir.x, face_dir.z)
+		rotation.y = lerp_angle(rotation.y, attack_yaw, attack_rot_speed * delta)
+
+		# Trigger attack animation
 		if can_change_state:
-			can_change_state = false # Immediately lock to prevent re-triggering mid-animation
+			can_change_state = false
 			play_animation(atkName, false)
-	elif in_range:
-		if atkTarget != null:
-			handle_movement(delta, atkTarget.global_position)
-			set_state(EnemyState.WALKING)
+
+	# --- WALKING TOWARD TARGET ---
+	elif in_range and atkTarget != null:
+		set_state(EnemyState.WALKING)
+		handle_movement(delta, desired_target)
+
+	# --- RETURN TO ORIGIN ---
+	elif global_position.distance_to(orig.global_position) > 0.5:
+		set_state(EnemyState.WALKING)
+		handle_movement(delta, orig.global_position)
+
+	# --- IDLE ---
 	else:
-	# If not in range and not at origin, return to origin
-		if global_position.distance_to(orig.global_position) > 0.5:
-			handle_movement(delta, orig.global_position)
-			set_state(EnemyState.WALKING)
-		else:
-			velocity = Vector3.ZERO
-			set_state(EnemyState.IDLE)
+		set_state(EnemyState.IDLE)
+		velocity = Vector3.ZERO
 
 	move_and_slide()
+
 	
 func handle_movement(delta: float, target_pos: Vector3 = player.global_position) -> void:
 	if (dead):
 		velocity = Vector3.ZERO
 		return;
-	navigation_agent.set_target_position(target_pos)
+	var offset_angle = float(get_instance_id() % 360) * 0.01745 # convert to radians
+	var offset = Vector3(cos(offset_angle), 0, sin(offset_angle)) * offset_strength
+	navigation_agent.set_target_position(target_pos + offset)
 	
 	if navigation_agent.is_navigation_finished():
 		set_state(EnemyState.IDLE)
@@ -180,8 +212,13 @@ func handle_movement(delta: float, target_pos: Vector3 = player.global_position)
 	direction = direction.normalized()
 
 	if direction.length() > 0.01:
-		var target_rotation = atan2(direction.x, direction.z)
-		rotation.y = lerp_angle(rotation.y, target_rotation, 8 * delta)
+		var look_dir = (target_pos - global_position).normalized()
+		look_dir.y = 0
+		var target_yaw = atan2(look_dir.x, look_dir.z)
+		rotation.y = lerp_angle(rotation.y, target_yaw, walk_rot_speed * delta)
+  # tweak 4–8 range
+		#var target_rotation = atan2(direction.x, direction.z)
+		#rotation.y = lerp_angle(rotation.y, target_rotation, 8 * delta)
 		velocity = direction * MoveSpeed
 	else:
 		velocity = Vector3.ZERO
@@ -202,7 +239,13 @@ func attack() -> void:
 
 	var killTarget = killArr.pick_random()
 	if killTarget:
-		killTarget.hurt(charName, 10)
+		var prob = randi()%100 + 1
+		if (prob < ATK_CHANCE):
+			killTarget.hurt(charName, damage)
+		else:
+			$hitsounds.stream =  swingSound
+			$hitsounds.play()
+			killTarget.hurt(charName, -1)
 		
 
 func hurt(_enemyName, dmg: int):

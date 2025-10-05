@@ -1,12 +1,12 @@
 CollisionShape3D
+Area3D
+MeshInstance3D
 CharacterBody3D
 Label
 RichTextLabel
 Control
-Area3D
 Node3D
 RigidBody3D
-MeshInstance3D
 AudioStreamPlayer3D
 TextureProgressBar
 ProgressBar

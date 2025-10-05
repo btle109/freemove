@@ -19,13 +19,23 @@ func heal(amt):
 	else:
 		HP = HP + amt
 func hurt(dmg):
-	dmg += -3 + randi() % 7
-	HP -= dmg;
+	var ret = false
+	var prob = randi()% 100 + 1
+	if (prob < weaponSkill/3.0): #block chance
+		dmg += -7 + randi() % 4		
+	else:
+		dmg += -3 + randi() % 7
+		ret = true
+	if (dmg <= 0):
+		return [false, -1]
+	else:
+		HP -= dmg;
 	if (HP <= 0):
 		dead = true;
 		atkready = false;
+
 	#print("curr health: ", HP)
-	return [true, dmg]
+	return [ret, dmg]
 
 func attack()->bool:
 	#atk logic
