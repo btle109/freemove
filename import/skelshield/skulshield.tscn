@@ -287,7 +287,7 @@ _data = {
 size = Vector3(1.2, 2.7, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xfjs2"]
-size = Vector3(1.8000001, 2, 1.9)
+size = Vector3(2.1000001, 2, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_so80k"]
 size = Vector3(2.3, 2, 3.2)
@@ -312,7 +312,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(0.99999183, 0.004017781, 0.0004699884, -0.004045177, 0.9932195, 0.11618391, -5.820766e-11, -0.11618486, 0.9932276, 0.002582876, 0.638505, -0.07469118)
 bones/1/enabled = true
 bones/1/position = Vector3(0.002582876, 0.638505, -0.07469118)
-bones/1/rotation = Quaternion(-0.05819092, 0.00011769684, -0.0020191649, 0.9983035)
+bones/1/rotation = Quaternion(-0.058190916, 0.000117696836, -0.0020191649, 0.9983034)
 bones/1/scale = Vector3(1, 1, 0.99999994)
 bones/2/name = "mixamorig_Spine1"
 bones/2/parent = 1
@@ -533,7 +533,7 @@ bones/32/rotation = Quaternion(-2.8307547e-06, 6.71891e-06, 3.9888546e-06, 1)
 bones/32/scale = Vector3(1, 1.0000001, 1.0000001)
 
 [node name="mixamorig_Head" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.9997338, 0.0229797, -0.002010219, -0.023067452, 0.9959292, -0.08713239, -2.3981556e-07, 0.08715558, 0.99619454, -0.0058748345, 11.534732, 0.39423236)
+transform = Transform3D(0.9997338, 0.022979701, -0.002010219, -0.023067456, 0.99592924, -0.08713238, -2.393499e-07, 0.087155566, 0.99619454, -0.005874831, 11.534732, 0.39423227)
 bone_name = "mixamorig_Head"
 bone_idx = 5
 
@@ -553,7 +553,7 @@ mesh = SubResource("ArrayMesh_d0xbq")
 skeleton = NodePath("")
 
 [node name="mixamorig_RightHand" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.56298304, 0.46376994, 0.6840813, 0.82639354, -0.30476955, -0.47348544, -0.011101112, 0.8318852, -0.5548367, -1.8585713, 7.938176, 1.3071749)
+transform = Transform3D(0.56298304, 0.46376994, 0.6840813, 0.82639354, -0.30476955, -0.47348544, -0.01110111, 0.8318852, -0.55483663, -1.8585713, 7.938176, 1.3071748)
 bone_name = "mixamorig_RightHand"
 bone_idx = 18
 
@@ -589,7 +589,7 @@ time_horizon_agents = 2.0
 collision_layer = 0
 
 [node name="ViewCol" type="CollisionShape3D" parent="attackZone"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.450581e-09, 1.8, 1.4499999)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04999987, 1.8, 1.6999999)
 shape = SubResource("BoxShape3D_xfjs2")
 
 [node name="steps" type="AudioStreamPlayer3D" parent="."]

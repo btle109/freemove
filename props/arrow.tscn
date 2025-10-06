@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://cvr1hvkpke2cq"]
 
 [ext_resource type="Script" uid="uid://bni1v2qe0rugr" path="res://props/arrow.gd" id="1_g1axj"]
-[ext_resource type="PackedScene" uid="uid://csexg3tybicq0" path="res://import/arrow.glb" id="2_anwtj"]
+[ext_resource type="PackedScene" uid="uid://csexg3tybicq0" path="res://import/arrow/arrow.glb" id="2_anwtj"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_81g7r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qiahp"]
-radius = 0.2
-height = 3.0
+radius = 0.1
+height = 0.9
 
 [node name="arrow" type="Area3D"]
 script = ExtResource("1_g1axj")
@@ -18,7 +18,7 @@ visible = false
 mesh = SubResource("SphereMesh_81g7r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-8.2503e-16, 2.64243e-08, -0.35, -0.25, -1.5299e-08, 1.48231e-22, -1.09278e-08, 0.35, 2.64243e-08, 0, 0, 0)
+transform = Transform3D(-3.30013e-15, 7.54979e-08, -1, -1, -4.371139e-08, 1.1918964e-20, -4.371139e-08, 1, 7.54979e-08, -3.774897e-09, 2.185569e-09, -0.050000012)
 shape = SubResource("CapsuleShape3D_qiahp")
 
 [node name="arrow" parent="." instance=ExtResource("2_anwtj")]

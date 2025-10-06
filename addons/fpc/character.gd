@@ -785,6 +785,7 @@ func _input(event):
 					var arrow = arrowScene.instantiate()
 					arrow.shooter = party[inactiveIndex].charName
 					arrow.damage = (party[inactiveIndex].damage * party[inactiveIndex].weaponSkill/100)/2
+					arrow.label = $"../UI/Info"
 					get_parent().add_child(arrow)
 					arrow.global_position =$Head/arrowOrigin.global_position
 					arrow.set_direction(arrowDir)

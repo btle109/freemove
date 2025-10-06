@@ -1,6 +1,8 @@
 extends Area3D
 @export var lifetime = 3
 @export var speed = 60
+var messaging = true;
+var label : Label 
 var shooter = "Bach"
 var damage = 5
 var direction = Vector3.FORWARD
@@ -33,7 +35,8 @@ func _on_body_entered(body):
 			stri += body.charName 
 			stri += "."
 			body.block()
-			$"../UI/Info".setText(stri)
+			if (messaging):
+				label.setText(stri)
 			queue_free()
 			return
 		else:
@@ -50,5 +53,6 @@ func _on_body_entered(body):
 		stri += " points."
 	else:
 		stri += "nothing."
-	$"../UI/Info".setText(stri)
+	if (messaging):
+		label.setText(stri)
 	queue_free()

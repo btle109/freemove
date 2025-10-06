@@ -12,7 +12,7 @@ func _ready()->void:
 	stunName = "stun"
 	dieName = "die"
 	restName = "rest"
-	
+	sound = load("res://import/skelshield/skelescream.mp3")
 	attackZone = $attackZone
 	add_to_group(group)
 	if enemyRange:

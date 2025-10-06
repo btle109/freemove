@@ -1,9 +1,9 @@
 [gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://ba8foggnyg4p7"]
 
-[ext_resource type="Texture2D" uid="uid://cxd7rawjja42x" path="res://skeleton/scalemail_alb.png" id="1_aes0p"]
-[ext_resource type="Texture2D" uid="uid://dk2tkl7jy5s7t" path="res://skeleton/scalemail_height.png" id="2_v6gxd"]
-[ext_resource type="Texture2D" uid="uid://x1au8psx1rsr" path="res://skeleton/scalemail_nrl.png" id="3_1kmh4"]
-[ext_resource type="Texture2D" uid="uid://dirfdqjpsej3h" path="res://skeleton/scalemale_rough.png" id="4_0jj84"]
+[ext_resource type="Texture2D" uid="uid://cxd7rawjja42x" path="res://import/skeleton/scalemail_alb.png" id="1_aes0p"]
+[ext_resource type="Texture2D" uid="uid://dk2tkl7jy5s7t" path="res://import/skeleton/scalemail_height.png" id="2_v6gxd"]
+[ext_resource type="Texture2D" uid="uid://x1au8psx1rsr" path="res://import/skeleton/scalemail_nrl.png" id="3_1kmh4"]
+[ext_resource type="Texture2D" uid="uid://dirfdqjpsej3h" path="res://import/skeleton/scalemale_rough.png" id="4_0jj84"]
 
 [resource]
 resource_name = "Scalemail"

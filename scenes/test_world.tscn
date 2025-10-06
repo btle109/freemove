@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cm0y4md206lmb"]
+[gd_scene load_steps=21 format=3 uid="uid://cm0y4md206lmb"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_umbte"]
 [ext_resource type="PackedScene" uid="uid://cvr1hvkpke2cq" path="res://props/arrow.tscn" id="2_ar7ra"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dgvxuijdt5w0x" path="res://props/info.gd" id="8_nrstc"]
 [ext_resource type="PackedScene" uid="uid://142ts2cqci3b" path="res://import/skeleton/skullowpoly.tscn" id="9_7448y"]
 [ext_resource type="PackedScene" uid="uid://bq8f2wjgodf20" path="res://import/skelshield/skulshield.tscn" id="11_ixgyf"]
+[ext_resource type="PackedScene" uid="uid://cpivjo7bcav6s" path="res://import/skelArcher/skularcher.tscn" id="12_8hcw6"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_nrstc"]
 vertices = PackedVector3Array(-5.36947, 0.337303, -5.5, -5.11947, 0.247303, -10.25, -5.61947, 0.427303, -10.5, -13.6195, 3.3373, -14.25, -13.6195, 3.3373, -5.5, -12.2445, 2.7873, -5.5, -10.8695, 2.2473, -5.5, -9.49447, 1.7873, -5.5, -8.11947, 1.2473, -5.5, -6.74447, 0.787303, -5.5, -5.18197, 0.247303, -9.0625, -6.95281, 0.877303, -11.125, -9.61947, 1.7873, -12.375, -10.9528, 2.3373, -13, -6.88932, 0.787303, -6.98217, -11.3945, 2.4273, -11.525, -6.86941, 0.787303, -10.0201, -9.85934, 1.8773, -7.00414, -11.3944, 2.4273, -7.01513, -8.35443, 1.3373, -9.98105, -9.88944, 1.8773, -9.99204, -5.61947, 0.427303, -14.25, -6.95281, 0.877303, -14.25, -9.61947, 1.7873, -14.25, -10.9528, 2.3373, -14.25, -6.85946, 0.787303, -13.014, -4.61947, 2.0673, -14.25, -4.61947, 2.0673, -11.5, -1.36947, 2.0673, -11.5, -1.36947, 2.0673, -14.25, -4.86947, 0.157303, -5.5, -4.36947, 0.017303, -10.5, -4.74447, 0.057303, -6.75, -4.61947, 0.017303, -8, 4.63053, 0.017303, -14.25, -4.36947, 0.017303, -14.25, -4.61947, 0.057303, -4.75, 4.63053, 0.017303, -5, -2.38932, 0.017303, -6.98217, -4.61947, 0.007303, 7, -1.11947, 0.007303, 7, -0.869474, 0.007303, 5.75, 5.13053, 0.007303, -4.5, 0.880526, 0.007303, 5.75, -2.38944, 0.007303, -2.49204, 0.605526, 0.007303, -4.025, 1.13053, 0.007303, 6.25, -0.869474, 0.007303, 8.25, -4.61947, 0.007303, 24.5, 0.880526, 0.007303, 8.25, 24.3805, 0.007303, -4.5, 24.3805, 0.007303, 24.5)
@@ -168,7 +169,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 17)
 
 [node name="sk2" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("9_7448y")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 19, 0, 0)
-HP = 10
 orig = NodePath("../orig")
 group = "Player"
 killGroup = "Enemy"
@@ -179,6 +179,22 @@ label = NodePath("../../UI/Info")
 transform = Transform3D(-0.8660254, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.8660254, 3, 0, 15)
 MoveSpeed = 2.5
 orig = NodePath("../orig")
+enemyRange = NodePath("../enemyRange")
+label = NodePath("../../UI/Info")
+
+[node name="skularcher" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("12_8hcw6")]
+transform = Transform3D(-0.25881904, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, -0.25881904, 1, 0, 11)
+orig = NodePath("../orig")
+charName = "Skeleton Archer"
+enemyRange = NodePath("../enemyRange")
+label = NodePath("../../UI/Info")
+
+[node name="skularcher2" parent="Enemies" node_paths=PackedStringArray("orig", "enemyRange", "label") instance=ExtResource("12_8hcw6")]
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 22, 0, 3)
+orig = NodePath("../orig")
+group = "Player"
+killGroup = "Enemy"
+charName = "Skeleton Archer"
 enemyRange = NodePath("../enemyRange")
 label = NodePath("../../UI/Info")
 
