@@ -1,8 +1,3 @@
-res://import/skelshield/skulshield.tscn
-res://import/skelArcher/skularcher.tscn
-res://import/skelArcher/skularcher.gd
-res://addons/fpc/character.tscn
-res://props/arrow.gd
-res://addons/fpc/character.gd
+res://import/skeleton/skeleton.gd
 res://scenes/test_world.tscn
-res://import/skeleton/skullowpoly.tscn
+res://import/skelArcher/skularcher.gd

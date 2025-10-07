@@ -108,7 +108,7 @@ func shoot() -> void:
 		var arrow = arrowScene.instantiate()
 		arrow.messaging = false
 		arrow.shooter = "Skeleton Archer"
-		arrow.damage = damage/2
+		arrow.damage = round(damage)/2
 		get_parent().add_child(arrow)
 		arrow.global_position =$skelChar/arrowOrigin.global_position
 		arrow.set_direction(arrowDir)

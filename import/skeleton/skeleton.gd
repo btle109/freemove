@@ -120,7 +120,15 @@ func choose_target() -> void:
 			atkTarget = null
 			return
 
-		atkTarget = atkArr.pick_random()
+		var nearest = atkArr[0]
+		var best_dist := global_position.distance_to(nearest.global_position)
+		for i in range(1, atkArr.size()):
+			var t = atkArr[i]
+			var d = global_position.distance_to(t.global_position)
+			if d < best_dist:
+				best_dist = d
+				nearest = t
+		atkTarget = nearest
 			
 func clean_dead_targets() -> void:
 	atkArr = atkArr.filter(func(t): return t != null and not t.dead)
@@ -317,6 +325,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	can_change_state = true
 
 	if anim_name == stunName:
+		clean_dead_targets()
+		atkTarget = null
+		choose_target()
 		stunned = false
 	# Do not force a new state — let _physics_process naturally re-evaluate
 
