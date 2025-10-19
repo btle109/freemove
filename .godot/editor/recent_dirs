@@ -1,3 +1,5 @@
+res://scenes
+res://addons/fpc/reticles
 res://import/arrow
 res://import/skeleton
 res://import/skelshield
@@ -7,7 +9,5 @@ res://props
 res://sound
 res://party
 res://addons
-res://addons/fpc/reticles
 res://addons/fpc
 res://fonts
-res://scenes

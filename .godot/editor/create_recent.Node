@@ -1,14 +1,14 @@
+Button
+Label
+OptionButton
+TextEdit
+Control
+ColorRect
+Label      - Matches the "text" keyword.
+Polygon2D
 Node3D
 SubViewportContainer
 SubViewport
 CharacterBody3D
 CollisionShape3D
 Area3D
-MeshInstance3D
-Label
-RichTextLabel
-Control
-RigidBody3D
-AudioStreamPlayer3D
-TextureProgressBar
-ProgressBar

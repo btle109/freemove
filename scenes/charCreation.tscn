@@ -1,0 +1,754 @@
+[gd_scene load_steps=7 format=3 uid="uid://bye21bocqjvtg"]
+
+[ext_resource type="Script" uid="uid://d5o6luv70vj7" path="res://scenes/char_creation.gd" id="1_6gou8"]
+[ext_resource type="FontFile" uid="uid://bswbfb2a61rur" path="res://fonts/GregorianFLF.ttf" id="1_7wh55"]
+[ext_resource type="Texture2D" uid="uid://bktwt0uslwg23" path="res://import/sampleimg/cropped-PXL_20250730_061432465.RAW-01.COVER.jpg" id="3_vcfe6"]
+[ext_resource type="Texture2D" uid="uid://v8t8dcmbr6va" path="res://import/sampleimg/image1.jpg" id="4_6asos"]
+[ext_resource type="Texture2D" uid="uid://cbq2nrv2xo5m0" path="res://import/sampleimg/IMG_0512.jpg" id="5_8053n"]
+[ext_resource type="Texture2D" uid="uid://8qsi6kjie5u8" path="res://import/sampleimg/image0.jpg" id="6_fi84n"]
+
+[node name="CharCreation" type="Node2D"]
+script = ExtResource("1_6gou8")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 596.0
+offset_top = 344.0
+offset_right = 596.0
+offset_bottom = 344.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+offset_left = -596.0
+offset_top = -344.0
+offset_right = 556.0
+offset_bottom = 304.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Continue" type="Button" parent="Control"]
+z_index = 623
+layout_mode = 1
+anchors_preset = -1
+offset_left = -88.0
+offset_top = 190.0
+offset_right = 48.0
+offset_bottom = 243.0
+scale = Vector2(1, 0.9898271)
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 40
+text = "Continue"
+
+[node name="PartySelect" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 544.0
+
+[node name="charM1" type="ColorRect" parent="PartySelect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 112.0
+offset_top = 24.0
+offset_right = -832.0
+offset_bottom = -39.0
+color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+
+[node name="charM2" type="ColorRect" parent="PartySelect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 352.0
+offset_top = 24.0
+offset_right = -592.0
+offset_bottom = -40.0
+color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+
+[node name="charM3" type="ColorRect" parent="PartySelect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 592.0
+offset_top = 24.0
+offset_right = -352.0
+offset_bottom = -40.0
+color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+
+[node name="charM4" type="ColorRect" parent="PartySelect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 832.0
+offset_top = 24.0
+offset_right = -112.0
+offset_bottom = -40.0
+color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+
+[node name="summon2" type="Button" parent="PartySelect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.356
+anchor_top = 0.38300002
+anchor_right = 0.42900002
+anchor_bottom = 0.43100002
+offset_left = -0.11199951
+offset_top = -0.18400574
+offset_right = -0.20800781
+offset_bottom = -0.2880249
+text = "SUMMON"
+
+[node name="summon3" type="Button" parent="PartySelect"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.57600003
+anchor_top = 0.38300002
+anchor_right = 0.646
+anchor_bottom = 0.43100002
+offset_left = -5.552063
+offset_top = -0.18400574
+offset_right = -2.1920166
+offset_bottom = -0.2880249
+text = "SUMMON"
+
+[node name="summon4" type="Button" parent="PartySelect"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35500002
+anchor_top = 0.37
+anchor_right = 0.42800003
+anchor_bottom = 0.418
+offset_left = 481.03998
+offset_top = 8.23999
+offset_right = 480.94397
+offset_bottom = 8.135986
+text = "SUMMON"
+
+[node name="partyInit1" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 112.0
+offset_top = 192.0
+offset_right = 320.0
+offset_bottom = 512.0
+
+[node name="nameEntry" type="TextEdit" parent="partyInit1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.053000003
+anchor_right = 0.808
+anchor_bottom = 0.15
+offset_left = 0.07999992
+offset_top = -15.960001
+offset_right = -0.06401062
+offset_bottom = -15.0
+placeholder_text = "Bach"
+
+[node name="Name" type="Label" parent="partyInit1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = -0.025
+anchor_right = 0.731
+anchor_bottom = 0.053000003
+offset_left = 0.07999992
+offset_top = -16.0
+offset_right = -0.04800415
+offset_bottom = -15.960001
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Name:"
+
+[node name="ClassEntry" type="OptionButton" parent="partyInit1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.25
+anchor_right = 0.76900005
+anchor_bottom = 0.35000002
+offset_left = 0.07999992
+offset_top = -16.0
+offset_right = 8.047989
+offset_bottom = -16.000008
+selected = 0
+item_count = 8
+popup/item_0/text = "Warrior"
+popup/item_0/id = 0
+popup/item_1/text = "Hunter"
+popup/item_1/id = 1
+popup/item_2/text = "Thrall"
+popup/item_2/id = 2
+popup/item_3/text = "Bard"
+popup/item_3/id = 3
+popup/item_4/text = "Thief"
+popup/item_4/id = 4
+popup/item_5/text = "Peddler"
+popup/item_5/id = 5
+popup/item_6/text = "Adventurer"
+popup/item_6/id = 6
+popup/item_7/text = "Killer"
+popup/item_7/id = 7
+
+[node name="Class_" type="Label" parent="partyInit1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.17500001
+anchor_right = 0.731
+anchor_bottom = 0.25
+offset_left = 0.07999992
+offset_top = -17.000004
+offset_right = -0.04800415
+offset_bottom = -16.0
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Class:"
+
+[node name="Burial" type="Label" parent="partyInit1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.37500003
+anchor_right = 0.731
+anchor_bottom = 0.45000002
+offset_left = 0.07999992
+offset_top = -16.000008
+offset_right = -0.04800415
+offset_bottom = -15.0
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Burial gift:"
+
+[node name="BurialGift" type="OptionButton" parent="partyInit1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.453
+anchor_right = 0.808
+anchor_bottom = 0.55
+offset_left = 0.07999992
+offset_top = -15.960007
+offset_right = -0.06401062
+offset_bottom = -15.0
+selected = 0
+item_count = 1
+popup/item_0/text = "Necklace"
+popup/item_0/id = 0
+
+[node name="Label" type="Label" parent="partyInit1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.52500004
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -18.000015
+offset_right = -6.0
+offset_bottom = -26.0
+theme_override_font_sizes/font_size = 10
+text = "Perhaps long ago you were a warrior in a lord's army.You were left to rot among the bodies of your comrades.
+Your primary attributes are:
+STR, CON, CHA
+Your primary skills are:
+SWORD, SPEAR, MAIL"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="p_img1" type="Sprite2D" parent="partyInit1"]
+position = Vector2(100.12511, -90.20881)
+scale = Vector2(0.200417, 0.200417)
+texture = ExtResource("3_vcfe6")
+
+[node name="partyInit2" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 353.0
+offset_top = 192.0
+offset_right = 561.0
+offset_bottom = 512.0
+
+[node name="nameEntry" type="TextEdit" parent="partyInit2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.003
+anchor_right = 0.80300003
+anchor_bottom = 0.10300001
+offset_left = 0.07999992
+offset_top = 0.03999996
+offset_right = 0.9759979
+offset_bottom = 0.0399971
+placeholder_text = "Darren"
+
+[node name="Name" type="Label" parent="partyInit2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = -0.025
+anchor_right = 0.731
+anchor_bottom = 0.053000003
+offset_left = 0.07999992
+offset_top = -16.0
+offset_right = -0.04800415
+offset_bottom = -15.960001
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Name:"
+
+[node name="ClassEntry" type="OptionButton" parent="partyInit2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.25
+anchor_right = 0.76900005
+anchor_bottom = 0.35000002
+offset_left = 0.07999992
+offset_top = -16.0
+offset_right = 8.047989
+offset_bottom = -16.000008
+selected = 1
+item_count = 8
+popup/item_0/text = "Warrior"
+popup/item_0/id = 0
+popup/item_1/text = "Hunter"
+popup/item_1/id = 1
+popup/item_2/text = "Thrall"
+popup/item_2/id = 2
+popup/item_3/text = "Bard"
+popup/item_3/id = 3
+popup/item_4/text = "Thief"
+popup/item_4/id = 4
+popup/item_5/text = "Peddler"
+popup/item_5/id = 5
+popup/item_6/text = "Adventurer"
+popup/item_6/id = 6
+popup/item_7/text = "Killer"
+popup/item_7/id = 7
+
+[node name="Class_" type="Label" parent="partyInit2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.17500001
+anchor_right = 0.731
+anchor_bottom = 0.25
+offset_left = 0.07999992
+offset_top = -17.000004
+offset_right = -0.04800415
+offset_bottom = -16.0
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Class:"
+
+[node name="Class_2" type="Label" parent="partyInit2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.37500003
+anchor_right = 0.731
+anchor_bottom = 0.45000002
+offset_left = 0.07999992
+offset_top = -16.000008
+offset_right = -0.04800415
+offset_bottom = -15.0
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Burial gift:"
+
+[node name="BurialGift" type="OptionButton" parent="partyInit2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.453
+anchor_right = 0.808
+anchor_bottom = 0.55
+offset_left = 0.07999992
+offset_top = -15.960007
+offset_right = -0.06401062
+offset_bottom = -15.0
+selected = 0
+item_count = 1
+popup/item_0/text = "Necklace"
+popup/item_0/id = 0
+
+[node name="Label" type="Label" parent="partyInit2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.048
+anchor_top = 0.48100004
+anchor_right = 0.9710001
+anchor_bottom = 0.90000004
+offset_left = 0.015999794
+offset_top = 0.07998657
+offset_right = 0.031982422
+offset_bottom = 2.0
+theme_override_font_sizes/font_size = 10
+text = "In life you were a hunter.
+You were slain by your quarry deep in the woods.
+Your primary attributes are:
+AGI , END, STR
+Your primary skills are:
+BOW, SWORD, DISARM TRAP"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="p_img2" type="Sprite2D" parent="partyInit2"]
+position = Vector2(102.99997, -90.54176)
+scale = Vector2(0.39999998, 0.384114)
+texture = ExtResource("4_6asos")
+
+[node name="RETURN" type="Button" parent="partyInit2"]
+visible = false
+z_index = 15
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.32200003
+anchor_top = 0.90000004
+anchor_right = 0.66300005
+anchor_bottom = 0.96800005
+offset_left = 0.023994446
+offset_top = -2.2479858
+offset_right = 0.09599304
+offset_bottom = -0.0079956055
+theme_override_font_sizes/font_size = 11
+text = "RETURN"
+
+[node name="partyInit3" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 591.0
+offset_top = 192.0
+offset_right = 799.0
+offset_bottom = 512.0
+
+[node name="nameEntry" type="TextEdit" parent="partyInit3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.003
+anchor_right = 0.80300003
+anchor_bottom = 0.10300001
+offset_left = 0.07999992
+offset_top = 0.03999996
+offset_right = 0.9759979
+offset_bottom = 0.0399971
+placeholder_text = "Buddy"
+
+[node name="Name" type="Label" parent="partyInit3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = -0.025
+anchor_right = 0.731
+anchor_bottom = 0.053000003
+offset_left = 0.07999992
+offset_top = -16.0
+offset_right = -0.04800415
+offset_bottom = -15.960001
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Name:"
+
+[node name="ClassEntry" type="OptionButton" parent="partyInit3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.25
+anchor_right = 0.76900005
+anchor_bottom = 0.35000002
+offset_left = 0.07999992
+offset_top = -16.0
+offset_right = 8.047989
+offset_bottom = -16.000008
+selected = 2
+item_count = 8
+popup/item_0/text = "Warrior"
+popup/item_0/id = 0
+popup/item_1/text = "Hunter"
+popup/item_1/id = 1
+popup/item_2/text = "Thrall"
+popup/item_2/id = 2
+popup/item_3/text = "Bard"
+popup/item_3/id = 3
+popup/item_4/text = "Thief"
+popup/item_4/id = 4
+popup/item_5/text = "Peddler"
+popup/item_5/id = 5
+popup/item_6/text = "Adventurer"
+popup/item_6/id = 6
+popup/item_7/text = "Killer"
+popup/item_7/id = 7
+
+[node name="Class_" type="Label" parent="partyInit3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.17500001
+anchor_right = 0.731
+anchor_bottom = 0.25
+offset_left = 0.07999992
+offset_top = -17.000004
+offset_right = -0.04800415
+offset_bottom = -16.0
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Class:"
+
+[node name="Class_2" type="Label" parent="partyInit3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.37500003
+anchor_right = 0.731
+anchor_bottom = 0.45000002
+offset_left = 0.07999992
+offset_top = -16.000008
+offset_right = -0.04800415
+offset_bottom = -15.0
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Burial gift:"
+
+[node name="BurialGift" type="OptionButton" parent="partyInit3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.453
+anchor_right = 0.808
+anchor_bottom = 0.55
+offset_left = 0.07999992
+offset_top = -15.960007
+offset_right = -0.06401062
+offset_bottom = -15.0
+selected = 0
+item_count = 1
+popup/item_0/text = "Necklace"
+popup/item_0/id = 0
+
+[node name="Label" type="Label" parent="partyInit3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.52500004
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -9.000015
+offset_right = -6.0
+offset_bottom = -27.0
+theme_override_font_sizes/font_size = 10
+text = "You were a wretched thrall,  stolen from your homeland. You were killed by your own master in a fit of rage.
+Your primary attributes are:
+STR, CONST,  END
+Your primary skills are:
+AXE, SWORD, FURY"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="p_img3" type="Sprite2D" parent="partyInit3"]
+position = Vector2(104.96869, -91.00001)
+scale = Vector2(0.2561251, 0.243714)
+texture = ExtResource("5_8053n")
+
+[node name="RETURN" type="Button" parent="partyInit3"]
+visible = false
+z_index = 15
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.32200003
+anchor_top = 0.90000004
+anchor_right = 0.66300005
+anchor_bottom = 0.96800005
+offset_left = 0.023994446
+offset_top = -2.2479858
+offset_right = 0.09599304
+offset_bottom = -0.0079956055
+theme_override_font_sizes/font_size = 11
+text = "RETURN"
+
+[node name="partyInit4" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 833.0
+offset_top = 192.0
+offset_right = 1041.0
+offset_bottom = 512.0
+
+[node name="nameEntry" type="TextEdit" parent="partyInit4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.003
+anchor_right = 0.80300003
+anchor_bottom = 0.10300001
+offset_left = 0.07999992
+offset_top = 0.03999996
+offset_right = 0.9759979
+offset_bottom = 0.0399971
+placeholder_text = "Evan"
+
+[node name="Name" type="Label" parent="partyInit4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = -0.025
+anchor_right = 0.731
+anchor_bottom = 0.053000003
+offset_left = 0.07999992
+offset_top = -16.0
+offset_right = -0.04800415
+offset_bottom = -15.960001
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Name:"
+
+[node name="ClassEntry" type="OptionButton" parent="partyInit4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.25
+anchor_right = 0.76900005
+anchor_bottom = 0.35000002
+offset_left = 0.07999992
+offset_top = -16.0
+offset_right = 8.047989
+offset_bottom = -16.000008
+selected = 3
+item_count = 8
+popup/item_0/text = "Warrior"
+popup/item_0/id = 0
+popup/item_1/text = "Hunter"
+popup/item_1/id = 1
+popup/item_2/text = "Thrall"
+popup/item_2/id = 2
+popup/item_3/text = "Bard"
+popup/item_3/id = 3
+popup/item_4/text = "Thief"
+popup/item_4/id = 4
+popup/item_5/text = "Peddler"
+popup/item_5/id = 5
+popup/item_6/text = "Adventurer"
+popup/item_6/id = 6
+popup/item_7/text = "Killer"
+popup/item_7/id = 7
+
+[node name="Class_" type="Label" parent="partyInit4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.17500001
+anchor_right = 0.731
+anchor_bottom = 0.25
+offset_left = 0.07999992
+offset_top = -17.000004
+offset_right = -0.04800415
+offset_bottom = -16.0
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Class:"
+
+[node name="Class_2" type="Label" parent="partyInit4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.37500003
+anchor_right = 0.731
+anchor_bottom = 0.45000002
+offset_left = 0.07999992
+offset_top = -16.000008
+offset_right = -0.04800415
+offset_bottom = -15.0
+theme_override_fonts/font = ExtResource("1_7wh55")
+theme_override_font_sizes/font_size = 21
+text = "Burial gift:"
+
+[node name="BurialGift" type="OptionButton" parent="partyInit4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.115
+anchor_top = 0.453
+anchor_right = 0.808
+anchor_bottom = 0.55
+offset_left = 0.07999992
+offset_top = -15.960007
+offset_right = -0.06401062
+offset_bottom = -15.0
+selected = 0
+item_count = 1
+popup/item_0/text = "Necklace"
+popup/item_0/id = 0
+
+[node name="Label" type="Label" parent="partyInit4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.52500004
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -4.0000153
+offset_right = -6.0
+offset_bottom = -28.0
+theme_override_font_sizes/font_size = 10
+text = "You were a bard, somewhat middling in terms of musical skill. You were murdered in a drunken tavern brawl.
+Your primary attributes are:
+INT, CHA, AGI
+Your primary skills are:
+MUSIC, RHETORIC, ID ITEM"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="p_img4" type="Sprite2D" parent="partyInit4"]
+position = Vector2(103, -92)
+scale = Vector2(0.39999974, 0.375)
+texture = ExtResource("6_fi84n")
+
+[node name="RETURN" type="Button" parent="partyInit4"]
+visible = false
+z_index = 15
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.32200003
+anchor_top = 0.90000004
+anchor_right = 0.66300005
+anchor_bottom = 0.96800005
+offset_left = 0.023994446
+offset_top = -2.2479858
+offset_right = 0.09599304
+offset_bottom = -0.0079956055
+theme_override_font_sizes/font_size = 11
+text = "RETURN"
+
+[connection signal="pressed" from="Control/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="PartySelect/summon2" to="." method="_on_summon_pressed"]
+[connection signal="pressed" from="PartySelect/summon3" to="." method="_on_summon_pressed"]
+[connection signal="pressed" from="PartySelect/summon4" to="." method="_on_summon_pressed"]
+[connection signal="item_selected" from="partyInit1/ClassEntry" to="." method="_on_class_entry_item_selected"]
+[connection signal="item_selected" from="partyInit2/ClassEntry" to="." method="_on_class_entry_item_selected"]
+[connection signal="pressed" from="partyInit2/RETURN" to="." method="_on_return_pressed"]
+[connection signal="item_selected" from="partyInit3/ClassEntry" to="." method="_on_class_entry_item_selected"]
+[connection signal="pressed" from="partyInit3/RETURN" to="." method="_on_return_pressed"]
+[connection signal="item_selected" from="partyInit4/ClassEntry" to="." method="_on_class_entry_item_selected"]
+[connection signal="pressed" from="partyInit4/RETURN" to="." method="_on_return_pressed"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=48 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=49 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://bh8b7mqs80wnc" path="res://addons/fpc/character.gd" id="1_0t4e8"]
+[ext_resource type="PackedScene" uid="uid://cvr1hvkpke2cq" path="res://props/arrow.tscn" id="2_6wwgf"]
 [ext_resource type="Script" uid="uid://dnm78wy2epe6i" path="res://addons/fpc/interact.gd" id="2_bx7cj"]
 [ext_resource type="ArrayMesh" uid="uid://c7ahg862icvt5" path="res://addons/swordmesh.res" id="3_qaoyu"]
 [ext_resource type="Script" uid="uid://descqbt73m7pl" path="res://addons/fpc/EditorModule.gd" id="3_v3ckk"]
@@ -759,6 +760,8 @@ default_reticle = "uid://coqpusufa8a6k"
 HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
+arrowScene = ExtResource("2_6wwgf")
+crouch_mode = 1
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -850,49 +853,52 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Party" type="Control" parent="UserInterface"]
+top_level = true
+z_index = 1
 layout_mode = 1
-anchor_left = -0.01
-anchor_top = -0.002
-anchor_right = 0.984
-anchor_bottom = 0.986
-offset_left = -7.48
-offset_top = -7.704
-offset_right = 288.432
-offset_bottom = 162.072
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 287.99988
+offset_bottom = 161.99994
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.8, 0.8)
 
 [node name="p_img1" type="Sprite2D" parent="UserInterface/Party"]
-position = Vector2(505.125, 717.805)
+position = Vector2(432.62488, 718.30493)
 scale = Vector2(0.200417, 0.200417)
 texture = ExtResource("7_q62an")
 
 [node name="p_img2" type="Sprite2D" parent="UserInterface/Party"]
-position = Vector2(693.375, 717.472)
+visible = false
+position = Vector2(620.8749, 717.97205)
 scale = Vector2(0.414844, 0.384114)
 texture = ExtResource("6_q34qd")
 
 [node name="p_img3" type="Sprite2D" parent="UserInterface/Party"]
-position = Vector2(878, 718.68)
+visible = false
+position = Vector2(805.5001, 719.17993)
 scale = Vector2(0.23625, 0.243714)
 texture = ExtResource("7_ex63h")
 
 [node name="p_img4" type="Sprite2D" parent="UserInterface/Party"]
-position = Vector2(1061, 716.68)
+visible = false
+position = Vector2(988.4999, 717.18005)
 scale = Vector2(0.425, 0.375)
 texture = ExtResource("8_q34qd")
 
 [node name="party1" type="Polygon2D" parent="UserInterface/Party"]
 z_index = -1
-position = Vector2(440, 652.68)
+position = Vector2(367.5001, 653.18)
 scale = Vector2(0.796077, 0.679995)
 color = Color(1, 0.843, 0, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 
 [node name="party2" type="Polygon2D" parent="UserInterface/Party"]
+visible = false
 z_index = -1
-position = Vector2(632, 652.68)
+position = Vector2(559.5, 653.18)
 scale = Vector2(0.796077, 0.679995)
 color = Color(0.133, 0.545, 0.133, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
@@ -900,7 +906,7 @@ polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 [node name="party3" type="Polygon2D" parent="UserInterface/Party"]
 visible = false
 z_index = -1
-position = Vector2(815, 653.18)
+position = Vector2(751.24976, 653.18)
 scale = Vector2(0.796077, 0.679995)
 color = Color(0.133, 0.545, 0.133, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
@@ -908,7 +914,7 @@ polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 [node name="party4" type="Polygon2D" parent="UserInterface/Party"]
 visible = false
 z_index = -1
-position = Vector2(999, 653.18)
+position = Vector2(935.25, 653.18)
 scale = Vector2(0.796077, 0.679995)
 color = Color(0.133, 0.545, 0.133, 1)
 polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
@@ -916,41 +922,59 @@ polygon = PackedVector2Array(161, -1, 161, 199, 0, 200, 0, 0)
 [node name="atkCooldown" type="Timer" parent="UserInterface/Party"]
 
 [node name="readyIndicators" type="Control" parent="UserInterface/Party"]
-anchors_preset = 0
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="readyindicator" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
-position = Vector2(505.561, 714.537)
+z_index = -1
+position = Vector2(439.56046, 714.53735)
 scale = Vector2(0.200417, 0.200417)
 polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
 uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
 
 [node name="readyindicator2" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
-position = Vector2(696.436, 715.732)
+visible = false
+z_index = -1
+position = Vector2(630.4354, 715.73236)
 scale = Vector2(0.200417, 0.200417)
 polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
 uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
 
 [node name="readyindicator3" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
-position = Vector2(880.436, 715.732)
+visible = false
+position = Vector2(814.4354, 715.73236)
 scale = Vector2(0.200417, 0.200417)
 polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
 uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
 
 [node name="readyindicator4" type="Polygon2D" parent="UserInterface/Party/readyIndicators"]
-position = Vector2(1064.44, 715.732)
+visible = false
+position = Vector2(998.4394, 715.73236)
 scale = Vector2(0.200417, 0.200417)
 polygon = PackedVector2Array(-2.28882e-05, -471.703, -47.7028, -424, -2.28882e-05, -376.297, 47.7027, -424)
 uv = PackedVector2Array(-216, -96, -232, -80, -216, -64, -200, -80)
 
 [node name="HPbar" type="Control" parent="UserInterface/Party"]
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="hp1" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
 layout_mode = 0
-offset_left = 576.435
-offset_top = 787.732
-offset_right = 844.435
-offset_bottom = 788.732
+offset_left = 497.5
+offset_top = 791.55444
+offset_right = 765.5
+offset_bottom = 792.55444
 rotation = -1.57079
 scale = Vector2(0.528189, 14.44)
 value = 100.0
@@ -959,11 +983,12 @@ texture_over = SubResource("GradientTexture1D_mnhhx")
 texture_progress = SubResource("GradientTexture1D_6yc32")
 
 [node name="hp2" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
+visible = false
 layout_mode = 0
-offset_left = 768.435
-offset_top = 787.732
-offset_right = 1036.44
-offset_bottom = 788.732
+offset_left = 689.5
+offset_top = 791.5547
+offset_right = 957.50494
+offset_bottom = 792.5547
 rotation = -1.57079
 scale = Vector2(0.5069, 14.44)
 value = 100.0
@@ -972,11 +997,12 @@ texture_over = SubResource("GradientTexture1D_6wwgf")
 texture_progress = SubResource("GradientTexture1D_xtbqr")
 
 [node name="hp3" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
+visible = false
 layout_mode = 0
-offset_left = 944.435
-offset_top = 787.732
-offset_right = 1212.44
-offset_bottom = 788.732
+offset_left = 869.25
+offset_top = 791.5549
+offset_right = 1137.2549
+offset_bottom = 792.5549
 rotation = -1.57079
 scale = Vector2(0.5069, 14.44)
 value = 100.0
@@ -985,11 +1011,12 @@ texture_over = SubResource("GradientTexture1D_6wwgf")
 texture_progress = SubResource("GradientTexture1D_xtbqr")
 
 [node name="hp4" type="TextureProgressBar" parent="UserInterface/Party/HPbar"]
+visible = false
 layout_mode = 0
-offset_left = 1136.44
-offset_top = 787.732
-offset_right = 1404.44
-offset_bottom = 788.732
+offset_left = 1057.5049
+offset_top = 791.5545
+offset_right = 1325.5049
+offset_bottom = 792.5545
 rotation = -1.57079
 scale = Vector2(0.5069, 14.44)
 value = 100.0

@@ -13,7 +13,7 @@ func _ready()->void:
 	stunName = "stun"
 	dieName = "die"
 	restName = "rest"
-	
+	damage = 5
 	attackZone = $attackZone
 	add_to_group(group)
 	if enemyRange:
@@ -108,7 +108,7 @@ func shoot() -> void:
 		var arrow = arrowScene.instantiate()
 		arrow.messaging = false
 		arrow.shooter = "Skeleton Archer"
-		arrow.damage = round(damage)/2
+		arrow.damage = round(damage)*2
 		get_parent().add_child(arrow)
 		arrow.global_position =$skelChar/arrowOrigin.global_position
 		arrow.set_direction(arrowDir)

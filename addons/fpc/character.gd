@@ -148,21 +148,48 @@ var mouseInput : Vector2 = Vector2(0,0)
 #endregion
 
 #region party system
-var party1 = preload("res://party/partyData.gd").new()
-var party2 = preload("res://party/partyData.gd").new()
-var party3 = preload("res://party/partyData.gd").new()
-var party4 = preload("res://party/partyData.gd").new()
-var party = [party1,party2,party3, party4]
+var party1 = Global.party[0]
+#var party2 = Global.party2
+#var party3 = Global.party3
+#var party4 = Global.party4
+var party = []
 #var partyHash = {party1 : 1 ,party2 : 2,party3 : 3, party4 : 4}
 @onready var partyImg = [$UserInterface/Party/p_img1, $UserInterface/Party/p_img2, $UserInterface/Party/p_img3, $UserInterface/Party/p_img4]
 @onready var partyHighlight = [$UserInterface/Party/party1, $UserInterface/Party/party2, $UserInterface/Party/party3, $UserInterface/Party/party4]
 @onready var readyIndicators = [$UserInterface/Party/readyIndicators/readyindicator, $UserInterface/Party/readyIndicators/readyindicator2, $UserInterface/Party/readyIndicators/readyindicator3, $UserInterface/Party/readyIndicators/readyindicator4]
 @onready var HPBars = [$UserInterface/Party/HPbar/hp1, $UserInterface/Party/HPbar/hp2, $UserInterface/Party/HPbar/hp3, $UserInterface/Party/HPbar/hp4]
 var activePlayer = party1;
-var inactiveIndex = 1;
+var inactiveIndex = -1;
 var activeIndex = 0;
 var dead = false;
 
+func _ready():
+	print(party)
+	for elem in Global.party:
+		party.append(elem)
+	#It is safe to comment this line if your game doesn't start with the mouse captured
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
+	HEAD.rotation.y = rotation.y
+	rotation.y = 0
+	
+	if default_reticle:
+		change_reticle(default_reticle)
+
+	initialize_animations()
+	check_controls()
+	enter_normal_state()
+
+	refreshPlayer()
+	if party.size() > 1:
+		inactiveIndex = 1
+	for elem in party:
+		HPBars[elem.index].value = elem.HP/elem.maxHP * 100
+		partyImg[elem.index].visible = true
+		readyIndicators[elem.index].visible=  true
+		HPBars[elem.index].visible = true
+	#	print(elem.index, " cooldown: ", elem.coolDown)
+	
 func refreshPlayer() -> void:
 	$Head/attacks.speed_scale = activePlayer.weaponSkill/100.0
 func heal(index, amt)-> void:
@@ -216,12 +243,16 @@ func hurt(enemyName, dmg)->void:
 		if (!elem.dead):
 			dmgArr.append(elem)
 	var rand = dmgArr.pick_random()
+	if (randi()%100 + 1 < party[activeIndex].hitPriority):
+		rand = party[activeIndex]
+		print("active character takes the hit")
 	var msg = ""
 	if (dmg == -1):
 		msg = enemyName + " swings at " + rand.charName + " and misses."
 		$"../UI/Info".setText(msg)
 	else:
 		var ret = rand.hurt(dmg)
+		start_cooldown(rand.index, rand.coolDown)
 		if (ret):
 			if (rand.HP <= 0):
 				msg = enemyName + " kills " + rand.charName + "."
@@ -314,44 +345,6 @@ func updateDead()->void:
 
 #region Main Control Flow
 
-func _ready():
-	#It is safe to comment this line if your game doesn't start with the mouse captured
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	# If the controller is rotated in a certain direction for game design purposes, redirect this rotation into the head.
-	HEAD.rotation.y = rotation.y
-	rotation.y = 0
-	
-	if default_reticle:
-		change_reticle(default_reticle)
-
-	initialize_animations()
-	check_controls()
-	enter_normal_state()
-
-	refreshPlayer()
-	party2.weaponSkill = 90.0
-	party3.weaponSkill = 35.0
-	party4.weaponSkill = 90.0
-	party2.index = 1
-	party3.index = 2
-	party4.index = 3
-	party2.damage = 5
-	party3.damage = 8
-	party1.HP = 10.0
-	#party2.HP = 20.0
-	#party3.HP = 10.0
-	#party4.HP = 10.0
-
-	party2.charName = "Darren"
-	party3.charName = "Buddy"
-	party4.charName = "Evan"
-	
-	for elem in party:
-	#	print(elem.index, " weaponSkill: ", elem.weaponSkill)
-		elem.coolDown = 9000.0 / ((elem.weaponSkill) * (elem.weaponSkill))
-		HPBars[elem.index].value = elem.HP/elem.maxHP * 100
-		
-	#	print(elem.index, " cooldown: ", elem.coolDown)
 
 func _process(_delta):
 	#if (dragging == true):
@@ -361,7 +354,7 @@ func _process(_delta):
 	if pausing_enabled:
 		handle_pausing()		
 	update_debug_menu_per_frame()
-	
+
 	if inactiveIndex != -1 and !party[inactiveIndex].dead:
 		partyHighlight[inactiveIndex].visible = true
 		if party[inactiveIndex].atkready:
@@ -373,15 +366,18 @@ func _process(_delta):
 	else:
 		partyHighlight[inactiveIndex].visible = false
 		
-	for i in range(0,4):
-		if party[i].atkready and !party[i].dead and i != activeIndex:
-			if readyIndicators[i].color != Color(0.133333, 0.545098, 0.133333, 1):
-				readyIndicators[i].color = Color(0.133333, 0.545098, 0.133333, 1)
+	for elem in party:
+		if elem.dead:
+			partyImg[elem.index].visible = false
+			
+		if elem.atkready and !elem.dead and elem.index != activeIndex:
+			if readyIndicators[elem.index].color != Color(0.133333, 0.545098, 0.133333, 1):
+				readyIndicators[elem.index].color = Color(0.133333, 0.545098, 0.133333, 1)
 		else:
-			if (i == activeIndex):
-				readyIndicators[i].color = Color(1, 0.843137, 0, 1)
-			elif readyIndicators[i].color != Color(0.862745, 0.0784314, 0.235294, 1):
-				readyIndicators[i].color = Color(0.862745, 0.0784314, 0.235294, 1)
+			if (elem.index == activeIndex):
+				readyIndicators[elem.index].color = Color(1, 0.843137, 0, 1)
+			elif readyIndicators[elem.index].color != Color(0.862745, 0.0784314, 0.235294, 1):
+				readyIndicators[elem.index].color = Color(0.862745, 0.0784314, 0.235294, 1)
 
 
 func _physics_process(delta): # Most things happen here.
@@ -715,6 +711,7 @@ const SWING_THRESHOLD := 20
 
 func start_cooldown(index: int, cool: float) -> void:
 	var t := get_tree().create_timer(cool)
+	party[index].atkready = false
 	t.timeout.connect(func():
 		party[index].atkready = true
 	)
@@ -835,7 +832,7 @@ func _input(event):
 			start_cooldown(prevIndex, cool*2)
 		else:
 			start_cooldown(prevIndex, cool)
-		party[prevIndex].atkready = false
+
 	
 	if (Input.is_action_just_pressed("G")):
 		var next = getNext(0);

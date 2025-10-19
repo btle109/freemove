@@ -1,16 +1,15 @@
-
-spells
 XP, levelling, skills
-classes 
+bard songs 
 inventory
 proper sounds and folder restructuring
-UI
+
 
 done:
 indirect attack -> another area3d (indirect range). maybe we can have an array of Booleans for each enemy in enemy group, Boolean True when enter range Boolean false. for each one that is Boolean true, add to a temp array and randomly pick one from it and deal damage.
 hp bar* -> damage will function same way, draw random who is alive and deal damage to them. use progress bar. indirect attack if dead skip/remove from arr
 shield enemy (high chance of blocking ranged attacks), ranged enemy
 archer enemy -> partially done, needs audio and melee attack function
+UI (main menu, character creation -> singleton -> game)
 
 
 Features:

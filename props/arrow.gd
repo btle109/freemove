@@ -52,7 +52,8 @@ func _on_body_entered(body):
 		stri += str(ret[1])
 		stri += " points."
 	else:
-		stri += "nothing."
+
+		stri += " shoots nothing."
 	if (messaging):
 		label.setText(stri)
 	queue_free()
