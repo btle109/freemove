@@ -130,7 +130,7 @@ layout_mode = 0
 offset_right = 208.0
 offset_bottom = 488.0
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 15
 autowrap_mode = 2
 
 [node name="charM2" type="ColorRect" parent="UI/PartyMenu"]
@@ -149,7 +149,7 @@ layout_mode = 0
 offset_right = 208.0
 offset_bottom = 488.0
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 15
 autowrap_mode = 2
 
 [node name="charM3" type="ColorRect" parent="UI/PartyMenu"]
@@ -168,7 +168,7 @@ layout_mode = 0
 offset_right = 208.0
 offset_bottom = 488.0
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 15
 autowrap_mode = 2
 
 [node name="charM4" type="ColorRect" parent="UI/PartyMenu"]
@@ -187,7 +187,7 @@ layout_mode = 0
 offset_right = 208.0
 offset_bottom = 488.0
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 15
 autowrap_mode = 2
 
 [node name="NavReg" type="NavigationRegion3D" parent="."]

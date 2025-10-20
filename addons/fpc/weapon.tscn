@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4h5hd8joeq6m"]
+
+[ext_resource type="ArrayMesh" uid="uid://c7ahg862icvt5" path="res://addons/swordmesh.res" id="1_3h2ng"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qaoyu"]
+size = Vector3(0.168262, 2.1, 0.0479248)
+
+[node name="sword" type="MeshInstance3D"]
+transform = Transform3D(0.6075875, 0.065964, 0.34129918, 0.33017623, -0.3244639, -0.52507776, 0.10871837, 0.6167435, -0.31274307, 0, 0, 0)
+mesh = ExtResource("1_3h2ng")
+
+[node name="swordCollision" type="Area3D" parent="."]
+transform = Transform3D(0.714284, -1.65724e-13, -1.23718, 1.23718, -5.17141e-06, 0.714282, -4.47858e-06, -1.42857, -2.5857e-06, -0.71334, 2.47875, -0.980009)
+monitoring = false
+
+[node name="col_shape" type="CollisionShape3D" parent="swordCollision"]
+transform = Transform3D(0.50001, 0.866019, -3.78549e-08, 2.23462e-24, -4.37105e-08, -0.999984, -0.866004, 0.499997, -2.18557e-08, -1.67808, -0.691332, -1.56374)
+visible = false
+shape = SubResource("BoxShape3D_qaoyu")

@@ -11,6 +11,8 @@ shield enemy (high chance of blocking ranged attacks), ranged enemy
 archer enemy -> partially done, needs audio and melee attack function
 UI (main menu, character creation -> singleton -> game)
 
+** properly set damage using weapon damage, skills
+** properly set cooldown using weapon quality, attributes, skills
 
 Features:
 Party indirect attack system with ranged checks, permadeath for party members. Simple enemy AI (melee)

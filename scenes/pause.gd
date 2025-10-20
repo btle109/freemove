@@ -59,3 +59,16 @@ func updatePartyData()->void:
 			labelArr[elem.index].text += "/"
 			labelArr[elem.index].text += str(elem.maxHP)
 			labelArr[elem.index].text += "\n"
+			labelArr[elem.index].text += "Attributes:\n"
+			for val in elem.attributes:
+				labelArr[elem.index].text += ("%s : %s" % [val, elem.attributes[val]])
+				labelArr[elem.index].text += "\n"
+			labelArr[elem.index].text += "Skills:\n"
+			for val in elem.skills:
+				if (elem.skills[val] > 0):
+					labelArr[elem.index].text += ("%s : %s" % [val, elem.skills[val]])
+					labelArr[elem.index].text += "\n"
+			labelArr[elem.index].text += "XP: "
+			labelArr[elem.index].text += str(elem.xp)
+			labelArr[elem.index].text += "/"
+			labelArr[elem.index].text += str(elem.xpNext)

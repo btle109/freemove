@@ -1,10 +1,6 @@
-res://scenes/test_world.tscn
-res://scenes/mainmenu.tscn
-res://scenes/charCreation.tscn
-res://scenes/mainmenu.gd
-res://scenes/char_creation.gd
 res://addons/fpc/character.tscn
-res://addons/fpc/character.gd
+res://party/weaponData.gd
 res://party/partyData.gd
-res://scenes/global.gd
 res://scenes/pause.gd
+res://addons/fpc/character.gd
+res://props/axce.res

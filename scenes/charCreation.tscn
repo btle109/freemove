@@ -399,8 +399,7 @@ offset_top = 0.07998657
 offset_right = 0.031982422
 offset_bottom = 2.0
 theme_override_font_sizes/font_size = 10
-text = "In life you were a hunter.
-You were slain by your quarry deep in the woods.
+text = "In life you were a hunter. You were slain by your quarry deep in the woods.
 Your primary attributes are:
 AGI , END, STR
 Your primary skills are:

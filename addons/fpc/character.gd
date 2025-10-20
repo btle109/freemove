@@ -184,7 +184,7 @@ func _ready():
 	if party.size() > 1:
 		inactiveIndex = 1
 	for elem in party:
-		HPBars[elem.index].value = elem.HP/elem.maxHP * 100
+		HPBars[elem.index].value = float(elem.HP)/float(elem.maxHP) * 100.0
 		partyImg[elem.index].visible = true
 		readyIndicators[elem.index].visible=  true
 		HPBars[elem.index].visible = true
@@ -192,6 +192,7 @@ func _ready():
 	
 func refreshPlayer() -> void:
 	$Head/attacks.speed_scale = activePlayer.weaponSkill/100.0
+	
 func heal(index, amt)-> void:
 	print("heal!")
 	if (index == 4):
@@ -206,7 +207,7 @@ func heal(index, amt)-> void:
 			HPBars[index].value = party[index].HP/party[index].maxHP * 100
 
 func switchActivePlayer(n: int) -> void:
-	if $Head/attacks.is_playing() || (party[n].dead):
+	if ($Head/attacks.is_playing() && $Head/attacks.current_animation != "RESET") || (party[n].dead):
 			return
 	activeIndex = n
 	activePlayer = party[n]
@@ -214,6 +215,11 @@ func switchActivePlayer(n: int) -> void:
 		if (i==n):
 			partyHighlight[i].color = Color(1, 0.843137, 0, 1)
 			partyHighlight[i].show()
+			$Head/sword.mesh = party[i].weapon.weaponMesh
+			$Head/sword/swordCollision/col_shape.scale = Vector3(party[i].weapon.collisionParam, party[i].weapon.collisionParam, party[i].weapon.collisionParam)
+			base_speed = party[i].speed
+			sprint_speed = 3 + party[i].speed
+			print("SPEED:", base_speed)
 		else:
 			partyHighlight[i].hide()
 	setInactive(n)
@@ -242,6 +248,8 @@ func hurt(enemyName, dmg)->void:
 	for elem in party:
 		if (!elem.dead):
 			dmgArr.append(elem)
+	if (dmgArr.is_empty()):
+		return
 	var rand = dmgArr.pick_random()
 	if (randi()%100 + 1 < party[activeIndex].hitPriority):
 		rand = party[activeIndex]
@@ -269,7 +277,7 @@ func hurt(enemyName, dmg)->void:
 				$"../UI/Info".setText(msg)
 				$hurtsfx.stream = hurtSound
 				$hurtsfx.play()
-			HPBars[rand.index].value = rand.HP/rand.maxHP * 100
+			HPBars[rand.index].value = float(rand.HP)/float(rand.maxHP) * 100.0
 			if(rand.HP <= 0):
 				updateDead()
 
@@ -337,7 +345,7 @@ func updateDead()->void:
 			#	pass
 		#else:
 			#party.insert(elem.index, elem)
-	if deadCount == 4:
+	if deadCount == party.size():
 		dead = true;
 		get_tree().quit()
 	
@@ -765,8 +773,9 @@ func _input(event):
 				inactiveIndex = next
 				#artyHighlight[inactiveIndex].show()
 			return
-			
+		
 		var prevIndex = inactiveIndex
+		var cool = party[prevIndex].coolDown
 		if (!atkArr.is_empty()):
 			var location = $".".global_position
 			var meleeArr = []
@@ -788,6 +797,7 @@ func _input(event):
 					arrow.set_direction(arrowDir)
 					$bowsfx.stream = bowSound
 					$bowsfx.play()
+					cool = party[prevIndex].bowCoolDown
 					
 				else:
 					$soundsfx.stream =  swingSound
@@ -826,7 +836,7 @@ func _input(event):
 			inactiveIndex = next;
 		#wwpartyHighlight[inactiveIndex].show()
 
-		var cool = party[prevIndex].coolDown
+		
 		print("cool: ", cool)
 		if (state == "sprinting"):
 			start_cooldown(prevIndex, cool*2)
@@ -845,7 +855,7 @@ func _input(event):
 		##STRONGLY RECOMMEND CODING A GENERIC "GET NEXT" function, that gets the next available.
 		##I SUSPECT THE BEST WAY is O(n) search that checks if it is active/inactive/dead
 func process_swing():
-	if $Head/attacks.is_playing():
+	if $Head/attacks.is_playing() and $Head/attacks.current_animation != "RESET":
 		return
 	swing_ready = false  # Prevent re-trigger until next swing
 	var direction = dirVec.normalized()
@@ -865,7 +875,7 @@ func process_swing():
 	$soundsfx.stream =  swingSound
 	$soundsfx.play()
 	dirVec = Vector2.ZERO
-
+	
 func process_bounce(target: Node) ->void:
 	if (target == $"."):
 		return;
@@ -926,3 +936,7 @@ func _on_bow_range_body_exited(body: Node3D) -> void:
 	if (atkArr.has(body)):
 		print(body, " LEFT")
 		atkArr.erase(body)
+
+
+func _on_attacks_animation_finished(anim_name: StringName) -> void:
+	$Head/attacks.play("RESET")
